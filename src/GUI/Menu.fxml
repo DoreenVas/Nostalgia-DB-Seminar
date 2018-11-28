@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MenuController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Nostalgia" textAlignment="CENTER" />
+      <Button fx:id="about" onAction="#about" mnemonicParsing="false" text="About" />
+      <Button fx:id="start" onAction="#start" mnemonicParsing="false" text="Start" />
+      <Button fx:id="exit" onAction="#exit" mnemonicParsing="false" text="Exit" />
+   </children>
+</VBox>

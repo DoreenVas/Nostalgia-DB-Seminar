@@ -1,3 +1,5 @@
+package DatabaseConnection;
+
 import java.sql.*;
 
 public class Model {
@@ -7,11 +9,12 @@ public class Model {
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "shimon12");
             // create a statement
             Statement myStatement = myConn.createStatement();
+
             // execute query
             ResultSet myRes = myStatement.executeQuery("select * from album");
             // process the result
             while(myRes.next()) {
-                System.out.println(myRes.getString("album_id" /*field name*/) + "," + myRes.getString("album_name" /*field name*/));
+                System.out.println(myRes.getString("album_id" /*field name*/) + ", " + myRes.getString("album_name" /*field name*/));
             }
             myRes.close();
             myStatement.close();
@@ -19,6 +22,17 @@ public class Model {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+//        String[] res = Queries.getHotArtists(myStatement);
+//        for (String line : res) {
+//            System.out.println(line);
+//        }
+//        res = Queries.getAlbumsTable(myStatement);
+//        for (String line : res) {
+//            System.out.println(line);
+//        }
+
 
 //        try {
 //            // start connection to DB

@@ -23,7 +23,6 @@ public class Model {
             e.printStackTrace();
         }
 
-
 //        String[] res = Queries.getHotArtists(myStatement);
 //        for (String line : res) {
 //            System.out.println(line);

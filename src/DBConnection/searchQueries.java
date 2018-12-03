@@ -2,7 +2,7 @@ package DBConnection;
 import java.sql.Statement;
 
 public class BasicSearchQueries {
-    private static String[] allSongFields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
+    private static String[] allSongFields = {"song_id", "name", "dencability", "duration", "tempo", "hotness",
             "loudness", "year", "words"};
     private static String[] allArtistFields = {"artist_id", "artist_name", "familiarity", "hotness"};
     private static String[] allGenreFields = {"genre_id", "genre_name"};
@@ -14,7 +14,10 @@ public class BasicSearchQueries {
      * @return  A string array of all the albums.
      */
     public static String[] getAlbums(Statement myStatement) {
-        String query = "select * from album";
+        String[] fields = {"*"};
+        String[] tables = {"album"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        String query = builder.build();
         return Executor.executeQuery(myStatement, query, allAlbumFields);
     }
 
@@ -24,7 +27,10 @@ public class BasicSearchQueries {
      * @return  A string array of all the songs.
      */
     public static String[] getSongs(Statement myStatement) {
-        String query = "select * from song";
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        String query = builder.build();
         return Executor.executeQuery(myStatement, query, allSongFields);
     }
 
@@ -34,7 +40,10 @@ public class BasicSearchQueries {
      * @return  A string array of all the genres.
      */
     public static String[] getGenres(Statement myStatement) {
-        String query = "select * from genre";
+        String[] fields = {"*"};
+        String[] tables = {"genre"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        String query = builder.build();
         return Executor.executeQuery(myStatement, query, allGenreFields);
     }
 
@@ -44,7 +53,10 @@ public class BasicSearchQueries {
      * @return  A string array of all the artists.
      */
     public static String[] getArtists(Statement myStatement) {
-        String query = "select * from artist";
+        String[] fields = {"*"};
+        String[] tables = {"artist"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        String query = builder.build();
         return Executor.executeQuery(myStatement, query, allArtistFields);
     }
 
@@ -57,7 +69,11 @@ public class BasicSearchQueries {
      * The function returns all of the songs from wanted year.
      */
     public static String[] getSongs(Statement myStatement, int year) {
-        String query = "select * from song where year=" + year;
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        builder = builder.addWhere().addEqualStatements("year", year);
+        String query = builder.build();
         return Executor.executeQuery(myStatement, query, allSongFields);
     }
 
@@ -71,7 +87,12 @@ public class BasicSearchQueries {
      * The function returns all of the songs between the given years.
      */
     public static String[] getSongs(Statement myStatement, int from, int to) {
-        String query = "select * from song where year between " + from + " and " + to;
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        builder = builder.addWhere().addBetweenStatements("year", from, to);
+        String query = builder.build();
+        //String query = "select * from song where year between " + from + " and " + to;
         return Executor.executeQuery(myStatement, query, allSongFields);
     }
 

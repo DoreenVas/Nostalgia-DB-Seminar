@@ -23,20 +23,19 @@ public class Model {
             // start connection to DBConnection
             Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", user, password);
 ////            // create a statement
-//            Statement myStatement = myConn.createStatement();
+            Statement myStatement = myConn.createStatement();
 ////            // execute query
 //            ResultSet myRes = myStatement.executeQuery("select * from song");
 
-            StatementHolder holder = new StatementHolder(myConn);
-            PreparedStatement statement = holder.get();
-            statement.setString(1, "name");
-            statement.setString(2, "barbie girl");
-            ResultSet myRes = statement.executeQuery();
+            String[] myRes = searchQueries.getSongs(myStatement, 1978, 1995);
+            for (String line : myRes) {
+                System.out.println(line);
+            }
 
             // process the result
-            while(myRes.next()) {
-                System.out.println(myRes.getString("name"));
-            }
+//            while(myRes.next()) {
+//                System.out.println(myRes.getString("name"));
+//            }
 //            myRes.close();
 //            myStatement.close();
             myConn.close();
@@ -44,11 +43,11 @@ public class Model {
             e.printStackTrace();
         }
 
-//        String[] res = BasicSearchQueries.getHotArtists(myStatement);
+//        String[] res = searchQueries.getHotArtists(myStatement);
 //        for (String line : res) {
 //            System.out.println(line);
 //        }
-//        res = BasicSearchQueries.getAlbumsTable(myStatement);
+//        res = searchQueries.getAlbumsTable(myStatement);
 //        for (String line : res) {
 //            System.out.println(line);
 //        }

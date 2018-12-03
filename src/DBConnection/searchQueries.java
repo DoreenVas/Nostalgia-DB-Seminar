@@ -1,7 +1,7 @@
 package DBConnection;
 import java.sql.Statement;
 
-public class BasicSearchQueries {
+public class searchQueries {
     private static String[] allSongFields = {"song_id", "name", "dencability", "duration", "tempo", "hotness",
             "loudness", "year", "words"};
     private static String[] allArtistFields = {"artist_id", "artist_name", "familiarity", "hotness"};
@@ -92,7 +92,6 @@ public class BasicSearchQueries {
         QueryBuilder builder = new QueryBuilder(fields, tables);
         builder = builder.addWhere().addBetweenStatements("year", from, to);
         String query = builder.build();
-        //String query = "select * from song where year between " + from + " and " + to;
         return Executor.executeQuery(myStatement, query, allSongFields);
     }
 
@@ -120,6 +119,168 @@ public class BasicSearchQueries {
 //    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
 //
 //    }
+
+
+
+
+
+
+
+
+
+    // get songs by artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by song length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by tempo
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, tempo, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, tempo, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, tempo, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, tempo, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, tempo, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, tempo
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, tempo
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by tempo, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by tempo, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // get songs by genre, popularity, tempo
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, popularity, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, tempo, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, tempo, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by genre, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, tempo, length
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by popularity, tempo, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+    // get songs by tempo, length, artist
+//    public static String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    }
+
+
+
+
+
+
+
+
 
 
     // !!! Irrelevant for now!!!

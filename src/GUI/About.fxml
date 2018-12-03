@@ -14,7 +14,7 @@
          <children>
             <ImageView fx:id="home" fitHeight="47.0" fitWidth="50.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="GUI\home.png" />
+                  <Image url="GUI\pic\home.png" />
                </image>
             </ImageView>
          </children>

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MenuController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MenuController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" text="Nostalgia" textAlignment="CENTER" />
-      <Button fx:id="about" onAction="#about" mnemonicParsing="false" text="About" />
-      <Button fx:id="start" onAction="#start" mnemonicParsing="false" text="Start" />
-      <Button fx:id="exit" onAction="#exit" mnemonicParsing="false" text="Exit" />
+      <Pane prefHeight="186.0" prefWidth="600.0" />
+      <Button fx:id="about" mnemonicParsing="false" onAction="#about" prefWidth="81.0" text="About">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+      <Button fx:id="start" mnemonicParsing="false" onAction="#start" prefWidth="81.0" text="Start">
+         <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </VBox.margin></Button>
+      <Button fx:id="exit" mnemonicParsing="false" onAction="#exit" prefWidth="81.0" text="Exit" />
    </children>
 </VBox>

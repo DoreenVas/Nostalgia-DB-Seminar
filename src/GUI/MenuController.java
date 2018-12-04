@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -37,8 +36,9 @@ public class MenuController {
     protected void start() {
         try {
             Stage stage = (Stage) start.getScene().getWindow();
-            GridPane root = (GridPane) FXMLLoader.load(getClass().getResource("Search.fxml"));
-            Scene scene = new Scene(root,600,400);
+            AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Search.fxml"));
+            Scene scene = new Scene(root,650,450);
+            scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();

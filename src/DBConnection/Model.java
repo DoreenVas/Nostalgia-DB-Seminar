@@ -2,7 +2,10 @@ package DBConnection;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
     private static String[] allSongFields = {"song_id", "name", "dencability", "duration", "tempo", "hotness",
@@ -13,46 +16,35 @@ public class Model {
 
     private Connection myConn;
     private Statement myStatement;
+    private String fileName, user, password;
 
-    public Model() {
+    public Model() throws IOException {
         BufferedReader br;
-        String user, password;
-        String fileName = "src/DBConnection/dbConnectionConfig";
-        try {
-            br = new BufferedReader(new FileReader(fileName));
-            user = br.readLine().replace("username: ", "");
-            password = br.readLine().replace("password: ", "");
-            br.close();
-        } catch (Exception e) {
-            System.out.println("File " + fileName + " not found");
-            return;
-        }
+        this.fileName = "src/DBConnection/dbConnectionConfig";
+        br = new BufferedReader(new FileReader(this.fileName));
+        user = br.readLine().replace("username: ", "");
+        password = br.readLine().replace("password: ", "");
+        br.close();
+    }
 
-        try {
-            // start connection to DBConnection
-            this.myConn = DriverManager.getConnection("jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", user, password);
-            // create a statement
-            this.myStatement = this.myConn.createStatement();
+    public void openConnection() throws SQLException {
+        // start connection to DBConnection
+        this.myConn = DriverManager.getConnection("jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", this.user, this.password);
+        // create a statement
+        this.myStatement = this.myConn.createStatement();
 ////            // execute query
 //            ResultSet myRes = myStatement.executeQuery("select * from song");
 
-            // process the result
+        // process the result
 //            while(myRes.next()) {
 //                System.out.println(myRes.getString("name"));
 //            }
-//            myRes.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//         myRes.close();
     }
 
-     public void closeConnection() {
-        try {
-            this.myStatement.close();
-            this.myConn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+     public void closeConnection() throws SQLException {
+        this.myStatement.close();
+        this.myConn.close();
      }
 
 //        String[] res = searchQueries.getHotArtists(myStatement);
@@ -64,48 +56,58 @@ public class Model {
 //            System.out.println(line);
 //        }
 
-    /**
-     * @return A string array of all the albums.
-     */
-    public String[] getAlbums() {
-        String[] fields = {"*"};
-        String[] tables = {"album"};
-        QueryBuilder builder = new QueryBuilder(fields, tables);
-        String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allAlbumFields);
+    private <T>boolean contains(T[] holder, T element) {
+        for (T item : holder) {
+            if(item.equals(element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String[] getFeilds(String table, String[] columns) {
+        String[] fields = null;
+        switch (table) {
+            case "song":
+                fields = allSongFields;
+                break;
+            case "artist":
+                fields =  allArtistFields;
+                break;
+            case "genre":
+                fields =  allGenreFields;
+                break;
+            case "album":
+                fields =  allAlbumFields;
+                break;
+        }
+        if(fields == null) {
+            return null;
+        }
+        if(columns.length > 1) {
+            for (String column : columns) {
+                if(!contains(fields, column)) {
+                    return null;
+                }
+            }
+        } else if(!columns[0].equals("*")) {
+            if(!contains(fields, columns[0])) {
+                return null;
+            }
+        }
+        return fields;
     }
 
     /**
-     * @return A string array of all the songs.
+     * @return A string array of all the given tables rows.
      */
-    public String[] getSongs() {
+    public String[] getTable(String table) {
         String[] fields = {"*"};
-        String[] tables = {"song"};
+        String[] tables = {table};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
-    }
-
-    /**
-     * @return A string array of all the genres.
-     */
-    public String[] getGenres() {
-        String[] fields = {"*"};
-        String[] tables = {"genre"};
-        QueryBuilder builder = new QueryBuilder(fields, tables);
-        String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allGenreFields);
-    }
-
-    /**
-     * @return A string array of all the artists.
-     */
-    public String[] getArtists() {
-        String[] fields = {"*"};
-        String[] tables = {"artist"};
-        QueryBuilder builder = new QueryBuilder(fields, tables);
-        String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allArtistFields);
+        fields = getFeilds(table, fields);
+        return Executor.executeQuery(this.myStatement, query, fields);
     }
 
     /**

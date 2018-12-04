@@ -3,10 +3,27 @@ package DBConnection;
 public class Test {
 
     public static void main(String[] args) {
-        Model model = new Model();
+        boolean connected = false;
+        Model model = null;
+        try {
+            model = new Model();
+        } catch (Exception e) {
+            // cannot read config file - need to give warning
+            e.printStackTrace();
+            return;
+        }
+
+        while(!connected) {
+            try {
+                model.openConnection();
+                connected = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         System.out.println("Getting all songs:");
-        String[] myRes = model.getSongs();
+        String[] myRes = model.getTable("song");
         for (String line : myRes) {
             System.out.println(line);
         }
@@ -25,6 +42,11 @@ public class Test {
             System.out.println(line);
         }
 
-        model.closeConnection();
+        try {
+            model.closeConnection();
+        } catch (Exception e) {
+            // error in closing resources
+            e.printStackTrace();
+        }
     }
 }

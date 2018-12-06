@@ -41,6 +41,15 @@ public class Test {
         for (String line : myRes) {
             System.out.println(line);
         }
+        System.out.println();
+
+        System.out.println("Getting songs 6 minutes long:");
+        DurationContainer durationContainer = new DurationContainer((float)5.91);
+        myRes = model.getSongs(durationContainer);
+        for (String line : myRes) {
+            System.out.println(line);
+        }
+        System.out.println();
 
         try {
             model.closeConnection();

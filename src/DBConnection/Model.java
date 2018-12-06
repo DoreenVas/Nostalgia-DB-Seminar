@@ -142,186 +142,198 @@ public class Model {
     }
 
     // NADAV
-    // gets a specific song's lyrics
-//    public String[] getSongs(Statement myStatement, String artistId, String songName) {
+//     gets a specific song's lyrics
+//    public String[] getSongs(ArtisitContainer artist, String songName) {
 //
 //    }
 
     // LITAL
     // gets songs by genre
-//   public String[] getSongs(Statement myStatement, String genre) {
+//    public String[] getSongs(GenreContainer genre) {
 //
 //    }
-
-    // DORIN
+    
     // gets popular songs by artist hotness and familiarity
-//   public String[] getSongs(Statement myStatement, float hotness, float familiarity) {
+//    public String[] getSongs(HotnessContainer hotness, float familiarity) {
 //
 //    }
 
-    // LITAL
     // gets popular songs by artist hotness and familiarity from specific genre
-//   public String[] getSongs(Statement myStatement, float hotness, float familiarity, String genre) {
+//   public String[] getSongs(float hotness, float familiarity, String genre) {
 //
 //    }
 
     // NADAV
     // get songs by song name
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//    public String[] getSongs(String songName) {
 //
 //    }
 
 
     //LITAL
     // get songs by artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//    public String[] getSongs(ArtisitContainer genreId) {
 //
 //    }
 
     // get songs by song length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
-//
-//    }
+    public String[] getSongs(DurationContainer duration) {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        float value = duration.getValue();
+        // get songs with given duration plus - minus an amount of time in relation to the given duration
+        float epsilon = value * (float)0.1;
+        builder.addWhere().addBetweenStatements("duration", Math.abs(value - epsilon), value + epsilon);
+        String query = builder.build();
+        return Executor.executeQuery(this.myStatement, query, allSongFields);
+    }
 
     // DORIN
     // get songs by tempo
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//    public String[] getSongs(String genreId) {
 //
 //    }
-
-    // NADAV
-    // get songs by genre, popularity, tempo, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by genre, popularity, tempo, length, artist
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
+//                             DurationContainer duration, ArtisitContainer artist) {
 //
 //    }
-
-    // get songs by popularity, tempo, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by popularity, tempo, length, artist
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration,
+//                             ArtisitContainer artist) {
 //
 //    }
-
-    // get songs by genre, tempo, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by genre, tempo, length, artist
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, DurationContainer duration,
+//                             ArtisitContainer artist) {
 //
 //    }
-
-    // NADAV
-    // get songs by genre, popularity, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by genre, popularity, length, artist
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, DurationContainer duration,
+//                             ArtisitContainer artist) {
 //
 //    }
-
-    //LITAL
-    // get songs by genre, popularity, tempo, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    //LITAL
+//    // get songs by genre, popularity, tempo, artist
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
+//                             ArtisitContainer artist) {
 //
 //    }
-
-    // DORIN
-    // get songs by genre, popularity, tempo, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // DORIN
+//    // get songs by genre, popularity, tempo, length
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
+//                             DurationContainer duration) {
 //
 //    }
-
-    // get songs by genre, popularity
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by genre, popularity
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity) {
 //
 //    }
-
-    // get songs by genre, tempo
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by genre, tempo
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo) {
 //
 //    }
-
-    // NADAV
-    // get songs by genre, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by genre, length
+//    public String[] getSongs(GenreContainer genre, DurationContainer duration) {
 //
 //    }
-
-    // NADAV
-    // get songs by genre, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by genre, artist
+//    public String[] getSongs(GenreContainer genre, ArtisitContainer artist) {
 //
 //    }
-
-    //LITAL
-    // get songs by popularity, tempo
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    //LITAL
+//    // get songs by popularity, tempo
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo) {
 //
 //    }
-
-    // get songs by popularity, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by popularity, length
+//    public String[] getSongs(PopularityContainer popularity, DurationContainer duration) {
 //
 //    }
-
-    // get songs by popularity, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by popularity, artist
+//    public String[] getSongs(PopularityContainer popularity, ArtisitContainer artist) {
 //
 //    }
-
-    // DORIN
-    // get songs by tempo, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // DORIN
+//    // get songs by tempo, length
+//    public String[] getSongs(TempoContainer tempo, DurationContainer duration) {
 //
 //    }
-
-    // LITAL
-    // get songs by tempo, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // LITAL
+//    // get songs by tempo, artist
+//    public String[] getSongs(TempoContainer tempo, ArtisitContainer artist) {
 //
 //    }
-
-
-    // get songs by genre, popularity, tempo
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//
+//    // get songs by genre, popularity, tempo
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo) {
 //
 //    }
-
-    // get songs by genre, popularity, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by genre, popularity, length
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, DurationContainer duration) {
 //
 //    }
-
-    // LITAL
-    // get songs by genre, popularity, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // LITAL
+//    // get songs by genre, popularity, artist
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, ArtisitContainer artist) {
 //
 //    }
-
-    // DORIN
-    // get songs by genre, tempo, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // DORIN
+//    // get songs by genre, tempo, length
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, DurationContainer duration) {
 //
 //    }
-
-    // NADAV
-    // get songs by genre, tempo, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by genre, tempo, artist
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, ArtisitContainer artist) {
 //
 //    }
-
-    // get songs by genre, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // get songs by genre, length, artist
+//    public String[] getSongs(GenreContainer genre, DurationContainer duration, ArtisitContainer artist) {
 //
 //    }
-
-    // LITAL
-    // get songs by popularity, tempo, length
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // LITAL
+//    // get songs by popularity, tempo, length
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration) {
 //
 //    }
-
-    // NADAV
-    // get songs by popularity, tempo, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // NADAV
+//    // get songs by popularity, tempo, artist
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, ArtisitContainer artist) {
 //
 //    }
-
-    // DORIN
-    // get songs by tempo, length, artist
-//    public String[] getSongs(Statement myStatement, String genreId /*or genreName*/) {
+//
+//    // DORIN
+//    // get songs by tempo, length, artist
+//    public String[] getSongs(TempoContainer tempo, DurationContainer duration, ArtisitContainer artist) {
 //
 //    }
 
@@ -332,7 +344,7 @@ public class Model {
      * @param myStatement The statement to use for query.
      * @return A string array of all the hot artists.
      */
-    /*public String[] getHotArtists(Statement myStatement, float familiarity) {
+    /*public String[] getHotArtists(float familiarity) {
         String query = "select * from artist where familiarity > " + familiarity;
         return Executor.executeQuery(myStatement, query, allArtistFields);
     }*/

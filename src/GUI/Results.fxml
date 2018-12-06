@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ResultsController">
+   <children>
+      <TableView layoutY="64.0" prefHeight="336.0" prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" />
+      <TextArea layoutX="190.0" layoutY="14.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="220.0" text="Displaying search results">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Blend />
+         </effect>
+      </TextArea>
+      <ScrollBar layoutX="579.0" layoutY="62.0" orientation="VERTICAL" prefHeight="336.0" prefWidth="14.0" />
+   </children>
+</AnchorPane>

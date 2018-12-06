@@ -47,13 +47,21 @@ public class SearchController {
 
     @FXML
     protected void rb1Clicked() {
-        rb2.disableProperty();
-        birthYear.disableProperty();
-        age.disableProperty();
+//        rb2.disableProperty();
+//        birthYear.disableProperty();
+//        age.disableProperty();
+
+        birthYear.setDisable(true);
+        age.setDisable(true);
+        era.setDisable(false);
     }
 
     @FXML
     protected void rb2Clicked() {
-        rb1.disableProperty();
+//        rb1.disableProperty();
+
+        era.setDisable(true);
+        birthYear.setDisable(false);
+        age.setDisable(false);
     }
 }

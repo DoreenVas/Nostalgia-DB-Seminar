@@ -17,20 +17,8 @@ class QueryBuilder {
     QueryBuilder(String[] fields, String[] tables) {
         // initialize builder
         this.query = new StringBuilder();
-        // start select statement
-        this.query.append("select ");
-        // append all of the wanted fields
-        for (int i = 0; i < fields.length - 1; i++) {
-            this.query.append(fields[i]).append(", ");
-        }
-        this.query.append(fields[fields.length - 1]).append(" ");
-        // add from statement and append all wanted tables
-        this.query.append("from ");
-        for (int i = 0; i < tables.length - 1; i++) {
-            this.query.append(tables[i]).append(", ");
-        }
-        this.query.append(tables[tables.length - 1]);
-
+        addSelect(fields);
+        addFrom(tables);
         // set condition and statement insertions as false
         this.conditionInserted = false;
         this.statementAdded = false;
@@ -42,6 +30,27 @@ class QueryBuilder {
      */
     String build() {
         return this.query.append(";").toString();
+    }
+
+    QueryBuilder addSelect(String[] fields) {
+        // start select statement
+        this.query.append("select ");
+        // append all of the wanted fields
+        for (int i = 0; i < fields.length - 1; i++) {
+            this.query.append(fields[i]).append(", ");
+        }
+        this.query.append(fields[fields.length - 1]).append(" ");
+        return this;
+    }
+
+    QueryBuilder addFrom(String[] tables) {
+        // add from statement and append all wanted tables
+        this.query.append("from ");
+        for (int i = 0; i < tables.length - 1; i++) {
+            this.query.append(tables[i]).append(", ");
+        }
+        this.query.append(tables[tables.length - 1]);
+        return this;
     }
 
     /**

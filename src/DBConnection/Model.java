@@ -49,12 +49,12 @@ public class Model {
     }
 
     public void closeConnection() throws DBConnectionException {
-    try {
-        this.myStatement.close();
-        this.myConn.close();
-    } catch (Exception e) {
-        throw new DBConnectionException("Failed to close the connection to the Database.", e);
-    }
+        try {
+            this.myStatement.close();
+            this.myConn.close();
+        } catch (Exception e) {
+            throw new DBConnectionException("Failed to close the connection to the Database.", e);
+        }
     }
 
 //        String[] res = searchQueries.getHotArtists(myStatement);

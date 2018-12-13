@@ -1,8 +1,9 @@
 package DBConnection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Executor {
+class Executor {
 
     /**
      *
@@ -13,7 +14,7 @@ public class Executor {
      *
      * Executes given query and returns an array of all the lines of the result.
      */
-    public static String[] executeQuery(Statement myStatement, String query, String[] columns) {
+    static String[] executeQuery(Statement myStatement, String query, String[] columns) throws SQLException {
         // initialize builder
         StringBuilder builder = new StringBuilder();
         try {
@@ -32,7 +33,7 @@ public class Executor {
             // close result
             myRes.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new SQLException("Failed to execute a query.", e);
         }
         // return all result lines as array
         return builder.toString().split("\n");

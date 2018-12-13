@@ -1,14 +1,14 @@
 package DBConnection;
 
+import Resources.DBConnectionException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Model {
-    private static String[] allSongFields = {"song_id", "name", "dencability", "duration", "tempo", "hotness",
+    private static String[] allSongFields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
             "loudness", "year", "words"};
     private static String[] allArtistFields = {"artist_id", "artist_name", "familiarity", "hotness"};
     private static String[] allGenreFields = {"genre_id", "genre_name"};
@@ -16,22 +16,28 @@ public class Model {
 
     private Connection myConn;
     private Statement myStatement;
-    private String fileName, user, password;
+    private String url, user, password;
 
     public Model() throws IOException {
         BufferedReader br;
-        this.fileName = "src/DBConnection/dbConnectionConfig";
-        br = new BufferedReader(new FileReader(this.fileName));
-        user = br.readLine().replace("username: ", "");
-        password = br.readLine().replace("password: ", "");
+        String fileName = "src/DBConnection/dbConnectionConfig";
+        br = new BufferedReader(new FileReader(fileName));
+        // get needed parameters for connection to DB from file
+        this.url = br.readLine().replace("url: ", "");
+        this.user = br.readLine().replace("username: ", "");
+        this.password = br.readLine().replace("password: ", "");
         br.close();
     }
 
-    public void openConnection() throws SQLException {
-        // start connection to DBConnection
-        this.myConn = DriverManager.getConnection("jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", this.user, this.password);
-        // create a statement
-        this.myStatement = this.myConn.createStatement();
+    public void openConnection() throws DBConnectionException {
+        try {
+            // start connection to DBConnection
+            this.myConn = DriverManager.getConnection(this.url /*"jdbc:mysql://localhost/seminardb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"*/, this.user, this.password);
+            // create a statement
+            this.myStatement = this.myConn.createStatement();
+        } catch (Exception e) {
+            throw new DBConnectionException("Failed to open a connection to the Database.", e);
+        }
 ////            // execute query
 //            ResultSet myRes = myStatement.executeQuery("select * from song");
 
@@ -42,10 +48,14 @@ public class Model {
 //         myRes.close();
     }
 
-     public void closeConnection() throws SQLException {
+    public void closeConnection() throws DBConnectionException {
+    try {
         this.myStatement.close();
         this.myConn.close();
-     }
+    } catch (Exception e) {
+        throw new DBConnectionException("Failed to close the connection to the Database.", e);
+    }
+    }
 
 //        String[] res = searchQueries.getHotArtists(myStatement);
 //        for (String line : res) {
@@ -65,7 +75,7 @@ public class Model {
         return false;
     }
 
-    private String[] getFeilds(String table, String[] columns) {
+    private String[] getFields(String table, String[] columns) {
         String[] fields = null;
         switch (table) {
             case "song":
@@ -101,12 +111,12 @@ public class Model {
     /**
      * @return A string array of all the given tables rows.
      */
-    public String[] getTable(String table) {
+    public String[] getTable(String table) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {table};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         String query = builder.build();
-        fields = getFeilds(table, fields);
+        fields = getFields(table, fields);
         return Executor.executeQuery(this.myStatement, query, fields);
     }
 
@@ -116,7 +126,7 @@ public class Model {
      * <p>
      * The function returns all of the songs from wanted year.
      */
-    public String[] getSongs(int year) {
+    public String[] getSongs(int year) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -132,7 +142,7 @@ public class Model {
      * <p>
      * The function returns all of the songs between the given years.
      */
-    public String[] getSongs(int from, int to) {
+    public String[] getSongs(int from, int to) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -143,41 +153,41 @@ public class Model {
 
     // NADAV
 //     gets a specific song's lyrics
-//    public String[] getSongs(ArtisitContainer artist, String songName) {
+//    public String[] getSongs(ArtisitContainer artist, String songName) throws SQLException {
 //
 //    }
 
     // LITAL
     // gets songs by genre
-//    public String[] getSongs(GenreContainer genre) {
+//    public String[] getSongs(GenreContainer genre) throws SQLException {
 //
 //    }
     
     // gets popular songs by artist hotness and familiarity
-//    public String[] getSongs(HotnessContainer hotness, float familiarity) {
+//    public String[] getSongs(HotnessContainer hotness, float familiarity) throws SQLException {
 //
 //    }
 
     // gets popular songs by artist hotness and familiarity from specific genre
-//   public String[] getSongs(float hotness, float familiarity, String genre) {
+//   public String[] getSongs(float hotness, float familiarity, String genre) throws SQLException {
 //
 //    }
 
     // NADAV
     // get songs by song name
-//    public String[] getSongs(String songName) {
+//    public String[] getSongs(String songName) throws SQLException {
 //
 //    }
 
 
     //LITAL
     // get songs by artist
-//    public String[] getSongs(ArtisitContainer genreId) {
+//    public String[] getSongs(ArtisitContainer genreId) throws SQLException {
 //
 //    }
 
     // get songs by song length
-    public String[] getSongs(DurationContainer duration) {
+    public String[] getSongs(DurationContainer duration) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -191,149 +201,149 @@ public class Model {
 
     // DORIN
     // get songs by tempo
-//    public String[] getSongs(String genreId) {
+//    public String[] getSongs(String genreId) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by genre, popularity, tempo, length, artist
 //    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
-//                             DurationContainer duration, ArtisitContainer artist) {
+//                             DurationContainer duration, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // get songs by popularity, tempo, length, artist
 //    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration,
-//                             ArtisitContainer artist) {
+//                             ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // get songs by genre, tempo, length, artist
 //    public String[] getSongs(GenreContainer genre, TempoContainer tempo, DurationContainer duration,
-//                             ArtisitContainer artist) {
+//                             ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by genre, popularity, length, artist
 //    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, DurationContainer duration,
-//                             ArtisitContainer artist) {
+//                             ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    //LITAL
 //    // get songs by genre, popularity, tempo, artist
 //    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
-//                             ArtisitContainer artist) {
+//                             ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // DORIN
 //    // get songs by genre, popularity, tempo, length
 //    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
-//                             DurationContainer duration) {
+//                             DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // get songs by genre, popularity
-//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity) {
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity) throws SQLException {
 //
 //    }
 //
 //    // get songs by genre, tempo
-//    public String[] getSongs(GenreContainer genre, TempoContainer tempo) {
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by genre, length
-//    public String[] getSongs(GenreContainer genre, DurationContainer duration) {
+//    public String[] getSongs(GenreContainer genre, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by genre, artist
-//    public String[] getSongs(GenreContainer genre, ArtisitContainer artist) {
+//    public String[] getSongs(GenreContainer genre, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    //LITAL
 //    // get songs by popularity, tempo
-//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo) {
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo) throws SQLException {
 //
 //    }
 //
 //    // get songs by popularity, length
-//    public String[] getSongs(PopularityContainer popularity, DurationContainer duration) {
+//    public String[] getSongs(PopularityContainer popularity, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // get songs by popularity, artist
-//    public String[] getSongs(PopularityContainer popularity, ArtisitContainer artist) {
+//    public String[] getSongs(PopularityContainer popularity, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // DORIN
 //    // get songs by tempo, length
-//    public String[] getSongs(TempoContainer tempo, DurationContainer duration) {
+//    public String[] getSongs(TempoContainer tempo, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // LITAL
 //    // get songs by tempo, artist
-//    public String[] getSongs(TempoContainer tempo, ArtisitContainer artist) {
+//    public String[] getSongs(TempoContainer tempo, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //
 //    // get songs by genre, popularity, tempo
-//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo) {
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo) throws SQLException {
 //
 //    }
 //
 //    // get songs by genre, popularity, length
-//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, DurationContainer duration) {
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // LITAL
 //    // get songs by genre, popularity, artist
-//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, ArtisitContainer artist) {
+//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // DORIN
 //    // get songs by genre, tempo, length
-//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, DurationContainer duration) {
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by genre, tempo, artist
-//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, ArtisitContainer artist) {
+//    public String[] getSongs(GenreContainer genre, TempoContainer tempo, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // get songs by genre, length, artist
-//    public String[] getSongs(GenreContainer genre, DurationContainer duration, ArtisitContainer artist) {
+//    public String[] getSongs(GenreContainer genre, DurationContainer duration, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // LITAL
 //    // get songs by popularity, tempo, length
-//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration) {
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration) throws SQLException {
 //
 //    }
 //
 //    // NADAV
 //    // get songs by popularity, tempo, artist
-//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, ArtisitContainer artist) {
+//    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, ArtisitContainer artist) throws SQLException {
 //
 //    }
 //
 //    // DORIN
 //    // get songs by tempo, length, artist
-//    public String[] getSongs(TempoContainer tempo, DurationContainer duration, ArtisitContainer artist) {
+//    public String[] getSongs(TempoContainer tempo, DurationContainer duration, ArtisitContainer artist) throws SQLException {
 //
 //    }
 

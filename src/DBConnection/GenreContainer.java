@@ -1,15 +1,15 @@
 package DBConnection;
 
-public class GenreContainer implements Container<String> {
+public class GenreContainer implements Container<String[]> {
 
-    private String genre;
+    private String[] genre;
 
-    public GenreContainer(String genre) {
+    public GenreContainer(String[] genre) {
         this.genre = genre;
     }
 
     @Override
-    public String getValue() {
+    public String[] getValue() {
         return this.genre;
     }
 }

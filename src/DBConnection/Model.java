@@ -151,17 +151,65 @@ public class Model {
         return Executor.executeQuery(this.myStatement, query, allSongFields);
     }
 
+    // gets a specific song's lyrics by song name
+    public String[] getLyrics(String songName) throws SQLException {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
+        String query = builder.build();
+        String[] columns = {"words"};
+        return Executor.executeQuery(this.myStatement, query, columns);
+    }
+
     // NADAV
-//     gets a specific song's lyrics
+    // gets a specific song's lyrics
 //    public String[] getSongs(ArtisitContainer artist, String songName) throws SQLException {
 //
 //    }
 
-    // LITAL
     // gets songs by genre
-//    public String[] getSongs(GenreContainer genre) throws SQLException {
-//
-//    }
+    public String[] getSongs(GenreContainer genre) throws SQLException {
+
+        // needs checking!!!
+
+        // original, only one genre
+//        String query = "select * from song, " +
+//                "(select distinct song_id from album_song, " +
+//                "(select album_id from artist_album, " +
+//                "(select artist_id from artist_genre, " +
+//                "(select genre_id from genre " +
+//                "where genre_name=\"" + genre.getValue()[0] + "\") as ID " +
+//                "where artist_genre.genre_id=ID.genre_id) as AID " +
+//                "where AID.artist_id=artist_album.artist_id) as RES " +
+//                "where RES.album_id=album_song.album_id) as SID " +
+//                "where SID.song_id=song.song_id";
+
+        StringBuilder query = new StringBuilder("select * from song, " +
+                "(select distinct song_id from album_song, " +
+                "(select album_id from artist_album, " +
+                "(select artist_id from artist_genre, " +
+                "(select genre_id from genre " +
+                "where ");
+        String genres[] = genre.getValue();
+        for (int i = 0; i < genres.length - 1; i++) {
+            query.append("genre_name=\"").append(genres[i]).append("\" or ");
+        }
+        query.append("genre_name=\"").append(genres[genres.length - 1]).append("\"");
+        query.append(") as ID " +
+                "where artist_genre.genre_id=ID.genre_id) as AID " +
+                "where AID.artist_id=artist_album.artist_id) as RES " +
+                "where RES.album_id=album_song.album_id) as SID " +
+                "where SID.song_id=song.song_id");
+
+        // was testing
+//        String query2 = "select * from song, album_song, artist_album, artist_genre, genre " +
+//                "where genre.genre_name=\"" + genre.getValue()[0] + "\" and artist_genre.genre_id=genre.genre_id " +
+//                "and artist_genre.artist_id=artist_album.artist_id " +
+//                "and artist_album.album_id=album_song.album_id " +
+//                "and album_song.song_id=song.song_id";
+        return Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
+    }
     
     // gets popular songs by artist hotness and familiarity
 //    public String[] getSongs(HotnessContainer hotness, float familiarity) throws SQLException {
@@ -173,18 +221,25 @@ public class Model {
 //
 //    }
 
-    // NADAV
     // get songs by song name
-//    public String[] getSongs(String songName) throws SQLException {
-//
-//    }
+    public String[] getSongs(String songName) throws SQLException {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
+        String query = builder.build();
+        return Executor.executeQuery(this.myStatement, query, allSongFields);
+    }
 
-
-    //LITAL
     // get songs by artist
-//    public String[] getSongs(ArtisitContainer genreId) throws SQLException {
-//
-//    }
+    public String[] getSongs(ArtisitContainer artisitContainer) throws SQLException {
+        String query = "select * from song, album_song, artist_album, artist " +
+                "where artist.artist_name=\"" + artisitContainer.getValue() + "\" " +
+                "and artist.artist_id=artist_album.artist_id " +
+                "and artist_album.album_id=album_song.album_id " +
+                "and album_song.song_id=song.song_id";
+        return Executor.executeQuery(this.myStatement, query, allSongFields);
+    }
 
     // get songs by song length
     public String[] getSongs(DurationContainer duration) throws SQLException {

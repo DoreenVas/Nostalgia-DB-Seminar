@@ -4,8 +4,8 @@ public class ArtisitContainer implements Container<String> {
 
     private String artist;
 
-    public ArtisitContainer(String genre) {
-        this.artist = genre;
+    public ArtisitContainer(String artist) {
+        this.artist = artist;
     }
 
     @Override

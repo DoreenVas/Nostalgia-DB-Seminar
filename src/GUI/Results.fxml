@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ResultsController">
    <children>
-      <TableView fx:id="results" layoutY="64.0" prefHeight="336.0" prefWidth="574.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" />
+      <TableView fx:id="results" layoutY="64.0" prefHeight="303.0" prefWidth="574.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="26.0" />
       <TextArea layoutX="366.0" layoutY="15.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="220.0" text="Displaying search results">
          <font>
             <Font size="18.0" />
@@ -25,5 +25,8 @@
       <TextArea fx:id="column" layoutX="102.0" layoutY="17.0" prefHeight="37.0" prefWidth="66.0" />
       <TextArea fx:id="surname" layoutX="303.0" layoutY="17.0" prefHeight="38.0" prefWidth="54.0" />
       <TextArea fx:id="name" layoutX="246.0" layoutY="17.0" prefHeight="38.0" prefWidth="54.0" />
+      <Button layoutX="304.0" layoutY="367.0" mnemonicParsing="false" text="-&gt;" />
+      <Button layoutX="241.0" layoutY="367.0" mnemonicParsing="false" text="&lt;-" />
+      <Button layoutX="83.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAll" text="clear" />
    </children>
 </AnchorPane>

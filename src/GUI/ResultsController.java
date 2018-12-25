@@ -26,6 +26,11 @@ public class ResultsController {
     }
 
     @FXML
+    protected void clearAll() {
+        this.results.getItems().clear();
+    }
+
+    @FXML
     protected void addColumn() {
 //        TableColumn<Person, String> nameColumn = new TableColumn<>("Name");
 //        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));

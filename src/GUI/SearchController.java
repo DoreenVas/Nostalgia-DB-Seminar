@@ -2,6 +2,7 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
@@ -47,13 +48,19 @@ public class SearchController {
 
     @FXML
     protected void rb1Clicked() {
-        rb2.disableProperty();
-        birthYear.disableProperty();
-        age.disableProperty();
+        // makes radio button able to select only if radio button is clicked
+        rb2.setPickOnBounds(false);
+        birthYear.setDisable(true);
+        age.setDisable(true);
+        era.setDisable(false);
     }
 
     @FXML
     protected void rb2Clicked() {
-        rb1.disableProperty();
+        // makes radio button able to select only if radio button is clicked
+        rb1.setPickOnBounds(false);
+        era.setDisable(true);
+        birthYear.setDisable(false);
+        age.setDisable(false);
     }
 }

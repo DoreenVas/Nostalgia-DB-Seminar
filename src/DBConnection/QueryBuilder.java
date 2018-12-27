@@ -1,6 +1,6 @@
 package DBConnection;
 
-public class QueryBuilder {
+class QueryBuilder {
 
     // the query builder
     private StringBuilder query;
@@ -14,23 +14,11 @@ public class QueryBuilder {
      * @param fields wanted fields to get from tables
      * @param tables wanted tables to get information from
      */
-    public QueryBuilder(String[] fields, String[] tables) {
+    QueryBuilder(String[] fields, String[] tables) {
         // initialize builder
         this.query = new StringBuilder();
-        // start select statement
-        this.query.append("select ");
-        // append all of the wanted fields
-        for (int i = 0; i < fields.length - 1; i++) {
-            this.query.append(fields[i]).append(", ");
-        }
-        this.query.append(fields[fields.length - 1]).append(" ");
-        // add from statement and append all wanted tables
-        this.query.append("from ");
-        for (int i = 0; i < tables.length - 1; i++) {
-            this.query.append(tables[i]).append(", ");
-        }
-        this.query.append(tables[tables.length - 1]);
-
+        addSelect(fields);
+        addFrom(tables);
         // set condition and statement insertions as false
         this.conditionInserted = false;
         this.statementAdded = false;
@@ -40,8 +28,29 @@ public class QueryBuilder {
      *
      * @return The string representation of the query
      */
-    public String build() {
+    String build() {
         return this.query.append(";").toString();
+    }
+
+    QueryBuilder addSelect(String[] fields) {
+        // start select statement
+        this.query.append("select ");
+        // append all of the wanted fields
+        for (int i = 0; i < fields.length - 1; i++) {
+            this.query.append(fields[i]).append(", ");
+        }
+        this.query.append(fields[fields.length - 1]).append(" ");
+        return this;
+    }
+
+    QueryBuilder addFrom(String[] tables) {
+        // add from statement and append all wanted tables
+        this.query.append("from ");
+        for (int i = 0; i < tables.length - 1; i++) {
+            this.query.append(tables[i]).append(", ");
+        }
+        this.query.append(tables[tables.length - 1]);
+        return this;
     }
 
     /**
@@ -65,7 +74,7 @@ public class QueryBuilder {
      *
      * adds where to query
      */
-    public QueryBuilder addWhere() {
+    QueryBuilder addWhere() {
         checkCondition("where");
         return this;
     }
@@ -76,7 +85,7 @@ public class QueryBuilder {
      *
      * adds having to query
      */
-    public QueryBuilder addHaving() {
+    QueryBuilder addHaving() {
         checkCondition("having");
         return this;
     }
@@ -101,7 +110,7 @@ public class QueryBuilder {
      * @param <T> the type to use for between
      * @return the builder
      */
-    public <T>QueryBuilder addBetweenStatements(String field, T from, T to) {
+    <T>QueryBuilder addBetweenStatements(String field, T from, T to) {
         checkStatement();
         this.query.append(" ").append(field).append(" between ").append(from).append(" and ").append(to);
         this.statementAdded = true;
@@ -115,7 +124,7 @@ public class QueryBuilder {
      * @param <T> the type to use for is
      * @return the builder
      */
-    public <T>QueryBuilder addIsStatements(String field, T val) {
+    <T>QueryBuilder addIsStatements(String field, T val) {
         checkStatement();
         this.query.append(" ").append(field).append(" is ").append(val);
         this.statementAdded = true;
@@ -129,7 +138,7 @@ public class QueryBuilder {
      * @param <T> the type to use for like
      * @return the builder
      */
-    public <T>QueryBuilder addLikeStatements(String field, T val) {
+    <T>QueryBuilder addLikeStatements(String field, T val) {
         checkStatement();
         this.query.append(" ").append(field).append(" like ").append(val);
         this.statementAdded = true;
@@ -142,7 +151,7 @@ public class QueryBuilder {
      *
      * adds "or" to query
      */
-    public QueryBuilder addOr() {
+    QueryBuilder addOr() {
         checkStatement();
         this.query.append(" or");
         this.statementAdded = true;
@@ -158,7 +167,7 @@ public class QueryBuilder {
      *
      * adds a full or statement
      */
-    public <T>QueryBuilder addOr(String leftStatement, String rightStatement) {
+    <T>QueryBuilder addOr(String leftStatement, String rightStatement) {
         checkStatement();
         this.query.append(" ").append(leftStatement).append(" or ").append(rightStatement);
         this.statementAdded = true;
@@ -173,7 +182,7 @@ public class QueryBuilder {
      *
      * adds an order by statement
      */
-    public QueryBuilder addOrderBy(String field, String ascOrDec) {
+    QueryBuilder addOrderBy(String field, String ascOrDec) {
         checkStatement();
         this.query.append(" order by ").append(field).append(" ").append(ascOrDec);
         this.statementAdded = true;
@@ -189,7 +198,7 @@ public class QueryBuilder {
      *
      * adds a full equals statement
      */
-    public <T>QueryBuilder addEqualStatements(String field, T value) {
+    <T>QueryBuilder addEqualStatements(String field, T value) {
         checkStatement();
         this.query.append(" ").append(field).append("=").append(value);
         this.statementAdded = true;
@@ -205,7 +214,7 @@ public class QueryBuilder {
      *
      * adds a full not equals statement
      */
-    public <T>QueryBuilder addNotEqualStatements(String field, T value) {
+    <T>QueryBuilder addNotEqualStatements(String field, T value) {
         checkStatement();
         this.query.append(" ").append(field).append("<>").append(value);
         this.statementAdded = true;
@@ -221,7 +230,7 @@ public class QueryBuilder {
      *
      * adds a full bigger than statement
      */
-    public <T>QueryBuilder addBiggerThanStatements(String field, T value) {
+    <T>QueryBuilder addBiggerThanStatements(String field, T value) {
         checkStatement();
         this.query.append(" ").append(field).append(">=").append(value);
         this.statementAdded = true;
@@ -237,7 +246,7 @@ public class QueryBuilder {
      *
      * adds a full smaller than statement
      */
-    public <T>QueryBuilder addSmallerThanStatements(String field, T value) {
+    <T>QueryBuilder addSmallerThanStatements(String field, T value) {
         checkStatement();
         this.query.append(" ").append(field).append("<=").append(value);
         this.statementAdded = true;
@@ -257,31 +266,31 @@ public class QueryBuilder {
         this.query.append(".").append(field).append(" = ").append(secondTable).append(".").append(field);
     }
 
-    public QueryBuilder addInnerJoinOnEqual(String firstTable, String secondTable, String field) {
+    QueryBuilder addInnerJoinOnEqual(String firstTable, String secondTable, String field) {
         this.query.append(" inner join ");
         joinAddOn(firstTable, secondTable, field);
         return this;
     }
 
-    public QueryBuilder addOuterJoinOnEqual(String table, String firstTable, String secondTable, String field) {
+    QueryBuilder addOuterJoinOnEqual(String table, String firstTable, String secondTable, String field) {
         this.query.append(" outer join ");
         joinAddOn(firstTable, secondTable, field);
         return this;
     }
 
-    public QueryBuilder addLeftJoinOnEqual(String table, String firstTable, String secondTable, String field) {
+    QueryBuilder addLeftJoinOnEqual(String table, String firstTable, String secondTable, String field) {
         this.query.append(" left join ");
         joinAddOn(firstTable, secondTable, field);
         return this;
     }
 
-    public QueryBuilder addRightJoinOnEqual(String table, String firstTable, String secondTable, String field) {
+    QueryBuilder addRightJoinOnEqual(String table, String firstTable, String secondTable, String field) {
         this.query.append(" right join ");
         joinAddOn(firstTable, secondTable, field);
         return this;
     }
 
-    public QueryBuilder addFullJoinOnEqual(String table, String firstTable, String secondTable, String field) {
+    QueryBuilder addFullJoinOnEqual(String table, String firstTable, String secondTable, String field) {
         this.query.append(" full join ");
         joinAddOn(firstTable, secondTable, field);
         return this;
@@ -294,7 +303,7 @@ public class QueryBuilder {
      *
      * adds a full group by statement
      */
-    public QueryBuilder addGroupBy(String field) {
+    QueryBuilder addGroupBy(String field) {
         this.query.append(" group by ").append(field);
         return this;
     }

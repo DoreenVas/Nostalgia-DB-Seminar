@@ -151,23 +151,6 @@ public class Model {
         return Executor.executeQuery(this.myStatement, query, allSongFields);
     }
 
-    // gets a specific song's lyrics by song name
-    public String[] getLyrics(String songName) throws SQLException {
-        String[] fields = {"*"};
-        String[] tables = {"song"};
-        QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
-        String query = builder.build();
-        String[] columns = {"words"};
-        return Executor.executeQuery(this.myStatement, query, columns);
-    }
-
-    // NADAV
-    // gets a specific song's lyrics
-//    public String[] getSongs(ArtisitContainer artist, String songName) throws SQLException {
-//
-//    }
-
     // gets songs by genre
     public String[] getSongs(GenreContainer genre) throws SQLException {
 
@@ -210,7 +193,42 @@ public class Model {
 //                "and album_song.song_id=song.song_id";
         return Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
     }
-    
+
+    public String[] getLyrics(String songName) throws SQLException {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
+        String query = builder.build();
+        String[] columns = {"words"};
+        return Executor.executeQuery(this.myStatement, query, columns);
+    }
+
+    /**
+     *
+     * @param popularity the wanted popularity of the songs
+     * @return all of the songs that are about as popular as given
+     */
+//    public String[] getSongs(PopularityContainer popularity) {
+//
+//    }
+
+    /**
+     *
+     * @param tempo the wanted tempo of the songs
+     * @return all of the songs that have a tempo as a function of the tempo
+     */
+//    public String[] getSongs(TempoContainer tempo) {
+//
+//    }
+
+    // gets a specific song's lyrics by song name
+    // NADAV
+    // gets a specific song's lyrics
+//    public String[] getSongs(ArtisitContainer artist, String songName) throws SQLException {
+//
+//    }
+
     // gets popular songs by artist hotness and familiarity
 //    public String[] getSongs(HotnessContainer hotness, float familiarity) throws SQLException {
 //
@@ -249,16 +267,10 @@ public class Model {
         float value = duration.getValue();
         // get songs with given duration plus - minus an amount of time in relation to the given duration
         float epsilon = value * (float)0.1;
-        builder.addWhere().addBetweenStatements("duration", Math.abs(value - epsilon), value + epsilon);
+        builder.addWhere().addBetweenStatements("duration", value - epsilon, value + epsilon);
         String query = builder.build();
         return Executor.executeQuery(this.myStatement, query, allSongFields);
     }
-
-    // DOREEN
-    // get songs by tempo
-//    public String[] getSongs(String genreId) throws SQLException {
-//
-//    }
 //
 //    // NADAV
 //    // get songs by genre, popularity, tempo, length, artist
@@ -406,7 +418,6 @@ public class Model {
     // !!! Irrelevant for now!!!
     /**
      *
-     * @param myStatement The statement to use for query.
      * @return A string array of all the hot artists.
      */
     /*public String[] getHotArtists(float familiarity) {
@@ -414,4 +425,13 @@ public class Model {
         return Executor.executeQuery(myStatement, query, allArtistFields);
     }*/
     // !!! do not touch !!!
+
+    /**
+     *
+     * @param artist the wanted artists name
+     * @return the given artists info
+     */
+//    public String[] getArtists(ArtisitContainer artist) {
+//
+//    }
 }

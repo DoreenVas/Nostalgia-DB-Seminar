@@ -307,4 +307,11 @@ class QueryBuilder {
         this.query.append(" group by ").append(field);
         return this;
     }
+
+    String addCount(String query) {
+        this.query.delete(0, this.query.length());
+        this.query.append("select count(*) from (");
+        this.query.append(query).append(")");
+        return build();
+    }
 }

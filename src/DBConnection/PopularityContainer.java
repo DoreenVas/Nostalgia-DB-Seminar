@@ -1,15 +1,15 @@
 package DBConnection;
 
-public class PopularityContainer implements Container<Float> {
+public class PopularityContainer implements Container<Double> {
 
-    private float genre;
+    private double popularity;
 
-    public PopularityContainer(float genre) {
-        this.genre = genre;
+    public PopularityContainer(double popularity) {
+        this.popularity = popularity;
     }
 
     @Override
-    public Float getValue() {
-        return this.genre;
+    public Double getValue() {
+        return this.popularity;
     }
 }

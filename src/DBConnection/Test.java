@@ -87,8 +87,8 @@ public class Test {
 //            System.out.println();
 //
 //            System.out.println("Getting songs of an artist");
-//            ArtisitContainer artisitContainer = new ArtisitContainer("Britney Spears");
-//            myRes = model.getSongs(artisitContainer);
+//            ArtistContainer ArtistContainer = new ArtistContainer("Britney Spears");
+//            myRes = model.getSongs(ArtistContainer);
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }
@@ -102,6 +102,40 @@ public class Test {
 //            }
 //            System.out.println(myRes.getCount());
 //            System.out.println();
+//
+//            System.out.println("Getting songs by hotness:");
+//            myRes = model.getSongs(new PopularityContainer(0.004));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+//
+//            System.out.println("Getting artist by name:");
+//            myRes = model.getArtists(new ArtistContainer("aerosmith"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+//            System.out.println("Getting song by artist name and genre:");
+//            String[] genre = {"rock", "disco", "rap"};
+//            myRes = model.getSongs(new GenreContainer(genre), new ArtistContainer("Ross"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+            System.out.println("Getting song by genre name and duration:");
+            String[] genre = {"rock", "disco", "rap"};
+            myRes = model.getSongs(new GenreContainer(genre), new DurationContainer(120));
+            for (String line : myRes.getData()) {
+                System.out.println(line);
+            }
+            System.out.println(myRes.getCount());
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }

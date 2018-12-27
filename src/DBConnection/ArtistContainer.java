@@ -1,10 +1,10 @@
 package DBConnection;
 
-public class ArtisitContainer implements Container<String> {
+public class ArtistContainer implements Container<String> {
 
     private String artist;
 
-    public ArtisitContainer(String artist) {
+    public ArtistContainer(String artist) {
         this.artist = artist;
     }
 

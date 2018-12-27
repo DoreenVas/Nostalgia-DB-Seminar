@@ -53,7 +53,7 @@ public class ResultsController {
     protected void addRow() {
         ArrayList<String> fields = new ArrayList<>();
         String[] fieldsList = {"name", "dancibility", "duration", "tempo", "hotness",
-                "loudness", "year", "words"};
+                "loudness", "year"};
 
         for(String item : fieldsList) {
             fields.add(item);

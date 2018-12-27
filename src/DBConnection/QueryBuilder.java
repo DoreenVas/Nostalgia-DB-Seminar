@@ -308,10 +308,11 @@ class QueryBuilder {
         return this;
     }
 
-    String addCount(String query) {
+    String addCount(String queryStr) {
         this.query.delete(0, this.query.length());
+        queryStr = queryStr.replace(";", "");
         this.query.append("select count(*) from (");
-        this.query.append(query).append(")");
+        this.query.append(queryStr).append(") as temp");
         return build();
     }
 }

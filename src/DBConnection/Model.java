@@ -1,6 +1,7 @@
 package DBConnection;
 
 import Resources.DBConnectionException;
+import Resources.DataContainer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,7 +10,7 @@ import java.sql.*;
 
 public class Model {
     private static String[] allSongFields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
-            "loudness", "year", "words"};
+            "loudness", "year"/*, "words"*/};
     private static String[] allArtistFields = {"artist_id", "artist_name", "familiarity", "hotness"};
     private static String[] allGenreFields = {"genre_id", "genre_name"};
     private static String[] allAlbumFields = {"album_id", "album_name"};
@@ -111,13 +112,16 @@ public class Model {
     /**
      * @return A string array of all the given tables rows.
      */
-    public String[] getTable(String table) throws SQLException {
+    public DataContainer getTable(String table) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {table};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         String query = builder.build();
         fields = getFields(table, fields);
-        return Executor.executeQuery(this.myStatement, query, fields);
+        String[] res = Executor.executeQuery(this.myStatement, query, fields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
     }
 
     /**
@@ -126,13 +130,16 @@ public class Model {
      * <p>
      * The function returns all of the songs from wanted year.
      */
-    public String[] getSongs(int year) throws SQLException {
+    public DataContainer getSongs(int year) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         builder = builder.addWhere().addEqualStatements("year", year);
         String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
     }
 
     /**
@@ -142,17 +149,21 @@ public class Model {
      * <p>
      * The function returns all of the songs between the given years.
      */
-    public String[] getSongs(int from, int to) throws SQLException {
+    public DataContainer getSongs(int from, int to) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         builder = builder.addWhere().addBetweenStatements("year", from, to);
         String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
+
     }
 
     // gets songs by genre
-    public String[] getSongs(GenreContainer genre) throws SQLException {
+    public DataContainer getSongs(GenreContainer genre) throws SQLException {
 
         // needs checking!!!
 
@@ -191,17 +202,22 @@ public class Model {
 //                "and artist_genre.artist_id=artist_album.artist_id " +
 //                "and artist_album.album_id=album_song.album_id " +
 //                "and album_song.song_id=song.song_id";
-        return Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
+        int count = res.length;
+        return new DataContainer(res, count);
     }
 
-    public String[] getLyrics(String songName) throws SQLException {
+    public DataContainer getLyrics(String songName) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
         String query = builder.build();
         String[] columns = {"words"};
-        return Executor.executeQuery(this.myStatement, query, columns);
+        String[] res = Executor.executeQuery(this.myStatement, query, columns);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
     }
 
     /**
@@ -240,27 +256,33 @@ public class Model {
 //    }
 
     // get songs by song name
-    public String[] getSongs(String songName) throws SQLException {
+    public DataContainer getSongs(String songName) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
         builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
         String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
+
     }
 
     // get songs by artist
-    public String[] getSongs(ArtisitContainer artisitContainer) throws SQLException {
+    public DataContainer getSongs(ArtisitContainer artisitContainer) throws SQLException {
         String query = "select * from song, album_song, artist_album, artist " +
                 "where artist.artist_name=\"" + artisitContainer.getValue() + "\" " +
                 "and artist.artist_id=artist_album.artist_id " +
                 "and artist_album.album_id=album_song.album_id " +
                 "and album_song.song_id=song.song_id";
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        int count = res.length;
+        return new DataContainer(res, count);
     }
 
     // get songs by song length
-    public String[] getSongs(DurationContainer duration) throws SQLException {
+    public DataContainer getSongs(DurationContainer duration) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -269,7 +291,10 @@ public class Model {
         float epsilon = value * (float)0.1;
         builder.addWhere().addBetweenStatements("duration", value - epsilon, value + epsilon);
         String query = builder.build();
-        return Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
     }
 //
 //    // NADAV

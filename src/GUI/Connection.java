@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Connection {
-    private static Connection ourInstance = new Connection();
+    private static Connection connection = new Connection();
     private Controller controller;
 
     public static Connection getInstance() {
-        return ourInstance;
+        return connection;
     }
 
     private Connection() {

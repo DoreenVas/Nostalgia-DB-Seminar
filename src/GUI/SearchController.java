@@ -105,12 +105,14 @@ public class SearchController {
         }
         map.put("genre",arr);
     }
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     private boolean checkValues(){
         if (era.isDisable() == true){
             String birthYear = this.birthYear.getText();

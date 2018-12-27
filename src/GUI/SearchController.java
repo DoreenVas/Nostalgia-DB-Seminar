@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -33,6 +34,13 @@ public class SearchController {
     private Button advanced;
     @FXML
     private Pane genres;
+
+    public void initialize(String era, ObservableList list, String birthYear, String age) {
+        this.era.setValue(era);
+        genres.getChildren().setAll(list);
+        this.birthYear.setText(birthYear);
+        this.age.setText(age);
+    }
 
     private void setCenter(Stage stage) {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();

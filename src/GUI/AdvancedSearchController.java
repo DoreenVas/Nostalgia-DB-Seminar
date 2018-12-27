@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -52,6 +53,25 @@ public class AdvancedSearchController {
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene scene = new Scene(root,450,500);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
+            stage.setTitle("Nostalgia");
+            stage.setScene(scene);
+            stage.show();
+            setCenter(stage);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void simpleSearch() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("Search.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            Stage stage = (Stage) rb1.getScene().getWindow();
+            Scene scene = new Scene(root,650,450);
+            SearchController searchController = loader.getController();
+            searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();

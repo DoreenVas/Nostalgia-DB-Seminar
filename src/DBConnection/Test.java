@@ -85,12 +85,12 @@ public class Test {
             }
             System.out.println();*/
 
-            /*System.out.println("Getting songs lyrics:");
-            myRes = model.getLyrics("Everytime");
-            for (String line : myRes) {
-                System.out.println(line);
-            }
-            System.out.println();*/
+//            System.out.println("Getting songs lyrics:");
+//            myRes = model.getLyrics("Everytime");
+//            for (String line : myRes) {
+//                System.out.println(line);
+//            }
+//            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }

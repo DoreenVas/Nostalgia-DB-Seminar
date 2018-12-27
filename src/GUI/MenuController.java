@@ -2,10 +2,12 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class MenuController {
@@ -16,6 +18,12 @@ public class MenuController {
     @FXML
     private Button exit;
 
+    private void setCenter(Stage stage) {
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+    }
+
     @FXML
     protected void about() {
         try {
@@ -25,11 +33,10 @@ public class MenuController {
             stage.setTitle("About");
             stage.setScene(scene);
             stage.show();
-
+            setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -42,7 +49,7 @@ public class MenuController {
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
-
+            setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }

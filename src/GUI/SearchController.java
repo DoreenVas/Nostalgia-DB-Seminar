@@ -77,6 +77,7 @@ public class SearchController {
     @FXML
     protected void results() {
         try {
+
             Stage stage = (Stage) results.getScene().getWindow();
             AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Results.fxml"));
             Scene scene = new Scene(root,450,500);

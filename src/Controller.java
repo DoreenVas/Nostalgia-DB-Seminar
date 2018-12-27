@@ -14,13 +14,12 @@ public class Controller {
     private infoGiver infGiv;
 
     //dictionary from the gui
-    Map<String, ArrayList<String>> infoFromGUI;
+    //Map<String, ArrayList<String>> infoFromGUI;
 
     private Model model;
 
-    public Controller(Map<String, ArrayList<String>> map){
-        this.infGiv = new infoGiver();
-        this.infoFromGUI = map;
+    public Controller(){
+        //this.infoFromGUI = new HashMap<String, ArrayList<String>>();
         this.modelInfo = new ArrayList<>();
         try{
             this.model = new Model();
@@ -28,9 +27,14 @@ public class Controller {
         catch (Exception e){
             System.out.println("error");
         }
-
     }
 
+    public void getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI){
+        for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
+        {
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+        }
+    }
 
 
 

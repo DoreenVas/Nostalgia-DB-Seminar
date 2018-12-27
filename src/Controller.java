@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import DBConnection.Model;
+import com.mysql.cj.conf.PropertyDefinitions;
 
 public class Controller {
     // an array from model: [fields, "count", info1, info2, ...]
@@ -13,16 +14,26 @@ public class Controller {
     private infoGiver infGiv;
 
     //dictionary from the gui
-    Map<String, String> infoFromGUI;
+    Map<String, ArrayList<String>> infoFromGUI;
 
     private Model model;
 
-
-    public Controller(infoGiver info){
-        this.infGiv = info;
-        this.infoFromGUI = new HashMap<String, String>();
+    public Controller(Map<String, ArrayList<String>> map){
+        this.infGiv = new infoGiver();
+        this.infoFromGUI = map;
         this.modelInfo = new ArrayList<>();
+        try{
+            this.model = new Model();
+        }
+        catch (Exception e){
+            System.out.println("error");
+        }
+
     }
+
+
+
+
 
 
 

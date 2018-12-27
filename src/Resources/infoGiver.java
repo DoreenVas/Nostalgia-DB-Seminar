@@ -1,4 +1,8 @@
+package Resources;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class infoGiver {
 
@@ -15,11 +19,15 @@ public class infoGiver {
      */
     private ArrayList<ArrayList<String>> fieldsValues;
 
+    //dictionary from the gui
+    Map<String, String> infoFromGUI;
+
     public infoGiver(){
         this.colsNum = 0;
         this.rowsNum = 0;
         this.fields = new ArrayList<>();
         this.fieldsValues = new ArrayList<ArrayList<String>>();
+        this.infoFromGUI = new HashMap<String, String>();
     }
 
     public int getColsNum(){
@@ -31,11 +39,15 @@ public class infoGiver {
     }
 
     public ArrayList<String> getFields(){
-        return this.fields
+        return this.fields;
     }
 
     public ArrayList<ArrayList<String>> getFieldsValues(){
         return this.fieldsValues;
+    }
+
+    public String getValueByField(String field){
+        return this.infoFromGUI.get(field);
     }
 
     public void setColsNum(int col){
@@ -54,5 +66,5 @@ public class infoGiver {
         this.fieldsValues.add(val);
     }
 
-
+    //public void addFieldsAndValues(String )
 }

@@ -1,4 +1,8 @@
 package GUI;
+import Controller.Controller;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Connection {
 
@@ -9,10 +13,15 @@ public class Connection {
         controller = new Controller();
     }
 
-    public Connection connection() {
+    public static Connection connection() {
         if(connection == null) {
             connection = new Connection();
         }
         return connection;
     }
+
+    public void query(Map<String, ArrayList<String>> map){
+        this.controller.getInfoFromGUI(map);
+    }
+
 }

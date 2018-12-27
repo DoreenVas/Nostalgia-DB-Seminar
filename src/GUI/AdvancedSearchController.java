@@ -9,13 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class SearchController {
+public class AdvancedSearchController {
     @FXML
     private ChoiceBox<String> era;
     @FXML
@@ -33,6 +32,13 @@ public class SearchController {
     @FXML
     private Pane genres;
 
+    protected void init(String era, ObservableList list, String birthYear, String age) {
+        this.era.setValue(era);
+        this.genres.getChildren().setAll(list);
+        this.birthYear.setText(birthYear);
+        this.age.setText(age);
+    }
+
     private void setCenter(Stage stage) {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
@@ -46,41 +52,6 @@ public class SearchController {
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene scene = new Scene(root,450,500);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
-            stage.setTitle("Nostalgia");
-            stage.setScene(scene);
-            stage.show();
-            setCenter(stage);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void advanced() {
-        try {
-            Stage stage = (Stage) advanced.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("AdvancedSearch.fxml"));
-            AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,650,650);
-            AdvancedSearchController advancedSearchController = loader.getController();
-            advancedSearchController.init(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText());
-            scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
-            stage.setTitle("Search");
-            stage.setScene(scene);
-            setCenter(stage);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void results() {
-        try {
-            Stage stage = (Stage) results.getScene().getWindow();
-            AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Results.fxml"));
-            Scene scene = new Scene(root,450,500);
-            //scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();

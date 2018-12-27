@@ -254,7 +254,7 @@ public class Model {
         return Executor.executeQuery(this.myStatement, query, allSongFields);
     }
 
-    // DORIN
+    // DOREEN
     // get songs by tempo
 //    public String[] getSongs(String genreId) throws SQLException {
 //

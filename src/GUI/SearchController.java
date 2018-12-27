@@ -124,7 +124,7 @@ public class SearchController {
         try {
             if(checkValues() == false)
                 return;
-            Connection connection = Connection.connection();
+            Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
             connection.query(map);

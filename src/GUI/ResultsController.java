@@ -27,6 +27,7 @@ public class ResultsController {
     private TextArea name;
     @FXML
     private TextArea surname;
+    private String[][] data;
 
     @FXML
     private void display() {
@@ -39,7 +40,7 @@ public class ResultsController {
             Scene scene = new Scene(root,450,500);
             SongInfoController songInfoController = loader.getController();
             songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
-                    row.getHotness(), row.getLoudness(), row.getYear(), row.getWords());
+                    row.getHotness(), row.getLoudness(), row.getYear(), row.getWords(), data);
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
@@ -97,6 +98,7 @@ public class ResultsController {
                 {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
                 {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
                 {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
+        this.data = data;
 
         for (String field : fields) {
             addColumn(field, field);

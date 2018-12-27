@@ -17,16 +17,11 @@ public class Controller {
 
     private Model model;
 
-
     public Controller(infoGiver info){
         this.infGiv = info;
         this.infoFromGUI = new HashMap<String, String>();
         this.modelInfo = new ArrayList<>();
     }
-
-
-
-
 }
 
 

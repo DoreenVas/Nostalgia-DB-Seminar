@@ -58,8 +58,8 @@
                 </ImageView>
                 <Group>
                     <children>
-                        <Label layoutX="100.0" layoutY="230.0" prefHeight="37.0" prefWidth="92.0" text="Genre:" />
-                        <Pane fx:id="genres" layoutX="114.0" layoutY="224.0" prefHeight="158.0" prefWidth="563.0">
+                        <Label layoutX="100.0" layoutY="221.0" prefHeight="37.0" prefWidth="92.0" text="Genre:" />
+                        <Pane fx:id="genres" layoutX="114.0" layoutY="216.0" prefHeight="158.0" prefWidth="563.0">
                             <children>
                                 <CheckBox layoutX="46.0" layoutY="8.0" mnemonicParsing="false" text="pop" />
                                 <CheckBox layoutX="46.0" layoutY="40.0" mnemonicParsing="false" text="hip hop" />
@@ -85,6 +85,11 @@
                 <Button fx:id="search" layoutX="338.0" layoutY="582.0" mnemonicParsing="false" text="simple Search" />
                 <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="556.0" prefWidth="0.0" />
                 <Separator layoutX="107.0" layoutY="60.0" prefHeight="11.0" prefWidth="461.0" />
+            <Label layoutX="100.0" layoutY="374.0" text="Song Tempo:" />
+            <Slider layoutX="240.0" layoutY="377.0" max="260.0" prefHeight="21.0" prefWidth="252.0" />
+            <Label layoutX="100.0" layoutY="425.0" text="Song Hotness:" />
+            <Slider layoutX="240.0" layoutY="434.0" max="1.0" prefHeight="21.0" prefWidth="252.0" />
+            <Label layoutX="100.0" layoutY="473.0" text="Song Duration:" />
             </children>
         </Pane>
     </children>

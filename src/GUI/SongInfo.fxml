@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SongInfoController">
+   <children>
+      <Label layoutX="43.0" layoutY="38.0" text="Name:" />
+      <Label layoutX="43.0" layoutY="66.0" text="Duration:" />
+      <Label layoutX="43.0" layoutY="96.0" text="Hotness:" />
+      <Label layoutX="43.0" layoutY="125.0" text="Year:" />
+      <Label layoutX="43.0" layoutY="156.0" text="Words:" />
+      <Label fx:id="name" layoutX="105.0" layoutY="38.0" text="Label" />
+      <Label fx:id="duration" layoutX="105.0" layoutY="66.0" text="Label" />
+      <Label fx:id="hotness" layoutX="105.0" layoutY="96.0" text="Label" />
+      <Label fx:id="year" layoutX="105.0" layoutY="125.0" text="Label" />
+      <TextArea fx:id="words" disable="true" layoutX="43.0" layoutY="180.0" prefHeight="200.0" prefWidth="298.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="43.0" />
+   </children>
+</AnchorPane>

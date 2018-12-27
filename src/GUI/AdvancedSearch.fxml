@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdvancedSearchController">
+    <children>
+        <Pane layoutX="-3.0" layoutY="7.0" prefHeight="650.0" prefWidth="650.0">
+            <children>
+                <Label layoutX="133.0" layoutY="29.0" prefHeight="31.0" prefWidth="107.0" text="Search" />
+                <Group layoutX="7.0" layoutY="-29.0">
+                    <children>
+                        <RadioButton fx:id="rb1" layoutX="336.0" layoutY="153.0" mnemonicParsing="false" onAction="#rb1Clicked" pickOnBounds="false" prefHeight="20.0" prefWidth="182.0" selected="true" textAlignment="RIGHT">
+                            <graphic>
+                                <ChoiceBox fx:id="era" prefWidth="150.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="20's" />
+                                            <String fx:value="30's" />
+                                            <String fx:value="40's" />
+                                            <String fx:value="50's" />
+                                            <String fx:value="60's" />
+                                            <String fx:value="70's" />
+                                            <String fx:value="80's" />
+                                            <String fx:value="90's" />
+                                            <String fx:value="2000's" />
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="20's" />
+                                    </value>
+                                </ChoiceBox>
+                            </graphic>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="years" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rb2" layoutX="100.0" layoutY="100.0" mnemonicParsing="false" onAction="#rb2Clicked" pickOnBounds="false" prefHeight="131.0" prefWidth="215.0" textAlignment="RIGHT" toggleGroup="$years">
+                            <graphic>
+                                <Pane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <TextField fx:id="birthYear" disable="true" layoutY="14.0" prefHeight="31.0" prefWidth="158.0" promptText="Birth Year" />
+                                        <TextField fx:id="age" disable="true" layoutX="-1.0" layoutY="78.0" prefHeight="39.0" prefWidth="160.0" promptText="Age" />
+                                    </children>
+                                </Pane>
+                            </graphic>
+                        </RadioButton>
+                    </children>
+                </Group>
+                <ImageView fitHeight="50.0" fitWidth="53.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="GUI\pic\home.png" />
+                    </image>
+                </ImageView>
+                <Group>
+                    <children>
+                        <Label layoutX="100.0" layoutY="221.0" prefHeight="37.0" prefWidth="92.0" text="Genre:" />
+                        <Pane fx:id="genres" layoutX="114.0" layoutY="216.0" prefHeight="158.0" prefWidth="563.0">
+                            <children>
+                                <CheckBox layoutX="46.0" layoutY="8.0" mnemonicParsing="false" text="pop" />
+                                <CheckBox layoutX="46.0" layoutY="40.0" mnemonicParsing="false" text="hip hop" />
+                                <CheckBox layoutX="46.0" layoutY="74.0" mnemonicParsing="false" text="rock" />
+                                <CheckBox layoutX="179.0" layoutY="74.0" mnemonicParsing="false" text="jass" />
+                                <CheckBox layoutX="179.0" layoutY="40.0" mnemonicParsing="false" text="blues" />
+                                <CheckBox layoutX="179.0" layoutY="8.0" mnemonicParsing="false" text="metal" />
+                                <CheckBox layoutX="301.0" layoutY="74.0" mnemonicParsing="false" text="rap" />
+                                <CheckBox layoutX="301.0" layoutY="40.0" mnemonicParsing="false" text="funk" />
+                                <CheckBox layoutX="301.0" layoutY="8.0" mnemonicParsing="false" text="punk" />
+                                <CheckBox layoutX="404.0" layoutY="74.0" mnemonicParsing="false" text="r&amp;b" />
+                                <CheckBox layoutX="404.0" layoutY="40.0" mnemonicParsing="false" text="country" />
+                                <CheckBox layoutX="404.0" layoutY="8.0" mnemonicParsing="false" text="classical" />
+                                <CheckBox layoutX="404.0" layoutY="110.0" mnemonicParsing="false" text="other" />
+                                <CheckBox layoutX="301.0" layoutY="110.0" mnemonicParsing="false" text="techno" />
+                                <CheckBox layoutX="179.0" layoutY="110.0" mnemonicParsing="false" text="soul" />
+                                <CheckBox layoutX="46.0" layoutY="110.0" mnemonicParsing="false" text="gospel" />
+                            </children>
+                        </Pane>
+                    </children>
+                </Group>
+                <Button fx:id="results" layoutX="124.0" layoutY="583.0" mnemonicParsing="false" text="Go to results" />
+                <Button fx:id="search" layoutX="338.0" layoutY="582.0" mnemonicParsing="false" text="simple Search" />
+                <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="556.0" prefWidth="0.0" />
+                <Separator layoutX="107.0" layoutY="60.0" prefHeight="11.0" prefWidth="461.0" />
+            <Label layoutX="100.0" layoutY="374.0" text="Song Tempo:" />
+            <Slider layoutX="240.0" layoutY="377.0" max="260.0" prefHeight="21.0" prefWidth="252.0" />
+            <Label layoutX="100.0" layoutY="425.0" text="Song Hotness:" />
+            <Slider layoutX="240.0" layoutY="434.0" max="1.0" prefHeight="21.0" prefWidth="252.0" />
+            <Label layoutX="100.0" layoutY="473.0" text="Song Duration:" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

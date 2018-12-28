@@ -1,6 +1,9 @@
 package DBConnection;
 
+import Resources.ArtisitContainer;
 import Resources.DBConnectionException;
+import Resources.DurationContainer;
+import Resources.GenreContainer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

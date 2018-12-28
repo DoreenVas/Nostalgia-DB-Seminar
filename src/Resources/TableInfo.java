@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class infoGiver {
+public class TableInfo {
 
     //number of info columns
     private int colsNum;
@@ -22,7 +22,7 @@ public class infoGiver {
     //dictionary from the gui
     Map<String, String> infoFromGUI;
 
-    public infoGiver(){
+    public TableInfo(){
         this.colsNum = 0;
         this.rowsNum = 0;
         this.fields = new ArrayList<>();

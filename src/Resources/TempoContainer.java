@@ -1,4 +1,6 @@
-package DBConnection;
+package Resources;
+
+import DBConnection.Container;
 
 public class TempoContainer implements Container<Float> {
 

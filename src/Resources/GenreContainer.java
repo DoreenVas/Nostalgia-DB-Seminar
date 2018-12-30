@@ -1,7 +1,5 @@
 package Resources;
 
-import DBConnection.Container;
-
 public class GenreContainer implements Container<String[]> {
 
     private String[] genre;

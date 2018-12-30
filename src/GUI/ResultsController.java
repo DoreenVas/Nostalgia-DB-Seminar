@@ -1,31 +1,115 @@
 package GUI;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class ResultsController {
 
     @FXML
-    private TableView<Person> results;
+    private TableView<SongRow> results;
     @FXML
     private TextArea column;
     @FXML
     private TextArea name;
     @FXML
     private TextArea surname;
+    private String[][] data;
+
+    @FXML
+    private void display() {
+        SongRow row = results.getSelectionModel().getSelectedItem();
+        try {
+            Stage stage = (Stage)results.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("SongInfo.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            Scene scene = new Scene(root,450,500);
+            SongInfoController songInfoController = loader.getController();
+            songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
+                    row.getHotness(), row.getLoudness(), row.getYear(), row.getWords(), data);
+            stage.setTitle("Song");
+            stage.setScene(scene);
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     protected void addRow() {
-        Person person = new Person(this.name.getText(), this.surname.getText());
+        ArrayList<String> fields = new ArrayList<>();
+        String[] fieldsList = {"name", "dancibility", "duration", "tempo", "hotness",
+                "loudness", "year"};
+
+        for(String item : fieldsList) {
+            fields.add(item);
+        }
+        String[][] data = {{"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", "I am the best.\nI will win all of my battles.\nI am the best person alive, and whoever wishes to oppose me shall perish.\nIlove the color pink."},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
+        this.data = data;
+
+        for (String field : fields) {
+            addColumn(field, field);
+        }
+
+        for (String[] row : data) {
+            SongRow item = new SongRow(row);
+            this.results.getItems().addAll(item);
+        }
         this.name.setText("");
         this.surname.setText("");
-        this.results.getItems().add(person);
     }
 
     @FXML
@@ -34,34 +118,127 @@ public class ResultsController {
     }
 
     @FXML
-    protected void addColumn() {
+    protected void addColumn(String field, String displayName) {
 //        TableColumn<Person, String> nameColumn = new TableColumn<>("Name");
 //        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 //        TableColumn<Person, String> surnameColumn = new TableColumn<>("Surname");
 //        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
 //        this.results.getColumns().add(nameColumn);
 //        this.results.getColumns().add(surnameColumn);
-        TableColumn<Person, String> column = new TableColumn<>(this.column.getText());
-        column.setCellValueFactory(new PropertyValueFactory<>(this.column.getText()));
+
+        TableColumn<SongRow, String> column = new TableColumn<>(field);
+        column.setCellValueFactory(new PropertyValueFactory<>(field));
+        column.setText(displayName);
         this.results.getColumns().add(column);
         this.column.setText("");
+
+//        TableColumn<Table, String> column = new TableColumn<>(this.column.getText());
+//        column.setCellValueFactory(new PropertyValueFactory<>(this.column.getText()));
+//        this.results.getColumns().add(column);
+//        this.column.setText("");
     }
 
-    public class Person {
-        private String name;
-        private String surname;
+    public class SongRow {
 
-        public Person(String name, String surname) {
-            this.name = name;
-            this.surname = surname;
+        private String song_id;
+        private String name;
+        private String dancibility;
+        private String duration;
+        private String tempo;
+        private String hotness;
+        private String loudness;
+        private String year;
+        private String words;
+
+//        public SongRow(String song_id, String name, String dancibility, String duration, String tempo,
+//                       String hotness, String loudness, String year, String words) {
+//            this.song_id = song_id;
+//            this.name = name;
+//            this.dancibility = dancibility;
+//            this.duration = duration;
+//            this.tempo = tempo;
+//            this.hotness = hotness;
+//            this.loudness = loudness;
+//            this.year = year;
+//            this.words = words;
+//        }
+
+        public SongRow(String[] data) {
+            this.song_id = data[0];
+            this.name = data[1];
+            this.dancibility = data[2];
+            this.duration = data[3];
+            this.tempo = data[4];
+            this.hotness = data[5];
+            this.loudness = data[6];
+            this.year = data[7];
+            this.words = data[8];
         }
 
         public String getName() {
             return name;
         }
 
-        public String getSurname() {
-            return surname;
+        public String getDancibility() {
+            return dancibility;
+        }
+
+        public String getDuration() {
+            return duration;
+        }
+
+        public String getHotness() {
+            return hotness;
+        }
+
+        public String getLoudness() {
+            return loudness;
+        }
+
+        public String getSong_id() {
+            return song_id;
+        }
+
+        public String getTempo() {
+            return tempo;
+        }
+
+        public String getWords() {
+            return words;
+        }
+
+        public String getYear() {
+            return year;
         }
     }
+
+//    public class Table {
+//        private int rows;
+//        private int columns;
+//        private ArrayList<String> fields;
+//        private String[][] data;
+//
+//        public Table(int rows, int columns, ArrayList<String> fields, String[][] data) {
+//            this.rows = rows;
+//            this.columns = columns;
+//            this.fields = fields;
+//            this.data = data;
+//        }
+//
+//        public int getRows() {
+//            return rows;
+//        }
+//
+//        public int getColumns() {
+//            return columns;
+//        }
+//
+//        public String[][] getData() {
+//            return data;
+//        }
+//
+//        public ArrayList<String> getFields() {
+//            return fields;
+//        }
+//    }
 }

@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -33,6 +34,13 @@ public class SearchController {
     private Button advanced;
     @FXML
     private Pane genres;
+
+    public void initialize(String era, ObservableList list, String birthYear, String age) {
+        this.era.setValue(era);
+        genres.getChildren().setAll(list);
+        this.birthYear.setText(birthYear);
+        this.age.setText(age);
+    }
 
     private void setCenter(Stage stage) {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -97,12 +105,14 @@ public class SearchController {
         }
         map.put("genre",arr);
     }
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     private boolean checkValues(){
         if (era.isDisable() == true){
             String birthYear = this.birthYear.getText();
@@ -124,7 +134,7 @@ public class SearchController {
         try {
             if(checkValues() == false)
                 return;
-            Connection connection = Connection.connection();
+            Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
             connection.query(map);

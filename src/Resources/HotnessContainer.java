@@ -1,7 +1,5 @@
 package Resources;
 
-import DBConnection.Container;
-
 public class HotnessContainer implements Container<Float> {
 
     private float hotness;

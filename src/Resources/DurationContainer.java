@@ -1,7 +1,5 @@
 package Resources;
 
-import DBConnection.Container;
-
 public class DurationContainer implements Container<Float> {
 
     private float duration;

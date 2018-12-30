@@ -1,7 +1,5 @@
 package Resources;
 
-import DBConnection.Container;
-
 public class TempoContainer implements Container<Float> {
 
     private float tempo;

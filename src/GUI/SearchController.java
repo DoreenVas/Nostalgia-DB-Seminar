@@ -125,6 +125,10 @@ public class SearchController {
                 showAlert("age is invalid");
                 return false;
             }
+            if(Integer.parseInt(birthYear)+Integer.parseInt(age)>2019){
+                showAlert("birth year or age is incorrect");
+                return false;
+            }
         }
         return true;
     }

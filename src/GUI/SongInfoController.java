@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.TableInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -9,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class SongInfoController {
 
@@ -27,10 +30,10 @@ public class SongInfoController {
     private String tempo;
     private String loudness;
     private String dancibility;
-    private String[][] data;
+    private TableInfo data;
 
     public void initialize(String name, String dancibility, String duration, String tempo,
-                           String hotness, String loudness, String year, String words, String[][] data) {
+                           String hotness, String loudness, String year, String words, TableInfo data) {
         this.name.setText(name);
         this.name.setAlignment(Pos.CENTER);
 //        this.dancibility = dancibility;
@@ -53,6 +56,7 @@ public class SongInfoController {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,450,500);
             ResultsController resultsController = loader.getController();
+            resultsController.addData(data);
 
             stage.setTitle("Results");
             stage.setScene(scene);

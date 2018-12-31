@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,16 @@ public class AdvancedSearchController {
     private TextField album_name;
 
 
-    protected void init(String era, ObservableList list, String birthYear, String age) {
+    protected void init(String era, ObservableList list, String birthYear, String age, boolean rb1Selected) {
+        if(rb1Selected) {
+            rb1Clicked();
+            rb1.selectedProperty().setValue(true);
+            rb2.selectedProperty().setValue(false);
+        } else {
+            rb2Clicked();
+            rb1.selectedProperty().setValue(false);
+            rb2.selectedProperty().setValue(true);
+        }
         this.era.setValue(era);
         this.genres.getChildren().setAll(list);
         this.birthYear.setText(birthYear);
@@ -84,7 +94,8 @@ public class AdvancedSearchController {
             Stage stage = (Stage) rb1.getScene().getWindow();
             Scene scene = new Scene(root,650,450);
             SearchController searchController = loader.getController();
-            searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText());
+            searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText(),
+                    !era.isDisabled());
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
@@ -179,11 +190,17 @@ public class AdvancedSearchController {
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
-            connection.query(map);
+            TableInfo info = connection.query(map);
 
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("Results.fxml"));
             Stage stage = (Stage) results.getScene().getWindow();
-            AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Results.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,450,500);
+
+            ResultsController resultsController = loader.getController();
+            resultsController.addData(info);
+
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();

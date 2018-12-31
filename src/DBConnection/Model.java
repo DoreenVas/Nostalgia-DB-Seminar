@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.sql.*;
 
 public class Model {
-    private static String[] allSongFields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
-            "loudness", "year"/*, "words"*/};
-    private static String[] allArtistFields = {"artist_id", "artist_name", "familiarity", "hotness"};
-    private static String[] allGenreFields = {"genre_id", "genre_name"};
-    private static String[] allAlbumFields = {"album_id", "album_name"};
+    private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
+            "song.loudness", "song.year"/*, "words"*/};
+    private static String[] allArtistFields = {"artist.artist_id", "artist.artist_name", "artist.familiarity", "artist.hotness"};
+    private static String[] allGenreFields = {"genre.genre_id", "genre.genre_name"};
+    private static String[] allAlbumFields = {"album.album_id", "album.album_name"};
 
     private Connection myConn;
     private Statement myStatement;
@@ -296,7 +296,8 @@ public class Model {
         QueryBuilder builder = new QueryBuilder(fields, tables);
         float value = duration.getValue();
         // get songs with given duration plus - minus an amount of time in relation to the given duration
-        float epsilon = value * (float)0.1;
+//        float epsilon = value * (float)0.1;
+        float epsilon = 30;
         builder.addWhere().addBetweenStatements("duration", value - epsilon, value + epsilon);
         String query = builder.build();
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
@@ -420,11 +421,25 @@ public class Model {
 //
 //    }
 //
-//    // DORIN
-//    // get songs by tempo, length
-//    public String[] getSongs(TempoContainer tempo, DurationContainer duration) throws SQLException {
-//
-//    }
+    // DORIN
+    // get songs by tempo, length
+    public DataContainer getSongs(TempoContainer tempo, DurationContainer duration) throws SQLException {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        float durationValue = duration.getValue();
+        float tempoValue = tempo.getValue();
+        // get songs with given duration plus - minus an amount of time in relation to the given duration
+        float epsilonDuration = 30;
+        float epsilonTempo = tempoValue * (float)0.3;
+        builder.addWhere().addBetweenStatements("duration", durationValue - epsilonDuration, durationValue + epsilonDuration);
+        builder.addWhere().addBetweenStatements("tempo",tempoValue -epsilonTempo,tempoValue+epsilonTempo);
+        String query = builder.build();
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
+    }
 //
 //    // LITAL
 //    // get songs by tempo, artist
@@ -480,9 +495,27 @@ public class Model {
 //
 //    // DORIN
 //    // get songs by tempo, length, artist
-//    public String[] getSongs(TempoContainer tempo, DurationContainer duration, ArtistContainer artist) throws SQLException {
-//
-//    }
+    public DataContainer getSongs(TempoContainer tempo, DurationContainer duration, ArtistContainer artist) throws SQLException {
+        String[] fields = allSongFields;
+        String[] tables = {"song","artist","artist_album","album_song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables, true);
+        float durationValue = duration.getValue();
+        float tempoValue = tempo.getValue();
+        // get songs with given duration plus - minus an amount of time in relation to the given duration
+        float epsilonDuration = 30;
+        float epsilonTempo = tempoValue * (float)0.3;
+        builder.addWhere().addEqualStatements("artist.artist_id","artist_album.artist_id");
+        builder.addEqualStatements("artist_album.album_id","album_song.album_id");
+        builder.addEqualStatements("album_song.song_id","song.song_id");
+        builder.addBetweenStatements("duration", durationValue - epsilonDuration, durationValue + epsilonDuration);
+        builder.addBetweenStatements("tempo",tempoValue -epsilonTempo,tempoValue+epsilonTempo);
+        builder.addEqualStatements("artist.artist_name", "\"" + artist.getValue() + "\"");
+        String query = builder.build();
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, count);
+    }
 
 
     // !!! Irrelevant for now!!!

@@ -24,6 +24,20 @@ class QueryBuilder {
         this.statementAdded = false;
     }
 
+    QueryBuilder(String[] fields, String[] tables, boolean distinct) {
+        // initialize builder
+        this.query = new StringBuilder();
+        if(distinct) {
+            addDistinctSelect(fields);
+        } else {
+            addSelect(fields);
+        }
+        addFrom(tables);
+        // set condition and statement insertions as false
+        this.conditionInserted = false;
+        this.statementAdded = false;
+    }
+
     /**
      *
      * @return The string representation of the query
@@ -35,6 +49,17 @@ class QueryBuilder {
     QueryBuilder addSelect(String[] fields) {
         // start select statement
         this.query.append("select ");
+        // append all of the wanted fields
+        for (int i = 0; i < fields.length - 1; i++) {
+            this.query.append(fields[i]).append(", ");
+        }
+        this.query.append(fields[fields.length - 1]).append(" ");
+        return this;
+    }
+
+    QueryBuilder addDistinctSelect(String[] fields) {
+        // start select statement
+        this.query.append("select distinct ");
         // append all of the wanted fields
         for (int i = 0; i < fields.length - 1; i++) {
             this.query.append(fields[i]).append(", ");
@@ -157,6 +182,19 @@ class QueryBuilder {
         this.statementAdded = true;
         return this;
     }
+
+//    /**
+//     *
+//     * @return the builder
+//     *
+//     * adds "and" to query
+//     */
+//    QueryBuilder addAnd() {
+//        checkStatement();
+//        this.query.append(" and");
+//        this.statementAdded = true;
+//        return this;
+//    }
 
     /**
      *

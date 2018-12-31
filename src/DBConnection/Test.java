@@ -3,6 +3,7 @@ package DBConnection;
 import Resources.DataContainer;
 import Resources.DurationContainer;
 import Resources.GenreContainer;
+import Resources.TempoContainer;
 
 public class Test {
 
@@ -130,9 +131,28 @@ public class Test {
 //            System.out.println(myRes.getCount());
 //            System.out.println();
 
-            System.out.println("Getting song by genre name and duration:");
-            String[] genre = {"rock", "disco", "rap"};
-            myRes = model.getSongs(new GenreContainer(genre), new DurationContainer(120));
+//            System.out.println("Getting song by genre name and duration:");
+//            String[] genre = {"rock", "disco", "rap"};
+//            myRes = model.getSongs(new GenreContainer(genre), new DurationContainer(120));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+//            System.out.println("Getting song by tempo and duration:");
+//            myRes = model.getSongs(new TempoContainer(60), new DurationContainer(120));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+            System.out.println("Getting song by tempo, duration and artist:");
+            myRes = model.getSongs(new TempoContainer(150), new DurationContainer(120),new ArtistContainer("Gorillaz"));
             for (String line : myRes.getData()) {
                 System.out.println(line);
             }

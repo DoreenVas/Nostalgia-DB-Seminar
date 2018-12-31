@@ -104,24 +104,24 @@
                         </Pane>
                     </children>
                 </Group>
-                <Button fx:id="results" layoutX="124.0" layoutY="583.0" mnemonicParsing="false" text="Go to results" />
+                <Button fx:id="results" layoutX="124.0" layoutY="583.0" mnemonicParsing="false" onAction="#results" text="Go to results" />
                 <Button fx:id="search" layoutX="338.0" layoutY="582.0" mnemonicParsing="false" onAction="#simpleSearch" text="simple Search" />
                 <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="556.0" prefWidth="0.0" />
             <Label layoutX="100.0" layoutY="374.0" text="Song Tempo:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Slider layoutX="240.0" layoutY="377.0" max="260.0" prefHeight="21.0" prefWidth="252.0" />
+            <Slider fx:id="tempo" layoutX="240.0" layoutY="377.0" max="260.0" prefHeight="21.0" prefWidth="252.0" />
             <Label layoutX="100.0" layoutY="422.0" text="Song Hotness:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Slider layoutX="240.0" layoutY="423.0" max="1.0" prefHeight="21.0" prefWidth="252.0" />
+            <Slider fx:id="hotness" layoutX="240.0" layoutY="423.0" max="1.0" prefHeight="21.0" prefWidth="252.0" />
             <Label layoutX="100.0" layoutY="471.0" text="Song Duration:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Slider blockIncrement="1.0" layoutX="240.0" layoutY="474.0" majorTickUnit="1.0" max="17.0" minorTickCount="0" prefHeight="21.0" prefWidth="252.0" showTickLabels="true" snapToTicks="true" />
+            <Slider fx:id="duration" blockIncrement="1.0" layoutX="240.0" layoutY="474.0" majorTickUnit="1.0" max="17.0" minorTickCount="0" prefHeight="21.0" prefWidth="252.0" showTickLabels="true" snapToTicks="true" />
                 <Separator layoutX="107.0" layoutY="60.0" prefHeight="11.0" prefWidth="461.0" />
             <Label layoutX="496.0" layoutY="484.0" text="minutes">
                <font>
@@ -143,13 +143,13 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="190.0" layoutY="520.0" prefHeight="10.0" prefWidth="150.0" />
+            <TextField fx:id="artist_name" layoutX="190.0" layoutY="520.0" prefHeight="10.0" prefWidth="150.0" />
             <Label layoutX="355.0" layoutY="523.0" text="Album Name:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="450.0" layoutY="520.0" prefHeight="10.0" prefWidth="150.0" />
+            <TextField fx:id="album_name" layoutX="450.0" layoutY="520.0" prefHeight="10.0" prefWidth="150.0" />
             </children>
         </Pane>
     </children>

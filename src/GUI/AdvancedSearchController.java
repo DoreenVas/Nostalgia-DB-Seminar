@@ -118,29 +118,29 @@ public class AdvancedSearchController {
         }
         map.put("genre",arr);
         //adding tempo
-        arr.clear();
-        arr.add(Double.toString(tempo.getValue()));
-        map.put("tempo",arr);
+        ArrayList<String> arrTempo = new ArrayList<>();
+        arrTempo.add(Double.toString(tempo.getValue()));
+        map.put("tempo",arrTempo);
 
         //adding hotness
-        arr.clear();
-        arr.add(Double.toString(hotness.getValue()));
-        map.put("hotness",arr);
+        ArrayList<String> arrHotness = new ArrayList<>();
+        arrHotness.add(Double.toString(hotness.getValue()));
+        map.put("hotness",arrHotness);
 
         //adding duration
-        arr.clear();
-        arr.add(Double.toString(duration.getValue()));
-        map.put("duration",arr);
+        ArrayList<String> arrDuration = new ArrayList<>();
+        arrDuration.add(Double.toString(duration.getValue()));
+        map.put("duration",arrDuration);
 
         //adding artist_name
-        arr.clear();
-        arr.add(artist_name.getText());
-        map.put("artist_name",arr);
+        ArrayList<String> arr_artist_name = new ArrayList<>();
+        arr_artist_name.add(artist_name.getText());
+        map.put("artist_name",arr_artist_name);
 
         //adding album_name
-        arr.clear();
-        arr.add(album_name.getText());
-        map.put("album_name",arr);
+        ArrayList<String> arr_album_name = new ArrayList<>();
+        arr_album_name.add(album_name.getText());
+        map.put("album_name",arr_album_name);
 
     }
 
@@ -179,9 +179,6 @@ public class AdvancedSearchController {
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
-            for (String key:map.keySet()) {
-                System.out.println(key+" "+map.get(key));
-            }
             connection.query(map);
 
             Stage stage = (Stage) results.getScene().getWindow();

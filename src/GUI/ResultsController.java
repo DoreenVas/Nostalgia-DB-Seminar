@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ResultsController {
 
@@ -27,7 +31,7 @@ public class ResultsController {
     private TextArea name;
     @FXML
     private TextArea surname;
-    private String[][] data;
+    private TableInfo data;
 
     @FXML
     private void display() {
@@ -39,14 +43,39 @@ public class ResultsController {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,450,500);
             SongInfoController songInfoController = loader.getController();
+
+            Connection connection = Connection.getInstance();
+            Map<String, ArrayList<String>> requestLyrics = new HashMap<>();
+            ArrayList<String> values = new ArrayList<>();
+            values.add(row.getName());
+            requestLyrics.put("name", values);
+            TableInfo info = connection.query(requestLyrics);
+            String words = info.getFieldsValues().get(0).get(0);
+
             songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
-                    row.getHotness(), row.getLoudness(), row.getYear(), row.getWords(), data);
+                    row.getHotness(), row.getLoudness(), row.getYear(), words, data);
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected void addData(TableInfo info) {
+        data = info;
+        ArrayList<String> fields = info.getFields();
+
+        for (String field : fields) {
+            addColumn(field, field);
+        }
+
+        for (ArrayList<String> row : info.getFieldsValues()) {
+            SongRow item = new SongRow(row);
+            this.results.getItems().addAll(item);
+        }
+        this.name.setText("");
+        this.surname.setText("");
     }
 
     @FXML
@@ -98,7 +127,7 @@ public class ResultsController {
                 {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
                 {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
                 {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
-        this.data = data;
+        //this.data = data;
 
         for (String field : fields) {
             addColumn(field, field);
@@ -163,6 +192,18 @@ public class ResultsController {
 //            this.words = words;
 //        }
 
+        public SongRow(ArrayList<String> data) {
+            this.song_id = data.get(0);
+            this.name = data.get(1);
+            this.dancibility = data.get(2);
+            this.duration = data.get(3);
+            this.tempo = data.get(4);
+            this.hotness = data.get(5);
+            this.loudness = data.get(6);
+            this.year = data.get(7);
+//            this.words = data.get(8);
+        }
+
         public SongRow(String[] data) {
             this.song_id = data[0];
             this.name = data[1];
@@ -172,7 +213,7 @@ public class ResultsController {
             this.hotness = data[5];
             this.loudness = data[6];
             this.year = data[7];
-            this.words = data[8];
+//            this.words = data[8];
         }
 
         public String getName() {

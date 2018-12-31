@@ -72,7 +72,8 @@ public class AdvancedSearchController {
             Scene scene = new Scene(root,650,450);
             SearchController searchController = loader.getController();
             searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText());
-            stage.setTitle("Nostalgia");
+            scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
+            stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
             setCenter(stage);

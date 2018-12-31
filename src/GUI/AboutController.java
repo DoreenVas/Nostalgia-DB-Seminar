@@ -2,16 +2,28 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class AboutController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AboutController implements Initializable {
     @FXML
     private Button back;
+    @FXML
+    private TextArea aboutText;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        aboutText.setText("aba");
+    }
 
     @FXML
     protected void back() {
@@ -30,4 +42,5 @@ public class AboutController {
             e.printStackTrace();
         }
     }
+
 }

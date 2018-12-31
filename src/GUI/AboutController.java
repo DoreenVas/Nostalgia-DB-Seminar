@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,7 +23,23 @@ public class AboutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        aboutText.setText("aba");
+        String text = "", line = "";
+        File aboutFile = new File("About.txt");
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(aboutFile));
+            while(line != null) {
+                line = bufferedReader.readLine();
+                if(line != null) {
+                    text = text.concat(line);
+                    text = text.concat("\n");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        aboutText.setText(text);
     }
 
     @FXML

@@ -1,5 +1,7 @@
 package DBConnection;
 
+import Resources.Container;
+
 public class ArtistContainer implements Container<String> {
 
     private String artist;

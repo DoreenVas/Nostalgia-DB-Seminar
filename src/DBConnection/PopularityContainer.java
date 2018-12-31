@@ -1,5 +1,7 @@
 package DBConnection;
 
+import Resources.Container;
+
 public class PopularityContainer implements Container<Double> {
 
     private double popularity;

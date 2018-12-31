@@ -1,6 +1,8 @@
 package DBConnection;
 
 import Resources.DataContainer;
+import Resources.DurationContainer;
+import Resources.GenreContainer;
 
 public class Test {
 

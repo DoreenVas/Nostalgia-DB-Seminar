@@ -1,17 +1,20 @@
 package GUI;
 
+import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Search {
@@ -96,6 +99,54 @@ public abstract class Search {
         age.setDisable(false);
     }
 
+    @FXML
+    protected void results() {
+        try {
+            if(checkValues() == false)
+                return;
+            Connection connection = Connection.getInstance();
+            Map<String, ArrayList<String>> map = new HashMap<>();
+            addValues(map);
+            TableInfo info = connection.query(map);
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("Results.fxml"));
+            Stage stage = (Stage) results.getScene().getWindow();
+            AnchorPane root = (AnchorPane) loader.load();
+            Scene scene = new Scene(root,450,500);
+
+            ResultsController resultsController = loader.getController();
+            resultsController.addData(info);
+
+            stage.setTitle("Nostalgia");
+            stage.setScene(scene);
+            stage.show();
+            setCenter(stage);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected boolean checkValues(){
+        if (era.isDisable() == true){
+            String birthYear = this.birthYear.getText();
+            String age = this.age.getText();
+            if( birthYear.equals("") || Integer.parseInt(birthYear) > 2018 || Integer.parseInt(birthYear) < 1900){
+                showAlert("birth year is invalid");
+                return false;
+            }
+            if( age.equals("") || Integer.parseInt(age)<1 || Integer.parseInt(age)>120 ){
+                showAlert("age is invalid");
+                return false;
+            }
+            if(Integer.parseInt(birthYear)+Integer.parseInt(age)>2019){
+                showAlert("birth year or age is incorrect");
+                return false;
+            }
+        }
+        return true;
+    }
+
     abstract void addValues(Map<String, ArrayList<String>> map);
-    abstract boolean checkValues();
+
 }

@@ -73,7 +73,10 @@ public class AdvancedSearchController extends Search {
                 arr.add(g);
             }
         }
-        map.put("genre",arr);
+        //if genres where added than add to map
+        if(arr.isEmpty()==false)
+            map.put("genre",arr);
+
         //adding tempo
         ArrayList<String> arrTempo = new ArrayList<>();
         arrTempo.add(Double.toString(tempo.getValue()));
@@ -89,63 +92,18 @@ public class AdvancedSearchController extends Search {
         arrDuration.add(Double.toString(duration.getValue()));
         map.put("duration",arrDuration);
 
-        //adding artist_name
-        ArrayList<String> arr_artist_name = new ArrayList<>();
-        arr_artist_name.add(artist_name.getText());
-        map.put("artist_name",arr_artist_name);
-
-        //adding album_name
-        ArrayList<String> arr_album_name = new ArrayList<>();
-        arr_album_name.add(album_name.getText());
-        map.put("album_name",arr_album_name);
-
-    }
-
-    protected boolean checkValues() {
-        if (era.isDisable() == true){
-            String birthYear = this.birthYear.getText();
-            String age = this.age.getText();
-            if( birthYear.equals("") || Integer.parseInt(birthYear) > 2018 || Integer.parseInt(birthYear) < 1900){
-                showAlert("birth year is invalid");
-                return false;
-            }
-            if( age.equals("") || Integer.parseInt(age)<1 || Integer.parseInt(age)>120 ){
-                showAlert("age is invalid");
-                return false;
-            }
-            if(Integer.parseInt(birthYear)+Integer.parseInt(age)>2019){
-                showAlert("birth year or age is incorrect");
-                return false;
-            }
+        //adding artist_name if given one
+        if(!artist_name.getText().equals("")){
+            ArrayList<String> arr_artist_name = new ArrayList<>();
+            arr_artist_name.add(artist_name.getText());
+            map.put("artist_name",arr_artist_name);
         }
-        return true;
-    }
 
-    @FXML
-    protected void results() {
-        try {
-            if(checkValues() == false)
-                return;
-            Connection connection = Connection.getInstance();
-            Map<String, ArrayList<String>> map = new HashMap<>();
-            addValues(map);
-            TableInfo info = connection.query(map);
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("Results.fxml"));
-            Stage stage = (Stage) results.getScene().getWindow();
-            AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,450,500);
-
-            ResultsController resultsController = loader.getController();
-            resultsController.addData(info);
-
-            stage.setTitle("Nostalgia");
-            stage.setScene(scene);
-            stage.show();
-            setCenter(stage);
-        } catch(Exception e) {
-            e.printStackTrace();
+        //adding album_name if given one
+        if(!artist_name.getText().equals("")) {
+            ArrayList<String> arr_album_name = new ArrayList<>();
+            arr_album_name.add(album_name.getText());
+            map.put("album_name", arr_album_name);
         }
     }
 }

@@ -40,33 +40,6 @@ public class SearchController extends Search {
         }
     }
 
-    @FXML
-    protected void results() {
-        try {
-            if(checkValues() == false)
-                return;
-            Connection connection = Connection.getInstance();
-            Map<String, ArrayList<String>> map = new HashMap<>();
-            addValues(map);
-            TableInfo info = connection.query(map);
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("Results.fxml"));
-            Stage stage = (Stage) results.getScene().getWindow();
-            AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,450,500);
-
-            ResultsController resultsController = loader.getController();
-            resultsController.addData(info);
-
-            stage.setTitle("Nostalgia");
-            stage.setScene(scene);
-            stage.show();
-            setCenter(stage);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     protected void addValues(Map<String, ArrayList<String>> map) {
         if (era.isDisable() == false){
@@ -89,26 +62,9 @@ public class SearchController extends Search {
                 arr.add(g);
             }
         }
-        map.put("genre",arr);
+        //if genres where added than add to map
+        if(arr.isEmpty()==false)
+            map.put("genre",arr);
     }
 
-    protected boolean checkValues(){
-        if (era.isDisable() == true){
-            String birthYear = this.birthYear.getText();
-            String age = this.age.getText();
-            if( birthYear.equals("") || Integer.parseInt(birthYear) > 2018 || Integer.parseInt(birthYear) < 1900){
-                showAlert("birth year is invalid");
-                return false;
-            }
-            if( age.equals("") || Integer.parseInt(age)<1 || Integer.parseInt(age)>120 ){
-                showAlert("age is invalid");
-                return false;
-            }
-            if(Integer.parseInt(birthYear)+Integer.parseInt(age)>2019){
-                showAlert("birth year or age is incorrect");
-                return false;
-            }
-        }
-        return true;
-    }
 }

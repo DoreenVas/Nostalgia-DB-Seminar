@@ -38,7 +38,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     /**
@@ -57,7 +57,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
 
     }
 
@@ -103,7 +103,7 @@ public class SongQueries {
 //                "and album_song.song_id=song.song_id";
         String[] res = Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
         int count = res.length;
-        return new DataContainer(res, count);
+        return new DataContainer(res,  allSongFields, count);
     }
 
     public DataContainer getLyrics(String songName) throws SQLException {
@@ -116,7 +116,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, columns);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, columns, count);
     }
 
     /**
@@ -134,7 +134,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by song name
@@ -147,7 +147,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
 
     }
 
@@ -160,7 +160,7 @@ public class SongQueries {
                 "and album_song.song_id=song.song_id";
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         int count = res.length;
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by song length
@@ -177,7 +177,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by genre, length
@@ -200,7 +200,7 @@ public class SongQueries {
                 "where SID.song_id=song.song_id and song.duration between " + duration.getValue() * 0.9 + " and " + duration.getValue() * 1.1);
         String[] res = Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
         int count = res.length;
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by genre, artist
@@ -224,7 +224,7 @@ public class SongQueries {
                 "where SID.song_id=song.song_id");
         String[] res = Executor.executeQuery(this.myStatement, query.toString(), allSongFields);
         int count = res.length;
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by tempo, length
@@ -243,7 +243,7 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by tempo, length, artist
@@ -266,6 +266,6 @@ public class SongQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allSongFields, count);
     }
 }

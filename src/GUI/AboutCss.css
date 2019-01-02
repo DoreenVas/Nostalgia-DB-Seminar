@@ -1,0 +1,9 @@
+.root {
+	-fx-background-image: url("pic/cassette4.jpg");
+	-fx-background-size:auto;
+	-fx-background-repeat:repeat;
+}
+
+.TextArea{
+    -fx-background-color:transparent;
+}

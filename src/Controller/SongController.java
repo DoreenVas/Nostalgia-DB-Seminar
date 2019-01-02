@@ -1,5 +1,6 @@
 package Controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import DBConnection.Model;
@@ -22,12 +23,20 @@ public class SongController {
         this.modelInfo = new ArrayList<>();
         try{
             this.model = new Model();
+            //model.openConnection();
         }
         catch (Exception e){
             System.out.println("error");
         }
     }
 
+    public void closeModelConnection() throws SQLException {
+        this.model.closeConnection();
+    }
+
+    public void openModelConnection() throws SQLException{
+        this.model.openConnection();
+    }
 
     /**
      * get the values from the model.
@@ -55,6 +64,7 @@ public class SongController {
                     catch(Exception e){
 
                     }
+                    break;
                 case "era":
                     str = entry.getValue().get(0).split("'");
                     year = Integer.parseInt(str[0]);
@@ -64,14 +74,17 @@ public class SongController {
                     catch(Exception e){
 
                     }
+                    break;
                 case "year":
                     yearOrAge = true;
                     str = entry.getValue().get(0).split(",");
                     year = Integer.parseInt(str[0]);
+                    break;
                 case "age":
                     yearOrAge = true;
                     str = entry.getValue().get(0).split(",");
                     age = Integer.parseInt(str[0]);
+                    break;
             }
 
             if(yearOrAge){

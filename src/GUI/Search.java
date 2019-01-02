@@ -105,9 +105,11 @@ public abstract class Search {
             if(checkValues() == false)
                 return;
             Connection connection = Connection.getInstance();
+            connection.OpenConnection();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
             TableInfo info = connection.query(map);
+            connection.CloseConnection();
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));

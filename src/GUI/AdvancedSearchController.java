@@ -43,7 +43,6 @@ public class AdvancedSearchController extends Search {
             searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText(),
                     !era.isDisabled());
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
-            searchController.setSliderLogicals();
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
@@ -78,20 +77,26 @@ public class AdvancedSearchController extends Search {
         if(arr.isEmpty()==false)
             map.put("genre",arr);
 
-        //adding tempo
-        ArrayList<String> arrTempo = new ArrayList<>();
-        arrTempo.add(Double.toString(tempo.getValue()));
-        map.put("tempo",arrTempo);
+        //adding tempo if not 0
+        if(tempo.getValue()!=0.0){
+            ArrayList<String> arrTempo = new ArrayList<>();
+            arrTempo.add(Double.toString(tempo.getValue()));
+            map.put("tempo",arrTempo);
+        }
 
-        //adding hotness
-        ArrayList<String> arrHotness = new ArrayList<>();
-        arrHotness.add(Double.toString(hotness.getValue()));
-        map.put("hotness",arrHotness);
+        //adding hotness if not 0
+        if(hotness.getValue()!=0.0) {
+            ArrayList<String> arrHotness = new ArrayList<>();
+            arrHotness.add(Double.toString(hotness.getValue()));
+            map.put("hotness", arrHotness);
+        }
 
-        //adding duration
-        ArrayList<String> arrDuration = new ArrayList<>();
-        arrDuration.add(Double.toString(duration.getValue()));
-        map.put("duration",arrDuration);
+        //adding duration if not 0
+        if(duration.getValue()!=0.0) {
+            ArrayList<String> arrDuration = new ArrayList<>();
+            arrDuration.add(Double.toString(duration.getValue()));
+            map.put("duration", arrDuration);
+        }
 
         //adding artist_name if given one
         if(!artist_name.getText().equals("")){

@@ -177,7 +177,7 @@ public class ResultsController {
         private String hotness;
         private String loudness;
         private String year;
-        private String words;
+        private String words = null;
 
 //        public SongRow(String song_id, String name, String dancibility, String duration, String tempo,
 //                       String hotness, String loudness, String year, String words) {

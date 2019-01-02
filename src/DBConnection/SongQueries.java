@@ -72,7 +72,6 @@ public class SongQueries {
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
         return new DataContainer(res, allSongFields, count);
-
     }
 
     // gets songs by genre

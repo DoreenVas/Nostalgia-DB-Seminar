@@ -2,6 +2,8 @@ package Controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import DBConnection.Model;
 import Resources.*;
@@ -68,8 +70,16 @@ public class SongController {
                 case "era":
                     str = entry.getValue().get(0).split("'");
                     year = Integer.parseInt(str[0]);
+                    int to;
+                    if(year < 2000){
+                        year += 1900;
+                        to = year + 9;
+                    }
+                    else{
+                        to = Calendar.getInstance().get(Calendar.YEAR);
+                    }
                     try{
-                        dc = model.getSongs(year,year + 9);
+                        dc = model.getSongs(year, to);
                     }
                     catch(Exception e){
 

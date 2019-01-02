@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SongQueries {
-    private static SongQueries ourInstance = new DBConnection.SongQueries();
+    private static SongQueries ourInstance = new SongQueries();
     private static Statement myStatement;
     private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
             "song.loudness", "song.year"/*, "song.words"*/};

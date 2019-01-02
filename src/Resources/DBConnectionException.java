@@ -1,8 +1,7 @@
 package Resources;
+import java.sql.SQLException;
 
-import com.sun.javaws.exceptions.ErrorCodeResponseException;
-
-public class DBConnectionException extends Exception {
+public class DBConnectionException extends SQLException {
 
     public DBConnectionException(String message, Throwable cause) {
         super(message, cause);

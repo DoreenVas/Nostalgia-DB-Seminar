@@ -118,7 +118,7 @@ public class SongController {
 
     private String[] parseFromArrayToList(int size, ArrayList<String> arr){
         String[] str = new String[size];
-        for(int i = 0; i <=size; i++){
+        for(int i = 0; i < size; i++){
             str[i] = arr.get(i);
         }
         return str;
@@ -129,7 +129,7 @@ public class SongController {
         int len = str.length;
         String[] temp = null;
         for(int i = 0; i < len; i++){
-            temp = str[i].split(".");
+            temp = str[i].replace(".", " ").split(" ");
             newArrayList.add(temp[1]);
         }
         return newArrayList;

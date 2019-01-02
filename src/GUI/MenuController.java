@@ -30,6 +30,7 @@ public class MenuController {
             Stage stage = (Stage) about.getScene().getWindow();
             Pane root = (Pane) FXMLLoader.load(getClass().getResource("About.fxml"));
             Scene scene = new Scene(root,600,400);
+            scene.getStylesheets().add(getClass().getResource("AboutCss.css").toExternalForm());
             stage.setTitle("About");
             stage.setScene(scene);
             stage.show();

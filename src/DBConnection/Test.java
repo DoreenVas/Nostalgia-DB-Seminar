@@ -148,17 +148,16 @@ public class Test {
 //            System.out.println(myRes.getCount());
 //            System.out.println();
 //
-//            System.out.println("Getting song by tempo, duration and artist:");
-//            myRes = model.getSongs(new TempoContainer(150), new DurationContainer(120),new ArtistContainer("Gorillaz"));
-//            for (String line : myRes.getData()) {
-//                System.out.println(line);
-//            }
-//            System.out.println(myRes.getCount());
-//            System.out.println();
+            System.out.println("Getting song by tempo, duration and artist:");
+            myRes = model.getSongs(new TempoContainer(150), new DurationContainer(120),new ArtistContainer("Gorillaz"));
+            for (String line : myRes.getData()) {
+                System.out.println(line);
+            }
+            System.out.println(myRes.getCount());
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         try {
             model.closeConnection();

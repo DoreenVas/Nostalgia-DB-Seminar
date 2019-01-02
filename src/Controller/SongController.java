@@ -133,7 +133,7 @@ public class SongController {
     }
 
     private ArrayList<ArrayList<String>> parse2DArrayList(String[] str){
-        ArrayList<ArrayList<String>> newArrayList = new ArrayList<ArrayList<String>>();
+        ArrayList<ArrayList<String>> newArrayList = new ArrayList<>();
         ArrayList<String> newRow = null;
 
         String[] temp = null;

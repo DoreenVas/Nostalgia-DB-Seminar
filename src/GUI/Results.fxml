@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ResultsController">
@@ -23,9 +24,13 @@
       <TextArea fx:id="column" layoutX="102.0" layoutY="3.0" prefHeight="37.0" prefWidth="66.0" />
       <TextArea fx:id="surname" layoutX="303.0" layoutY="3.0" prefHeight="38.0" prefWidth="54.0" />
       <TextArea fx:id="name" layoutX="246.0" layoutY="3.0" prefHeight="38.0" prefWidth="54.0" />
-      <Button layoutX="304.0" layoutY="372.0" mnemonicParsing="false" text="-&gt;" AnchorPane.bottomAnchor="3.0" />
-      <Button layoutX="241.0" layoutY="372.0" mnemonicParsing="false" text="&lt;-" AnchorPane.bottomAnchor="3.0" />
-      <Button layoutX="83.0" layoutY="372.0" mnemonicParsing="false" onAction="#clearAll" text="clear" AnchorPane.bottomAnchor="3.0" />
-      <Button layoutX="396.0" layoutY="372.0" mnemonicParsing="false" onAction="#display" text="Display" AnchorPane.bottomAnchor="3.0" />
+      <HBox layoutY="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#clearAll" text="clear" />
+            <Button mnemonicParsing="false" text="&lt;-" />
+            <Button mnemonicParsing="false" text="-&gt;" />
+            <Button mnemonicParsing="false" onAction="#display" text="Display" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

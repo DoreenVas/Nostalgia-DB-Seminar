@@ -40,7 +40,6 @@ public class SearchController extends Search {
         }
     }
 
-
     protected void addValues(Map<String, ArrayList<String>> map) {
         if (era.isDisable() == false){
             ArrayList<String> arr = new ArrayList<>();

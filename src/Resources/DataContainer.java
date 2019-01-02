@@ -6,6 +6,7 @@ package Resources;
 public class DataContainer {
 
     private int count;
+    private String[] columns;
     private String[] data;
 
     /**
@@ -14,9 +15,10 @@ public class DataContainer {
      * @param data the data to store
      * @param count the row count of the data
      */
-    public DataContainer(String[] data, int count) {
+    public DataContainer(String[] data, String[] columns, int count) {
         this.count = count;
         this.data = data;
+        this.columns = columns;
     }
 
     /**
@@ -33,5 +35,13 @@ public class DataContainer {
      */
     public int getCount() {
         return count;
+    }
+
+    /**
+     *
+     * @return the datas columns
+     */
+    public String[] getColumns() {
+        return columns;
     }
 }

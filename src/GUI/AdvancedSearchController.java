@@ -43,6 +43,7 @@ public class AdvancedSearchController extends Search {
             searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText(),
                     !era.isDisabled());
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
+            searchController.setSliderLogicals();
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();

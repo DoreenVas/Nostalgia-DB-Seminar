@@ -20,14 +20,12 @@ public class TableInfo {
     private ArrayList<ArrayList<String>> fieldsValues;
 
     //dictionary from the gui
-    Map<String, String> infoFromGUI;
 
-    public TableInfo(){
-        this.colsNum = 0;
-        this.rowsNum = 0;
-        this.fields = new ArrayList<>();
-        this.fieldsValues = new ArrayList<ArrayList<String>>();
-        this.infoFromGUI = new HashMap<String, String>();
+    public TableInfo(int colsNum, int rowsNum, ArrayList<String> fields, ArrayList<ArrayList<String>> fieldsValues){
+        this.colsNum = colsNum;
+        this.rowsNum = rowsNum;
+        this.fields = fields;
+        this.fieldsValues = fieldsValues;
     }
 
     public int getColsNum(){
@@ -44,10 +42,6 @@ public class TableInfo {
 
     public ArrayList<ArrayList<String>> getFieldsValues(){
         return this.fieldsValues;
-    }
-
-    public String getValueByField(String field){
-        return this.infoFromGUI.get(field);
     }
 
     public void setColsNum(int col){

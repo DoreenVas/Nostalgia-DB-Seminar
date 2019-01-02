@@ -34,6 +34,6 @@ public class ArtistQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allArtistFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
-        return new DataContainer(res, count);
+        return new DataContainer(res, allArtistFields, count);
     }
 }

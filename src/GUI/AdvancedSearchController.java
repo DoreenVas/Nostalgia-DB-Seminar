@@ -23,7 +23,7 @@ public class AdvancedSearchController extends Search {
     @FXML
     private Slider tempo;
     @FXML
-    private Slider hotness;
+    private Slider popularity;
     @FXML
     private Slider duration;
     @FXML
@@ -85,9 +85,9 @@ public class AdvancedSearchController extends Search {
         }
 
         //adding hotness if not 0
-        if(hotness.getValue()!=0.0) {
+        if(popularity.getValue()!=0.0) {
             ArrayList<String> arrHotness = new ArrayList<>();
-            arrHotness.add(Double.toString(hotness.getValue()));
+            arrHotness.add(Double.toString(popularity.getValue()));
             map.put("hotness", arrHotness);
         }
 

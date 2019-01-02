@@ -1,18 +1,19 @@
 package DBConnection;
 
-import Resources.DataContainer;
-import Resources.DurationContainer;
-import Resources.GenreContainer;
-import Resources.TempoContainer;
+import Resources.*;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class SongQueries {
     private static SongQueries ourInstance = new SongQueries();
     private static Statement myStatement;
     private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
             "song.loudness", "song.year"/*, "song.words"*/};
+    private static final float tempoRate = (float)0.3;
+    private static final int durationRate = 30;
+    private static final float popularityRate = (float)0.0035;
 
     public static SongQueries getInstance(Statement statement) {
         myStatement = statement;
@@ -21,6 +22,19 @@ public class SongQueries {
 
     private SongQueries() {
 
+    }
+
+    private String[] getSameLines(String[] first, String[] second) {
+        ArrayList<String> newLines = new ArrayList<>();
+        for(String row1 : first) {
+            for(String row2 : second) {
+                if(row1.equals(row2)) {
+                    newLines.add(row2);
+                    break;
+                }
+            }
+        }
+        return newLines.toArray(new String[0]);
     }
 
     /**
@@ -127,9 +141,9 @@ public class SongQueries {
     public DataContainer getSongs(PopularityContainer popularity) throws SQLException{
         String[] fields = {"*"};
         String[] tables = {"song"};
-        double eps = 0.0035;
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addBetweenStatements("hotness", popularity.getValue() - eps, popularity.getValue() + eps);
+        builder = builder.addWhere().addBetweenStatements("hotness",
+                popularity.getValue() - popularityRate, popularity.getValue() + popularityRate);
         String query = builder.build();
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
@@ -151,6 +165,21 @@ public class SongQueries {
 
     }
 
+    // get songs by tempo
+    public DataContainer getSongs(TempoContainer tempo) throws SQLException {
+        String[] fields = {"*"};
+        String[] tables = {"song"};
+        QueryBuilder builder = new QueryBuilder(fields, tables);
+        float val = tempo.getValue();
+        float epsilon = val * tempoRate;
+        builder = builder.addWhere().addBetweenStatements("tempo", val - epsilon, val + epsilon);
+        String query = builder.build();
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] countField = {"count(*)"};
+        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, allSongFields, count);
+    }
+
     // get songs by artist
     public DataContainer getSongs(ArtistContainer artist) throws SQLException {
         String query = "select * from song, album_song, artist_album, artist " +
@@ -158,6 +187,19 @@ public class SongQueries {
                 "and artist.artist_id=artist_album.artist_id " +
                 "and artist_album.album_id=album_song.album_id " +
                 "and album_song.song_id=song.song_id";
+        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        int count = res.length;
+        return new DataContainer(res, allSongFields, count);
+    }
+
+    // get songs by artist
+    public DataContainer getSongs(SongContainer songName, ArtistContainer artist) throws SQLException {
+        String query = "select distinct * from song, album_song, artist_album, artist " +
+                "where artist.artist_name=\"" + artist.getValue() + "\" " +
+                "and artist.artist_id=artist_album.artist_id " +
+                "and artist_album.album_id=album_song.album_id " +
+                "and album_song.song_id=song.song_id " +
+                "and song.name=\"" + songName.getValue() + "\" ";
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         int count = res.length;
         return new DataContainer(res, allSongFields, count);
@@ -171,8 +213,7 @@ public class SongQueries {
         float value = duration.getValue();
         // get songs with given duration plus - minus an amount of time in relation to the given duration
 //        float epsilon = value * (float)0.1;
-        float epsilon = 30;
-        builder.addWhere().addBetweenStatements("duration", value - epsilon, value + epsilon);
+        builder.addWhere().addBetweenStatements("duration", value - durationRate, value + durationRate);
         String query = builder.build();
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
@@ -235,9 +276,8 @@ public class SongQueries {
         float durationValue = duration.getValue();
         float tempoValue = tempo.getValue();
         // get songs with given duration plus - minus an amount of time in relation to the given duration
-        float epsilonDuration = 30;
-        float epsilonTempo = tempoValue * (float)0.3;
-        builder.addWhere().addBetweenStatements("duration", durationValue - epsilonDuration, durationValue + epsilonDuration);
+        float epsilonTempo = tempoValue * tempoRate;
+        builder.addWhere().addBetweenStatements("duration", durationValue - durationRate, durationValue + durationRate);
         builder.addWhere().addBetweenStatements("tempo",tempoValue -epsilonTempo,tempoValue+epsilonTempo);
         String query = builder.build();
         String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
@@ -254,12 +294,11 @@ public class SongQueries {
         float durationValue = duration.getValue();
         float tempoValue = tempo.getValue();
         // get songs with given duration plus - minus an amount of time in relation to the given duration
-        float epsilonDuration = 30;
-        float epsilonTempo = tempoValue * (float)0.3;
+        float epsilonTempo = tempoValue * tempoRate;
         builder.addWhere().addEqualStatements("artist.artist_id","artist_album.artist_id");
         builder.addEqualStatements("artist_album.album_id","album_song.album_id");
         builder.addEqualStatements("album_song.song_id","song.song_id");
-        builder.addBetweenStatements("duration", durationValue - epsilonDuration, durationValue + epsilonDuration);
+        builder.addBetweenStatements("duration", durationValue - durationRate, durationValue + durationRate);
         builder.addBetweenStatements("tempo",tempoValue -epsilonTempo,tempoValue+epsilonTempo);
         builder.addEqualStatements("artist.artist_name", "\"" + artist.getValue() + "\"");
         String query = builder.build();
@@ -267,5 +306,19 @@ public class SongQueries {
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
         return new DataContainer(res, allSongFields, count);
+    }
+
+    public DataContainer getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
+                                  DurationContainer duration, ArtistContainer artist) throws SQLException {
+        DataContainer genreResult = getSongs(genre);
+        DataContainer popularityResult = getSongs(popularity);
+        DataContainer tempoResult = getSongs(tempo);
+        DataContainer durationResult = getSongs(duration);
+        DataContainer artistResult = getSongs(artist);
+        String[] data = getSameLines(genreResult.getData(), popularityResult.getData());
+        data = getSameLines(data, tempoResult.getData());
+        data = getSameLines(data, durationResult.getData());
+        data = getSameLines(data, artistResult.getData());
+        return new DataContainer(data, genreResult.getColumns(), data.length);
     }
 }

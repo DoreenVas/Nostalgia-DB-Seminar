@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Model {
     private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
@@ -167,9 +168,9 @@ public class Model {
      * @param tempo the wanted tempo of the songs
      * @return all of the songs that have a tempo as a function of the tempo
      */
-//    public String[] getSongs(TempoContainer tempo) {
-//
-//    }
+    public DataContainer getSongs(TempoContainer tempo) throws SQLException {
+        return SongQueries.getInstance(myStatement).getSongs(tempo);
+    }
 
     // gets a specific song's lyrics by song name
     // NADAV
@@ -202,13 +203,12 @@ public class Model {
     public DataContainer getSongs(DurationContainer duration) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(duration);
     }
-//
-//    // NADAV
-//    // get songs by genre, popularity, tempo, length, artist
-//    public String[] getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
-//                             DurationContainer duration, ArtistContainer artist) throws SQLException {
-//
-//    }
+
+    // get songs by genre, popularity, tempo, length, artist
+    public DataContainer getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
+                             DurationContainer duration, ArtistContainer artist) throws SQLException {
+        return SongQueries.getInstance(myStatement).getSongs(genre, popularity, tempo, duration, artist);
+    }
 //
 //    // get songs by popularity, tempo, length, artist
 //    public String[] getSongs(PopularityContainer popularity, TempoContainer tempo, DurationContainer duration,
@@ -261,6 +261,10 @@ public class Model {
     // get songs by genre, artist
     public DataContainer getSongs(GenreContainer genre, ArtistContainer artist) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(genre, artist);
+    }
+
+    public DataContainer getSongs(SongContainer songName, ArtistContainer artist) throws SQLException {
+        return SongQueries.getInstance(myStatement).getSongs(songName, artist);
     }
 //
 //    //LITAL
@@ -360,5 +364,9 @@ public class Model {
      */
     public DataContainer getArtists(ArtistContainer artist) throws SQLException{
         return ArtistQueries.getInstance(myStatement).getArtists(artist);
+    }
+
+    public DataContainer getArtists(SongContainer songName) throws SQLException{
+        return ArtistQueries.getInstance(myStatement).getArtists(songName);
     }
 }

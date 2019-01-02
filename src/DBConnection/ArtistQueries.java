@@ -1,6 +1,7 @@
 package DBConnection;
 
 import Resources.DataContainer;
+import Resources.SongContainer;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,6 +35,17 @@ public class ArtistQueries {
         String[] res = Executor.executeQuery(this.myStatement, query, allArtistFields);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        return new DataContainer(res, allArtistFields, count);
+    }
+
+    public DataContainer getArtists(SongContainer song) throws SQLException {
+        String query = "select distinct * from song, album_song, artist_album, artist " +
+                "where song.name=\"" + song.getValue() + "\" " +
+                "and album_song.song_id=song.song_id " +
+                "and artist.artist_id=artist_album.artist_id " +
+                "and artist_album.album_id=album_song.album_id;";
+        String[] res = Executor.executeQuery(this.myStatement, query, allArtistFields);
+        int count = res.length;
         return new DataContainer(res, allArtistFields, count);
     }
 }

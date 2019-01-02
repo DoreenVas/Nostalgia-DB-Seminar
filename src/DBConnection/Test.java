@@ -1,9 +1,6 @@
 package DBConnection;
 
-import Resources.DataContainer;
-import Resources.DurationContainer;
-import Resources.GenreContainer;
-import Resources.TempoContainer;
+import Resources.*;
 
 public class Test {
 
@@ -29,6 +26,7 @@ public class Test {
 
         try {
             DataContainer myRes;
+            String[] genre = {"rock", "disco", "rap"};
 
 //            System.out.println("Getting all songs:");
 //            myRes = model.getTable("song");
@@ -148,8 +146,41 @@ public class Test {
 //            System.out.println(myRes.getCount());
 //            System.out.println();
 //
-            System.out.println("Getting song by tempo, duration and artist:");
-            myRes = model.getSongs(new TempoContainer(150), new DurationContainer(120),new ArtistContainer("Gorillaz"));
+//            System.out.println("Getting song by tempo, duration and artist:");
+//            myRes = model.getSongs(new TempoContainer(150), new DurationContainer(120),new ArtistContainer("Gorillaz"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+//            System.out.println("Getting song by tempo of 30:");
+//            myRes = model.getSongs(new TempoContainer(30));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+//            System.out.println("Getting artist by song name:");
+//            myRes = model.getArtists(new SongContainer("The Court"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+//            System.out.println("Getting songs:");
+//            myRes = model.getSongs(new GenreContainer(genre), new PopularityContainer(0.41952), new TempoContainer(30),
+//                    new DurationContainer(60), new ArtistContainer("Zbigniew Preisner"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+            System.out.println("Getting song by song name and artist:");
+            myRes = model.getSongs(new SongContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
             for (String line : myRes.getData()) {
                 System.out.println(line);
             }

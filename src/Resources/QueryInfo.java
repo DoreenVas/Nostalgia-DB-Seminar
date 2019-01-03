@@ -1,7 +1,5 @@
 package Resources;
 
-import DBConnection.ArtistContainer;
-
 public class QueryInfo {
     private int year;
     private int from;

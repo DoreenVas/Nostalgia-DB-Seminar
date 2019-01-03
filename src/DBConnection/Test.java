@@ -6,9 +6,9 @@ public class Test {
 
     public static void main(String[] args) {
         boolean connected = false;
-        Model model = null;
+        DBModel model = null;
         try {
-            model = new Model();
+            model = new DBModel();
         } catch (Exception e) {
             // cannot read config file - need to give warning
             e.printStackTrace();

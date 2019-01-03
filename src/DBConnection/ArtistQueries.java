@@ -1,5 +1,6 @@
 package DBConnection;
 
+import Resources.ArtistContainer;
 import Resources.DataContainer;
 import Resources.SongContainer;
 

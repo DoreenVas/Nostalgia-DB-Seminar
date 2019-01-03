@@ -3,8 +3,8 @@ package Controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
+import DBConnection.DBModel;
 import DBConnection.Model;
 import Resources.*;
 
@@ -24,7 +24,7 @@ public class SongController {
         //this.infoFromGUI = new HashMap<String, ArrayList<String>>();
         this.modelInfo = new ArrayList<>();
         try{
-            this.model = new Model();
+            this.model = new DBModel();
             //model.openConnection();
         }
         catch (Exception e){

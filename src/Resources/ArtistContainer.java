@@ -1,4 +1,4 @@
-package DBConnection;
+package Resources;
 
 import Resources.Container;
 

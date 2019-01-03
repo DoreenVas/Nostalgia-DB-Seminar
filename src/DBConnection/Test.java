@@ -130,7 +130,6 @@ public class Test {
 //            System.out.println();
 //
 //            System.out.println("Getting song by genre name and duration:");
-//            String[] genre = {"rock", "disco", "rap"};
 //            myRes = model.getSongs(new GenreContainer(genre), new DurationContainer(120));
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
@@ -181,6 +180,23 @@ public class Test {
 
 //            System.out.println("Getting song by song name and artist:");
 //            myRes = model.getSongs(new SongContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
+
+
+
+
+
+
+
+
+
+
+//            System.out.println("Getting song by year, genre and duration:");
+//            myRes = model.getSongs(1979, new GenreContainer(genre), new DurationContainer(60));
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }

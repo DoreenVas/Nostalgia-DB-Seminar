@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class Model {
     private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
@@ -343,6 +342,10 @@ public class Model {
     // get songs by tempo, length, artist
     public DataContainer getSongs(TempoContainer tempo, DurationContainer duration, ArtistContainer artist) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(tempo, duration, artist);
+    }
+
+    public DataContainer getSongs(int year, GenreContainer genre, DurationContainer duration) throws SQLException {
+        return SongQueries.getInstance(myStatement).getSongs(year, genre, duration);
     }
 
 

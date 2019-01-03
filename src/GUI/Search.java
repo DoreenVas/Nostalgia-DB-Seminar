@@ -77,13 +77,6 @@ public abstract class Search {
         stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
-    protected void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @FXML
     protected void rb1Clicked() {
         // makes radio button able to select only if radio button is clicked
@@ -139,15 +132,15 @@ public abstract class Search {
             String birthYear = this.birthYear.getText();
             String age = this.age.getText();
             if( birthYear.equals("") || Integer.parseInt(birthYear) > 2018 || Integer.parseInt(birthYear) < 1900){
-                showAlert("birth year is invalid");
+                Alerter.showAlert("birth year is invalid", Alert.AlertType.WARNING);
                 return false;
             }
             if( age.equals("") || Integer.parseInt(age)<1 || Integer.parseInt(age)>120 ){
-                showAlert("age is invalid");
+                Alerter.showAlert("age is invalid", Alert.AlertType.WARNING);
                 return false;
             }
             if(Integer.parseInt(birthYear)+Integer.parseInt(age)>2019){
-                showAlert("birth year or age is incorrect");
+                Alerter.showAlert("birth year or age is incorrect", Alert.AlertType.WARNING);
                 return false;
             }
         }

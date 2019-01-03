@@ -309,15 +309,14 @@ public class SongQueries {
 
     public DataContainer getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
                                   DurationContainer duration, ArtistContainer artist) throws SQLException {
-        DataContainer genreResult = getSongs(genre);
+        DataContainer combination1 = getSongs(genre, artist);
+        DataContainer combination2 = getSongs(tempo, duration);
         DataContainer popularityResult = getSongs(popularity);
-        DataContainer tempoResult = getSongs(tempo);
-        DataContainer durationResult = getSongs(duration);
-        DataContainer artistResult = getSongs(artist);
-        String[] data = getSameLines(genreResult.getData(), popularityResult.getData());
-        data = getSameLines(data, tempoResult.getData());
-        data = getSameLines(data, durationResult.getData());
-        data = getSameLines(data, artistResult.getData());
-        return new DataContainer(data, genreResult.getColumns(), data.length);
+//        DataContainer tempoResult = getSongs(tempo);
+//        DataContainer durationResult = getSongs(duration);
+//        DataContainer artistResult = getSongs(artist);
+        String[] data = getSameLines(combination1.getData(), combination2.getData());
+        data = getSameLines(data, popularityResult.getData());
+        return new DataContainer(data, popularityResult.getColumns(), data.length);
     }
 }

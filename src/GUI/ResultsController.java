@@ -1,13 +1,11 @@
 package GUI;
 
 import Resources.TableInfo;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,9 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +44,7 @@ public class ResultsController {
             Map<String, ArrayList<String>> requestLyrics = new HashMap<>();
             ArrayList<String> values = new ArrayList<>();
             values.add(row.getName());
-            requestLyrics.put("name", values);
+            requestLyrics.put("lyrics", values);
             TableInfo info = connection.query(requestLyrics);
             String words = info.getFieldsValues().get(0).get(0);
 
@@ -60,6 +56,46 @@ public class ResultsController {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void home() {
+        try {
+            Stage stage = (Stage) results.getScene().getWindow();
+            VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
+            Scene scene = new Scene(root,450,500);
+            scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
+            stage.setTitle("Nostalgia");
+            stage.setScene(scene);
+            stage.show();
+            setCenter(stage);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void simpleSearch() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("Search.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            Stage stage = (Stage) results.getScene().getWindow();
+            Scene scene = new Scene(root,650,450);
+            scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
+            stage.setTitle("Search");
+            stage.setScene(scene);
+            stage.show();
+            setCenter(stage);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setCenter(Stage stage) {
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
     protected void addData(TableInfo info) {
@@ -78,68 +114,68 @@ public class ResultsController {
         this.surname.setText("");
     }
 
-    @FXML
-    protected void addRow() {
-        ArrayList<String> fields = new ArrayList<>();
-        String[] fieldsList = {"name", "dancibility", "duration", "tempo", "hotness",
-                "loudness", "year"};
-
-        for(String item : fieldsList) {
-            fields.add(item);
-        }
-        String[][] data = {{"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", "I am the best.\nI will win all of my battles.\nI am the best person alive, and whoever wishes to oppose me shall perish.\nIlove the color pink."},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
-        //this.data = data;
-
-        for (String field : fields) {
-            addColumn(field, field);
-        }
-
-        for (String[] row : data) {
-            SongRow item = new SongRow(row);
-            this.results.getItems().addAll(item);
-        }
-        this.name.setText("");
-        this.surname.setText("");
-    }
+//    @FXML
+//    protected void addRow() {
+//        ArrayList<String> fields = new ArrayList<>();
+//        String[] fieldsList = {"name", "dancibility", "duration", "tempo", "hotness",
+//                "loudness", "year"};
+//
+//        for(String item : fieldsList) {
+//            fields.add(item);
+//        }
+//        String[][] data = {{"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", "I am the best.\nI will win all of my battles.\nI am the best person alive, and whoever wishes to oppose me shall perish.\nIlove the color pink."},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
+//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
+//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
+//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
+//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
+//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
+//        //this.data = data;
+//
+//        for (String field : fields) {
+//            addColumn(field, field);
+//        }
+//
+//        for (String[] row : data) {
+//            SongRow item = new SongRow(row);
+//            this.results.getItems().addAll(item);
+//        }
+//        this.name.setText("");
+//        this.surname.setText("");
+//    }
 
     @FXML
     protected void clearAll() {
@@ -252,34 +288,4 @@ public class ResultsController {
             return year;
         }
     }
-
-//    public class Table {
-//        private int rows;
-//        private int columns;
-//        private ArrayList<String> fields;
-//        private String[][] data;
-//
-//        public Table(int rows, int columns, ArrayList<String> fields, String[][] data) {
-//            this.rows = rows;
-//            this.columns = columns;
-//            this.fields = fields;
-//            this.data = data;
-//        }
-//
-//        public int getRows() {
-//            return rows;
-//        }
-//
-//        public int getColumns() {
-//            return columns;
-//        }
-//
-//        public String[][] getData() {
-//            return data;
-//        }
-//
-//        public ArrayList<String> getFields() {
-//            return fields;
-//        }
-//    }
 }

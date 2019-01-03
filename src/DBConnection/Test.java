@@ -15,7 +15,7 @@ public class Test {
             return;
         }
 
-        while(!connected) {
+        while (!connected) {
             try {
                 model.openConnection();
                 connected = true;
@@ -70,7 +70,7 @@ public class Test {
 //            System.out.println();
 //
 //            System.out.println("Getting all songs with rock, metal, jazz, punk genre:");
-//            String genre[] = {"rock", "metal", "jazz", "punk"};
+//            String genre2[] = {"pop"};
 //            GenreContainer genreContainer = new GenreContainer(genre);
 //            myRes = model.getSongs(genreContainer);
 //            for (String line : myRes.getData()) {
@@ -179,13 +179,13 @@ public class Test {
 //            System.out.println(myRes.getCount());
 //            System.out.println();
 
-            System.out.println("Getting song by song name and artist:");
-            myRes = model.getSongs(new SongContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
-            for (String line : myRes.getData()) {
-                System.out.println(line);
-            }
-            System.out.println(myRes.getCount());
-            System.out.println();
+//            System.out.println("Getting song by song name and artist:");
+//            myRes = model.getSongs(new SongContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
+//            for (String line : myRes.getData()) {
+//                System.out.println(line);
+//            }
+//            System.out.println(myRes.getCount());
+//            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }

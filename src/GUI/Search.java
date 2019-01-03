@@ -36,6 +36,9 @@ public abstract class Search {
     @FXML
     protected Pane genres;
 
+    protected final int minHeight = 350;
+    protected final int minWidth = 192;
+
     public void initialize(String era, ObservableList list, String birthYear, String age, boolean rb1Selected) {
         if(rb1Selected) {
             rb1Clicked();
@@ -120,6 +123,8 @@ public abstract class Search {
             ResultsController resultsController = loader.getController();
             resultsController.addData(info);
 
+            stage.setMinHeight(minHeight);
+            stage.setMinWidth(minWidth);
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();

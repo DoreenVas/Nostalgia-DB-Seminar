@@ -21,12 +21,6 @@ public class ResultsController {
 
     @FXML
     private TableView<SongRow> results;
-    @FXML
-    private TextArea column;
-    @FXML
-    private TextArea name;
-    @FXML
-    private TextArea surname;
     private TableInfo data;
 
     @FXML
@@ -110,8 +104,6 @@ public class ResultsController {
             SongRow item = new SongRow(row);
             this.results.getItems().addAll(item);
         }
-        this.name.setText("");
-        this.surname.setText("");
     }
 
 //    @FXML
@@ -195,7 +187,6 @@ public class ResultsController {
         column.setCellValueFactory(new PropertyValueFactory<>(field));
         column.setText(displayName);
         this.results.getColumns().add(column);
-        this.column.setText("");
 
 //        TableColumn<Table, String> column = new TableColumn<>(this.column.getText());
 //        column.setCellValueFactory(new PropertyValueFactory<>(this.column.getText()));

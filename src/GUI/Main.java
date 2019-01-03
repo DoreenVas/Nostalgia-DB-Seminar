@@ -21,8 +21,16 @@ public class Main extends Application {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+        Connection connection = Connection.getInstance();
+        connection.OpenConnection();
     }
 
+    @Override
+    public void stop() throws Exception {
+        Connection connection = Connection.getInstance();
+        connection.CloseConnection();
+        super.stop();
+    }
 
     public static void main(String[] args) {
         launch(args);

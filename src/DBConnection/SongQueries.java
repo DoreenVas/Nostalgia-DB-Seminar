@@ -1,9 +1,6 @@
 package DBConnection;
 
 import Resources.*;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -16,8 +13,6 @@ public class SongQueries {
     private static final float tempoRate = (float)0.3;
     private static final int durationRate = 30;
     private static final float popularityRate = (float)0.0035;
-
-    private static PreparedStatement genrePreparedStatement;
 
     public static SongQueries getInstance(Statement statement) throws SQLException {
         myStatement = statement;

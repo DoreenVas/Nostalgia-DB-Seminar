@@ -152,11 +152,22 @@ public class SongController {
     }
 
     // method to change letters to lower and then only the first letter to upper
+    private String matchStringToPattern(String str){
+        str = str.toLowerCase();
+        str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        return str;
+    }
 
-    //method to change time from minutes to seconds
+    // method to change time from minutes to seconds
+    private int minutesToseconds(String duration){
+        String[] time = duration.split(":");
+        //time[0] - is the minutes
+        //time[1] - the seconds
+        int seconds = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);;
+        return seconds;
+    }
 
-
-
+// should return the data in arraylist in which every place is 50 rows of songs
 
 
 

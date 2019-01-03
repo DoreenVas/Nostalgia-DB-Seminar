@@ -20,13 +20,13 @@ public class Connection {
     }
 
     public void OpenConnection() throws SQLException {
-        throw new SQLException("Couldn't open connection to db.\nTry again?");
-        //controller.openModelConnection();
+        //throw new SQLException("Couldn't open connection to db.\nTry again?");
+        controller.openModelConnection();
     }
 
     public void CloseConnection() throws SQLException {
-        throw new SQLException("Couldn't close connection to db");
-        //controller.closeModelConnection();
+        //throw new SQLException("Couldn't close connection to db");
+        controller.closeModelConnection();
     }
 
     public TableInfo query(Map<String, ArrayList<String>> map){

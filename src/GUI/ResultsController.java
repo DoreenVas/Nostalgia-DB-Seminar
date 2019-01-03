@@ -271,6 +271,9 @@ public class ResultsController {
         }
 
         public String getWords() {
+            if(words == null) {
+                return "Sorry, we do not have the lyrics for this song.";
+            }
             return words;
         }
 

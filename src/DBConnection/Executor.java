@@ -1,5 +1,7 @@
 package DBConnection;
 
+import Resources.AlertMessages;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +27,7 @@ class Executor {
             // close result
             myRes.close();
         } catch (Exception e) {
-            throw new SQLException("Failed to execute a query.", e);
+            throw new SQLException(AlertMessages.queryExecutionFailure(), e);
         }
         return result.split("\n");
     }
@@ -47,7 +49,7 @@ class Executor {
             // close result
             myRes.close();
         } catch (Exception e) {
-            throw new SQLException("Failed to execute a query.", e);
+            throw new SQLException(AlertMessages.queryExecutionFailure(), e);
         }
         return result.split("\n");
     }

@@ -32,7 +32,8 @@ public class DBModel implements Model {
             this.password = br.readLine().replace("password: ", "");
             br.close();
         } catch(Exception e) {
-            throw new IOException("Failed to connect to DB\nReason: couldn't read from configuration file.");
+            throw new IOException(AlertMessages.failedConnection("couldn't read from configuration file.",
+                    false));
         }
     }
 
@@ -43,7 +44,7 @@ public class DBModel implements Model {
             // create a statement
             this.myStatement = this.myConn.createStatement();
         } catch (Exception e) {
-            throw new DBConnectionException("Failed to open a connection to the Database.", e);
+            throw new DBConnectionException(AlertMessages.failedConnection(), e);
         }
 ////            // execute query
 //            ResultSet myRes = myStatement.executeQuery("select * from song");
@@ -60,7 +61,7 @@ public class DBModel implements Model {
             this.myStatement.close();
             this.myConn.close();
         } catch (Exception e) {
-            throw new DBConnectionException("Failed to close the connection to the Database.", e);
+            throw new DBConnectionException(AlertMessages.failedDisconnection(), e);
         }
     }
 
@@ -76,7 +77,7 @@ public class DBModel implements Model {
     public DataContainer getData(QueryInfo info) throws SQLException {
         DataContainer dataContainer = activateAppropriateQuery(info);
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException("The search yielded no results.\nPlease enter different search parameters.");
+            throw new SQLException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }

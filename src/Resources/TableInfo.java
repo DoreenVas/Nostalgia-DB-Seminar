@@ -32,7 +32,7 @@ public class TableInfo {
         return this.colsNum;
     }
 
-    public int getRowsNumNum(){
+    public int getRowsNum(){
         return this.rowsNum;
     }
 

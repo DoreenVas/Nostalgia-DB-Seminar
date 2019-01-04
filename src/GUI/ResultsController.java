@@ -7,23 +7,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 public class ResultsController {
 
     @FXML
     private TableView<SongRow> results;
+    @FXML
+    private Label countLabel;
     Map<String, ArrayList<String>> map;
     private TableInfo data;
+    private int doubleClick = 0;
 
     @FXML
     private void display() {
@@ -130,6 +134,7 @@ public class ResultsController {
     }
 
     protected void addData(TableInfo info, Map<String, ArrayList<String>> map) {
+        countLabel.setText("Displaying " + info.getFieldsValues().size() + " results out of " + info.getRowsNum());
         this.results.getItems().clear();
         this.results.getColumns().clear();
         data = info;
@@ -144,6 +149,11 @@ public class ResultsController {
             SongRow item = new SongRow(row);
             this.results.getItems().addAll(item);
         }
+        this.results.setOnMouseClicked((event) -> {
+            if(event.getClickCount() == 2) {
+                display();
+            }
+        });
     }
 
 //    @FXML

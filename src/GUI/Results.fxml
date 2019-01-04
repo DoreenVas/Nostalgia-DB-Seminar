@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -34,5 +35,6 @@
          <image>
             <Image url="GUI\pic\backToTheFuture.png" />
          </image></ImageView>
+      <Label fx:id="countLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="103.0" layoutY="12.0" text="Displaying 0 results" AnchorPane.topAnchor="12.0" />
    </children>
 </AnchorPane>

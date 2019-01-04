@@ -11,7 +11,6 @@ public class QueryInfo {
     private ArtistContainer artist;
     private AlbumContainer album;
     private LyricsContainer lyrics;
-    private HotnessContainer hotness;
 
     public QueryInfo() {
         this.year = -1;
@@ -24,7 +23,6 @@ public class QueryInfo {
         this.duration = null;
         this.album = null;
         this.lyrics = null;
-        this.hotness = null;
     }
 
     public int getYear() {
@@ -105,13 +103,5 @@ public class QueryInfo {
 
     public void setLyrics(LyricsContainer lyrics) {
         this.lyrics = lyrics;
-    }
-
-    public HotnessContainer getHotness() {
-        return hotness;
-    }
-
-    public void setHotness(HotnessContainer hotness) {
-        this.hotness = hotness;
     }
 }

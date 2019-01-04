@@ -96,15 +96,19 @@ public abstract class Search {
     }
 
     @FXML
-    protected void results() {
+    protected boolean results() {
         try {
-            if(checkValues() == false)
-                return;
+            if(checkValues() == false) {
+                return false;
+            }
             Connection connection = Connection.getInstance();
 //            connection.OpenConnection();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
             TableInfo info = connection.query(map);
+            if(info == null) {
+                return false;
+            }
 //            connection.CloseConnection();
 
             FXMLLoader loader = new FXMLLoader();
@@ -124,7 +128,9 @@ public abstract class Search {
             setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     protected boolean checkValues(){

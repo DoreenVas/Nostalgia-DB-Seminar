@@ -26,7 +26,6 @@
             <Image url="GUI\pic\home.png" />
          </image>
       </ImageView>
-      <Button layoutX="249.0" layoutY="16.0" mnemonicParsing="false" onAction="#simpleSearch" text="Return to search" AnchorPane.topAnchor="8.0" />
-      <Button layoutX="543.0" layoutY="8.0" mnemonicParsing="false" onAction="#clearAll" text="clear" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
+      <Button layoutX="482.0" layoutY="8.0" mnemonicParsing="false" onAction="#simpleSearch" text="Return to search" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="8.0" />
    </children>
 </AnchorPane>

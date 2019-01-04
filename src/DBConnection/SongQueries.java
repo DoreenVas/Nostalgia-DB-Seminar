@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SongQueries {
     private static SongQueries ourInstance = new SongQueries();
     private static Statement myStatement;
-    private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
+    private static String[] allSongFields = {/*"song.song_id", */"song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
             "song.loudness", "song.year"/*, "song.words"*/};
     private static final float tempoRate = (float)0.3;
     private static final int durationRate = 30;
@@ -70,7 +70,7 @@ public class SongQueries {
     }
 
     // gets songs by genre
-    public DataContainer getSongs(GenreContainer genre) throws SQLException {
+    public DataContainer getSongs(GenreContainer genre, String songConditions) throws SQLException {
 
         // needs checking!!!
 
@@ -102,13 +102,9 @@ public class SongQueries {
                 "where AID.artist_id=artist_album.artist_id) as RES " +
                 "where RES.album_id=album_song.album_id) as SID " +
                 "where SID.song_id=song.song_id");
-
-        // was testing
-//        String query2 = "select * from song, album_song, artist_album, artist_genre, genre " +
-//                "where genre.genre_name=\"" + genre.getValue()[0] + "\" and artist_genre.genre_id=genre.genre_id " +
-//                "and artist_genre.artist_id=artist_album.artist_id " +
-//                "and artist_album.album_id=album_song.album_id " +
-//                "and album_song.song_id=song.song_id";
+        if(!songConditions.equals("")) {
+            query.append(" and ").append(songConditions);
+        }
         String[] res = Executor.executeQuery(myStatement, query.toString(), allSongFields);
         int count = res.length;
         return new DataContainer(res,  allSongFields, count);
@@ -146,11 +142,11 @@ public class SongQueries {
     }
 
     // get songs by song name
-    public DataContainer getSongs(String songName) throws SQLException {
+    public DataContainer getSongs(SongContainer song) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
+        builder = builder.addWhere().addEqualStatements("name", "\"" + song.getValue() + "\"");
         String query = builder.build();
         String[] res = Executor.executeQuery(myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
@@ -175,12 +171,15 @@ public class SongQueries {
     }
 
     // get songs by artist
-    public DataContainer getSongs(ArtistContainer artist) throws SQLException {
+    public DataContainer getSongs(ArtistContainer artist, String songConditions) throws SQLException {
         String query = "select * from song, album_song, artist_album, artist " +
                 "where artist.artist_name=\"" + artist.getValue() + "\" " +
                 "and artist.artist_id=artist_album.artist_id " +
                 "and artist_album.album_id=album_song.album_id " +
                 "and album_song.song_id=song.song_id";
+        if(!songConditions.equals("")) {
+            query += " and " + songConditions;
+        }
         String[] res = Executor.executeQuery(myStatement, query, allSongFields);
         int count = res.length;
         return new DataContainer(res, allSongFields, count);
@@ -246,6 +245,47 @@ public class SongQueries {
         return query;
     }
 
+    public DataContainer getSongs(ArtistContainer artist, AlbumContainer album, String songConditions) throws SQLException {
+        //StringBuilder query = new StringBuilder();
+        String query = "select * from song, album_song, artist_album, artist, album " +
+                "where artist.artist_name=\"" + artist.getValue() + "\" " +
+                "and artist.artist_id=artist_album.artist_id " +
+                "and artist_album.album_id=album_song.album_id " +
+                "and album.album_name=\"" + album.getValue() + "\" " +
+                "and album_song.song_id=song.song_id";
+        if(!songConditions.equals("")) {
+            query += " and " + songConditions;
+        }
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
+        int count = res.length;
+        return new DataContainer(res, allSongFields, count);
+    }
+
+    public DataContainer getSongs(AlbumContainer album, String songConditions) throws SQLException {
+        //StringBuilder query = new StringBuilder();
+        String query = "select * from song, album_song, album " +
+                "where album.album_id=album_song.album_id " +
+                "and album.album_name=\"" + album.getValue() + "\" " +
+                "and album_song.song_id=song.song_id";
+        if(!songConditions.equals("")) {
+            query += " and " + songConditions;
+        }
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
+        int count = res.length;
+        return new DataContainer(res, allSongFields, count);
+    }
+
+    public DataContainer getSongs(String songConditions) throws SQLException {
+        //StringBuilder query = new StringBuilder();
+        String query = "select * from song";
+        if(!songConditions.equals("")) {
+            query += " where " + songConditions;
+        }
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
+        int count = res.length;
+        return new DataContainer(res, allSongFields, count);
+    }
+
     public DataContainer getSongs(int year, GenreContainer genre, DurationContainer duration) throws SQLException {
         String songQuery = "song.year=" + year + " and " +
                 "song.duration between " + (duration.getValue() - durationRate) + " and " + (duration.getValue() + durationRate);
@@ -265,7 +305,7 @@ public class SongQueries {
     }
 
     // get songs by genre, artist
-    public DataContainer getSongs(GenreContainer genre, ArtistContainer artist) throws SQLException {
+    public DataContainer getSongs(GenreContainer genre, ArtistContainer artist, String songConditions) throws SQLException {
         StringBuilder query = new StringBuilder("select * from song, " +
                 "(select distinct song_id from album_song, " +
                 "(select album_id from artist_album, " +
@@ -283,6 +323,62 @@ public class SongQueries {
                 "and AID.artist_id=artist_album.artist_id) as RES " +
                 "where RES.album_id=album_song.album_id) as SID " +
                 "where SID.song_id=song.song_id");
+        if(!songConditions.equals("")) {
+            query.append(" and ").append(songConditions);
+        }
+        String[] res = Executor.executeQuery(myStatement, query.toString(), allSongFields);
+        int count = res.length;
+        return new DataContainer(res, allSongFields, count);
+    }
+
+    // get songs by genre, artist
+//    public DataContainer getSongs(GenreContainer genre, ArtistContainer artist,
+//                                  AlbumContainer album) throws SQLException {
+//        StringBuilder query = new StringBuilder("select * from song, album, genre, artist, artist_album," +
+//                " album_song, artist_genre " +
+//                "where ");
+//        String genres[] = genre.getValue();
+//        for (int i = 0; i < genres.length - 1; i++) {
+//            query.append("genre_name=\"").append(genres[i]).append("\" or ");
+//        }
+//        query.append("genre_name=\"").append(genres[genres.length - 1]).append("\"");
+//        query.append(" and artist_genre.genre_id=genre.genre_id " +
+//                "and artist_genre.artist_id=artist.artist_id " +
+//                "and artist.artist_name=\"" + artist.getValue() + "\" " +
+//                "and artist.artist_id=artist_album.artist_id " +
+//                "and album.album_name=\"" + album.getValue() + "\" " +
+//                "and album.album_id=album_song.album_id " +
+//                "and album_song.song_id=song.song_id");
+//        String[] res = Executor.executeQuery(myStatement, query.toString(), allSongFields);
+//        int count = res.length;
+//        return new DataContainer(res, allSongFields, count);
+//    }
+
+    // get songs by genre, artist
+    public DataContainer getSongs(GenreContainer genre, ArtistContainer artist,
+                                  AlbumContainer album, String songConditions) throws SQLException {
+        StringBuilder query = new StringBuilder("select * from song, " +
+                "(select distinct song_id from album_song, " +
+                "(select artist_album.album_id from artist_album, album, " +
+                "(select artist_id from artist_genre, " +
+                "(select genre_id from genre " +
+                "where ");
+        String genres[] = genre.getValue();
+        for (int i = 0; i < genres.length - 1; i++) {
+            query.append("genre_name=\"").append(genres[i]).append("\" or ");
+        }
+        query.append("genre_name=\"").append(genres[genres.length - 1]).append("\"");
+        query.append(") as ID " +
+                "where artist_genre.genre_id=ID.genre_id) as AID , artist " +
+                "where AID.artist_id=artist.artist_id and artist.artist_name=\"" + artist.getValue() + "\" " +
+                "and AID.artist_id=artist_album.artist_id " +
+                "and album.album_name=\"" + album.getValue() + "\"" +
+                ") as RES " +
+                "where RES.album_id=album_song.album_id) as SID " +
+                "where SID.song_id=song.song_id");
+        if(!songConditions.equals("")) {
+            query.append(" and ").append(songConditions);
+        }
         String[] res = Executor.executeQuery(myStatement, query.toString(), allSongFields);
         int count = res.length;
         return new DataContainer(res, allSongFields, count);
@@ -330,7 +426,7 @@ public class SongQueries {
 
     public DataContainer getSongs(GenreContainer genre, PopularityContainer popularity, TempoContainer tempo,
                                   DurationContainer duration, ArtistContainer artist) throws SQLException {
-        DataContainer combination1 = getSongs(genre, artist);
+        DataContainer combination1 = getSongs(genre, artist, "");
         DataContainer combination2 = getSongs(tempo, duration);
         DataContainer popularityResult = getSongs(popularity);
         String[] data = getSameLines(combination1.getData(), combination2.getData());

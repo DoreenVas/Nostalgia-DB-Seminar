@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public interface Model {
 
-    DataContainer getData(QueryInfo info);
+    DataContainer getData(QueryInfo info) throws SQLException;
     void closeConnection() throws SQLException;
     void openConnection() throws SQLException;
 }

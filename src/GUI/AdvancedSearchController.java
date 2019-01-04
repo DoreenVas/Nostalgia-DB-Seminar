@@ -88,7 +88,7 @@ public class AdvancedSearchController extends Search {
         if(popularity.getValue()!=0.0) {
             ArrayList<String> arrHotness = new ArrayList<>();
             arrHotness.add(Double.toString(popularity.getValue()));
-            map.put("hotness", arrHotness);
+            map.put("popularity", arrHotness);
         }
 
         //adding duration if not 0
@@ -106,7 +106,7 @@ public class AdvancedSearchController extends Search {
         }
 
         //adding album_name if given one
-        if(!artist_name.getText().equals("")) {
+        if(!album_name.getText().equals("")) {
             ArrayList<String> arr_album_name = new ArrayList<>();
             arr_album_name.add(album_name.getText());
             map.put("album_name", arr_album_name);

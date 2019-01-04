@@ -1,15 +1,15 @@
 package Resources;
 
-public class PopularityContainer implements Container<Double> {
+public class PopularityContainer implements Container<Float> {
 
-    private double popularity;
+    private float popularity;
 
-    public PopularityContainer(double popularity) {
+    public PopularityContainer(float popularity) {
         this.popularity = popularity;
     }
 
     @Override
-    public Double getValue() {
+    public Float getValue() {
         return this.popularity;
     }
 }

@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.SongController;
 import Resources.TableInfo;
+import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +17,11 @@ public class Connection {
     }
 
     private Connection() {
-        controller = new SongController();
+        try {
+            controller = new SongController();
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     public void OpenConnection() throws SQLException {
@@ -29,7 +34,7 @@ public class Connection {
         controller.closeModelConnection();
     }
 
-    public TableInfo query(Map<String, ArrayList<String>> map){
+    public TableInfo query(Map<String, ArrayList<String>> map) {
         // for debugging
 //        String[] fields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
 //                "loudness", "year"};
@@ -47,6 +52,13 @@ public class Connection {
 //        }
 //        TableInfo info = new TableInfo(fields.length, 100, fieldsList, data);
 //        return info;
-        return this.controller.getInfoFromGUI(map);
+        TableInfo info = null;
+        try {
+            info = this.controller.getInfoFromGUI(map);
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            return null;
+        }
+        return info;
     }
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,7 +25,14 @@ public class ResultsController {
 
     @FXML
     private void display() {
-        SongRow row = results.getSelectionModel().getSelectedItem();
+        TableView.TableViewSelectionModel selectionModel = results.getSelectionModel();
+        SongRow row;
+        if(selectionModel.getSelectedItems().size() != 0) {
+            row = results.getSelectionModel().getSelectedItem();
+        } else {
+            Alerter.showAlert("Please select a song to display its information.", Alert.AlertType.INFORMATION);
+            return;
+        }
         try {
             Stage stage = (Stage)results.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader();
@@ -40,6 +48,9 @@ public class ResultsController {
             requestLyrics.put("lyrics", values);
             TableInfo info = connection.query(requestLyrics);
             String words = info.getFieldsValues().get(0).get(0);
+            if(words.equals("null")) {
+                words = "The lyrics for this song are unavailable.\nSorry for the inconvenience";
+            }
 
             songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
                     row.getHotness(), row.getLoudness(), row.getYear(), words, data);
@@ -169,11 +180,6 @@ public class ResultsController {
 //    }
 
     @FXML
-    protected void clearAll() {
-        this.results.getItems().clear();
-    }
-
-    @FXML
     protected void addColumn(String field, String displayName) {
 //        TableColumn<Person, String> nameColumn = new TableColumn<>("Name");
 //        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -219,26 +225,26 @@ public class ResultsController {
 //        }
 
         public SongRow(ArrayList<String> data) {
-            this.song_id = data.get(0);
-            this.name = data.get(1);
-            this.dancibility = data.get(2);
-            this.duration = data.get(3);
-            this.tempo = data.get(4);
-            this.hotness = data.get(5);
-            this.loudness = data.get(6);
-            this.year = data.get(7);
+            //this.song_id = data.get(0);
+            this.name = data.get(0);
+            this.dancibility = data.get(1);
+            this.duration = data.get(2);
+            this.tempo = data.get(3);
+            this.hotness = data.get(4);
+            this.loudness = data.get(5);
+            this.year = data.get(6);
 //            this.words = data.get(8);
         }
 
         public SongRow(String[] data) {
-            this.song_id = data[0];
-            this.name = data[1];
-            this.dancibility = data[2];
-            this.duration = data[3];
-            this.tempo = data[4];
-            this.hotness = data[5];
-            this.loudness = data[6];
-            this.year = data[7];
+            //this.song_id = data[0];
+            this.name = data[0];
+            this.dancibility = data[1];
+            this.duration = data[2];
+            this.tempo = data[3];
+            this.hotness = data[4];
+            this.loudness = data[5];
+            this.year = data[6];
 //            this.words = data[8];
         }
 

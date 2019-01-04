@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,26 +11,21 @@ import Resources.*;
 
 public class SongController {
     // an array from model: [fields, "count", info1, info2, ...]
-    private ArrayList<String> modelInfo;
+    //private ArrayList<String> modelInfo;
 
     // an object which holds the information needed for the gui
-    private TableInfo infGiv;
+    //private TableInfo infGiv;
 
     //dictionary from the gui
     //Map<String, ArrayList<String>> infoFromGUI;
 
     private Model model;
 
-    public SongController(){
+    public SongController() throws IOException {
         //this.infoFromGUI = new HashMap<String, ArrayList<String>>();
-        this.modelInfo = new ArrayList<>();
-        try{
-            this.model = new DBModel();
+        //this.modelInfo = new ArrayList<>();
+        this.model = new DBModel();
             //model.openConnection();
-        }
-        catch (Exception e){
-            System.out.println("error");
-        }
     }
 
     public void closeModelConnection() throws SQLException {
@@ -46,14 +42,14 @@ public class SongController {
      * first line is the field, the second to end is: "value1", "value2"...
      * @param infoFromGUI
      */
-    public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI){
+    public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException {
         QueryInfo queryInfo = new QueryInfo();
         boolean yearOrAge = false;
         int year = -1;
         int age = -1;
         int from = -1;
         int to =-1;
-        double pop = -1;
+        float pop = -1;
         float tempo = -1;
         String[] str;
         String temp = null;
@@ -70,11 +66,11 @@ public class SongController {
                     break;
                 case "era":
                     str = entry.getValue().get(0).split("'");
-                    year = Integer.parseInt(str[0]);
+                    from = Integer.parseInt(str[0]);
                     //int to;
-                    if(year < 2000){
-                        year += 1900;
-                        to = year + 9;
+                    if(from < 2000){
+                        from += 1900;
+                        to = from + 9;
                     }
                     else{
                         to = Calendar.getInstance().get(Calendar.YEAR);
@@ -100,17 +96,17 @@ public class SongController {
                     TempoContainer tempoContainer = new TempoContainer(tempo);
                     queryInfo.setTempo(tempoContainer);
                     break;
-                case "srtist":
+                case "artist_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
                     ArtistContainer artistContainer = new ArtistContainer(temp);
                     queryInfo.setArtist(artistContainer);
                     break;
                 case "popularity":
-                    pop = Double.parseDouble(entry.getValue().get(0));
+                    pop = Float.parseFloat(entry.getValue().get(0));
                     PopularityContainer popularityContainer = new PopularityContainer(pop);
                     queryInfo.setPopularity(popularityContainer);
                     break;
-                case "album":
+                case "album_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
                     AlbumContainer album = new AlbumContainer(temp);
                     queryInfo.setAlbum(album);
@@ -120,16 +116,15 @@ public class SongController {
                     LyricsContainer lyricsContainer = new LyricsContainer(temp);
                     queryInfo.setLyrics(lyricsContainer);
                     break;
-                case "hotness":
-                tempo = Float.parseFloat(entry.getValue().get(0));
-                HotnessContainer hotnessContainer = new HotnessContainer(tempo);
-                queryInfo.setHotness(hotnessContainer);
-                break;
+//                case "hotness":
+//                    tempo = Float.parseFloat(entry.getValue().get(0));
+//                    HotnessContainer hotnessContainer = new HotnessContainer(tempo);
+//                    queryInfo.setHotness(hotnessContainer);
+//                    break;
             }
 
             if(yearOrAge){
-                from = year;
-                to = year + age;
+                year += age;
             }
 
         }
@@ -160,8 +155,12 @@ public class SongController {
         int len = str.length;
         String[] temp = null;
         for(int i = 0; i < len; i++){
-            temp = str[i].replace(".", " ").split(" ");
-            newArrayList.add(temp[1]);
+            if(str[i].contains(".")) {
+                temp = str[i].replace(".", " ").split(" ");
+                newArrayList.add(temp[1]);
+            } else {
+                newArrayList.add(str[i]);
+            }
         }
         return newArrayList;
     }
@@ -191,7 +190,7 @@ public class SongController {
 
     // method to change time from minutes to seconds
     private float minutesToseconds(String duration){
-        String[] time = duration.split(":");
+        String[] time = duration.replace(".", " ").split(" ");
         //time[0] - is the minutes
         //time[1] - the seconds
         float seconds = Float.parseFloat(time[0])*60 + Integer.parseInt(time[1]);;

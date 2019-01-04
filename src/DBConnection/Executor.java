@@ -1,4 +1,5 @@
 package DBConnection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,12 +9,12 @@ class Executor {
 
     /**
      *
+     * Executes given query and returns an array of all the lines of the result.
      * @param myStatement The sql statement
      * @param query The sql query
      * @param columns The wanted columns from the table
      * @return A string array of all the lines from the query's answer
      *
-     * Executes given query and returns an array of all the lines of the result.
      */
     static String[] executeQuery(Statement myStatement, String query, String[] columns) throws SQLException {
         String result = "";
@@ -29,6 +30,14 @@ class Executor {
         return result.split("\n");
     }
 
+    /**
+     *
+     * Executes given query from a prepared statement, and returns an array of all the lines of the result.
+     * @param myStatement The sql statement
+     * @param columns The wanted columns from the table
+     * @return A string array of all the lines from the query's answer
+     *
+     */
     static String[] executeQuery(PreparedStatement myStatement, String[] columns) throws SQLException {
         String result = "";
         try {
@@ -43,6 +52,13 @@ class Executor {
         return result.split("\n");
     }
 
+    /**
+     *
+     * @param myRes the result set that was returnes from the query.
+     * @param columns the results columns.
+     * @return the queries data as a string.
+     * @throws SQLException throws exception if there is a problem reading from given resultSet.
+     */
     private static String joinResult(ResultSet myRes, String[] columns) throws SQLException {
         int j = 0;
         // initialize builder
@@ -60,12 +76,12 @@ class Executor {
         return builder.toString();
     }
 
-    private static StringBuilder addFirstRow(String[] columns) {
-        StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < columns.length - 1; i++) {
-            builder.append(columns[i]).append(",");
-        }
-        builder.append(columns[columns.length - 1]).append("\n");
-        return builder;
-    }
+//    private static StringBuilder addFirstRow(String[] columns) {
+//        StringBuilder builder = new StringBuilder();
+//        for(int i = 0; i < columns.length - 1; i++) {
+//            builder.append(columns[i]).append(",");
+//        }
+//        builder.append(columns[columns.length - 1]).append("\n");
+//        return builder;
+//    }
 }

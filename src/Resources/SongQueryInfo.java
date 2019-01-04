@@ -1,6 +1,6 @@
 package Resources;
 
-public class QueryInfo {
+public class SongQueryInfo {
     private int year;
     private int from;
     private int to;
@@ -12,7 +12,7 @@ public class QueryInfo {
     private AlbumContainer album;
     private LyricsContainer lyrics;
 
-    public QueryInfo() {
+    public SongQueryInfo() {
         this.year = -1;
         this.from = -1;
         this.to = -1;

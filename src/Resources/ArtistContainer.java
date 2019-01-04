@@ -1,6 +1,6 @@
 package Resources;
 
-import Resources.Container;
+import java.sql.SQLException;
 
 public class ArtistContainer implements Container<String> {
 

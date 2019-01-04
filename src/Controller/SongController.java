@@ -43,7 +43,7 @@ public class SongController {
      * @param infoFromGUI
      */
     public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException {
-        QueryInfo queryInfo = new QueryInfo();
+        SongQueryInfo queryInfo = new SongQueryInfo();
         boolean yearOrAge = false;
         int year = -1;
         int age = -1;

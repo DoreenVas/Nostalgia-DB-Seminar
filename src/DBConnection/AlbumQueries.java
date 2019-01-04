@@ -1,5 +1,11 @@
 package DBConnection;
 
+import Resources.AlbumContainer;
+import Resources.ArtistContainer;
+import Resources.DataContainer;
+import Resources.GenreContainer;
+
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AlbumQueries {

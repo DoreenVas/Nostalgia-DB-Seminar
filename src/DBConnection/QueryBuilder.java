@@ -1,6 +1,6 @@
 package DBConnection;
 
-class QueryBuilder {
+public class QueryBuilder {
 
     // the query builder
     private StringBuilder query;

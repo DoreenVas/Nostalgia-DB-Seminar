@@ -110,11 +110,11 @@ public class SongQueries {
         return new DataContainer(res,  allSongFields, count);
     }
 
-    public DataContainer getLyrics(String songName) throws SQLException {
+    public DataContainer getLyrics(LyricsContainer song) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addEqualStatements("name", "\"" + songName + "\"");
+        builder = builder.addWhere().addEqualStatements("name", "\"" + song.getValue() + "\"");
         String query = builder.build();
         String[] columns = {"words"};
         String[] res = Executor.executeQuery(myStatement, query, columns);
@@ -164,9 +164,9 @@ public class SongQueries {
         float epsilon = val * tempoRate;
         builder = builder.addWhere().addBetweenStatements("tempo", val - epsilon, val + epsilon);
         String query = builder.build();
-        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
-        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        int count = Integer.parseInt(Executor.executeQuery(myStatement, builder.addCount(query), countField)[0]);
         return new DataContainer(res, allSongFields, count);
     }
 
@@ -193,13 +193,13 @@ public class SongQueries {
                 "and artist_album.album_id=album_song.album_id " +
                 "and album_song.song_id=song.song_id " +
                 "and song.name=\"" + songName.getValue() + "\" ";
-        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
         int count = res.length;
         return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by song length
-    public DataContainer getSongs(DurationContainer duration) throws SQLException {
+    DataContainer getSongs(DurationContainer duration) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -208,14 +208,14 @@ public class SongQueries {
 //        float epsilon = value * (float)0.1;
         builder.addWhere().addBetweenStatements("duration", value - durationRate, value + durationRate);
         String query = builder.build();
-        String[] res = Executor.executeQuery(this.myStatement, query, allSongFields);
+        String[] res = Executor.executeQuery(myStatement, query, allSongFields);
         String[] countField = {"count(*)"};
-        int count = Integer.parseInt(Executor.executeQuery(this.myStatement, builder.addCount(query), countField)[0]);
+        int count = Integer.parseInt(Executor.executeQuery(myStatement, builder.addCount(query), countField)[0]);
         return new DataContainer(res, allSongFields, count);
     }
 
     // get songs by genre, length
-    public DataContainer getSongs(GenreContainer genre, DurationContainer duration) throws SQLException {
+    DataContainer getSongs(GenreContainer genre, DurationContainer duration) throws SQLException {
         String songQuery = "song.duration between " + (duration.getValue() - durationRate) + " and " +
                 (duration.getValue() + durationRate);
         StringBuilder query = attachGenreQueryToSongQuery(songQuery, genre);
@@ -245,7 +245,7 @@ public class SongQueries {
         return query;
     }
 
-    public DataContainer getSongs(ArtistContainer artist, AlbumContainer album, String songConditions) throws SQLException {
+    DataContainer getSongs(ArtistContainer artist, AlbumContainer album, String songConditions) throws SQLException {
         //StringBuilder query = new StringBuilder();
         String query = "select * from song, album_song, artist_album, artist, album " +
                 "where artist.artist_name=\"" + artist.getValue() + "\" " +

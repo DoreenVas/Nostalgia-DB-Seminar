@@ -65,16 +65,10 @@ public abstract class Search {
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
-
-    protected void setCenter(Stage stage) {
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
     @FXML
@@ -125,7 +119,7 @@ public abstract class Search {
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
             return false;

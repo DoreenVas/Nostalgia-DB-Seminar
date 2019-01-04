@@ -18,12 +18,6 @@ public class MenuController {
     @FXML
     private Button exit;
 
-    private void setCenter(Stage stage) {
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
-    }
-
     @FXML
     protected void about() {
         try {
@@ -34,7 +28,7 @@ public class MenuController {
             stage.setTitle("About");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +44,7 @@ public class MenuController {
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }

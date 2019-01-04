@@ -74,7 +74,7 @@ public class ResultsController {
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class ResultsController {
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -127,12 +127,6 @@ public class ResultsController {
             return;
         }
         addData(Connection.getInstance().query(map), map);
-    }
-
-    private void setCenter(Stage stage) {
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
     protected void addData(TableInfo info, Map<String, ArrayList<String>> map) {

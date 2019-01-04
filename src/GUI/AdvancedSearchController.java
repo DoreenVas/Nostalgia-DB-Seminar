@@ -46,7 +46,7 @@ public class AdvancedSearchController extends Search {
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
-            setCenter(stage);
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }

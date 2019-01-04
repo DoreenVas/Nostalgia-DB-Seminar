@@ -118,7 +118,7 @@ public abstract class Search {
             Scene scene = new Scene(root,450,500);
 
             ResultsController resultsController = loader.getController();
-            resultsController.addData(info);
+            resultsController.addData(info, map);
 
             stage.setMinHeight(minHeight);
             stage.setMinWidth(minWidth);

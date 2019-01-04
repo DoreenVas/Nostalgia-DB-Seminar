@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.DataContainer;
 import Resources.TableInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ public class ResultsController {
 
     @FXML
     private TableView<SongRow> results;
+    Map<String, ArrayList<String>> map;
     private TableInfo data;
 
     @FXML
@@ -53,7 +55,7 @@ public class ResultsController {
             }
 
             songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
-                    row.getHotness(), row.getLoudness(), row.getYear(), words, data);
+                    row.getHotness(), row.getLoudness(), row.getYear(), words, data, map);
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
@@ -96,14 +98,48 @@ public class ResultsController {
         }
     }
 
+    @FXML
+    protected void backToTheFuture() {
+        int year;
+        if(map.containsKey("era")) {
+            String[] era = map.get("era").get(0).replace("'", " ").split(" ");
+            int num = Integer.parseInt(era[0]) + 10;
+            ArrayList<String> arr = new ArrayList<>();
+            arr.add(String.valueOf(num) + "'" + era[1]);
+            map.replace("era", arr);
+        } else if(map.containsKey("birthYear")) {
+            String age = map.get("age").get(0);
+            ArrayList<String> arr = new ArrayList<>();
+            arr.add(String.valueOf(Integer.parseInt(age) + 10));
+            map.replace("age", arr);
+        } else {
+            year = Integer.parseInt(data.getFieldsValues().get(0).get(6));
+            ArrayList<String> arr = new ArrayList<>();
+            year += 10;
+            arr.add(String.valueOf(year));
+            map.put("from", arr);
+            arr = new ArrayList<>();
+            arr.add(String.valueOf(year + 9));
+            map.put("to", arr);
+        }
+        TableInfo info = Connection.getInstance().query(map);
+        if(info == null) {
+            return;
+        }
+        addData(Connection.getInstance().query(map), map);
+    }
+
     private void setCenter(Stage stage) {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
         stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
-    protected void addData(TableInfo info) {
+    protected void addData(TableInfo info, Map<String, ArrayList<String>> map) {
+        this.results.getItems().clear();
+        this.results.getColumns().clear();
         data = info;
+        this.map = map;
         ArrayList<String> fields = info.getFields();
 
         for (String field : fields) {
@@ -228,7 +264,7 @@ public class ResultsController {
             //this.song_id = data.get(0);
             this.name = data.get(0);
             this.dancibility = data.get(1);
-            this.duration = data.get(2);
+            this.duration = String.valueOf(Float.parseFloat(data.get(2)) / 60);
             this.tempo = data.get(3);
             this.hotness = data.get(4);
             this.loudness = data.get(5);
@@ -240,7 +276,7 @@ public class ResultsController {
             //this.song_id = data[0];
             this.name = data[0];
             this.dancibility = data[1];
-            this.duration = data[2];
+            this.duration = String.valueOf(Float.parseFloat(data[2]) / 60);
             this.tempo = data[3];
             this.hotness = data[4];
             this.loudness = data[5];

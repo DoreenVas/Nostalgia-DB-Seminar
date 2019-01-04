@@ -76,7 +76,7 @@ public class SongController {
                         to = Calendar.getInstance().get(Calendar.YEAR);
                     }
                     break;
-                case "year":
+                case "birthYear":
                     yearOrAge = true;
                     str = entry.getValue().get(0).split(",");
                     year = Integer.parseInt(str[0]);
@@ -122,11 +122,9 @@ public class SongController {
 //                    queryInfo.setHotness(hotnessContainer);
 //                    break;
             }
-
-            if(yearOrAge){
-                year += age;
-            }
-
+        }
+        if(yearOrAge){
+            year += age;
         }
         queryInfo.setYear(year);
         queryInfo.setFrom(from);

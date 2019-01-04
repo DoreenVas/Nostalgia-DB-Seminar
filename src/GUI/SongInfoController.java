@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SongInfoController {
 
@@ -30,10 +31,12 @@ public class SongInfoController {
     private String tempo;
     private String loudness;
     private String dancibility;
+    Map<String, ArrayList<String>> map;
     private TableInfo data;
 
     public void initialize(String name, String dancibility, String duration, String tempo,
-                           String hotness, String loudness, String year, String words, TableInfo data) {
+                           String hotness, String loudness, String year, String words, TableInfo data,
+                           Map<String, ArrayList<String>> map) {
         this.name.setText(name);
         this.name.setAlignment(Pos.CENTER);
 //        this.dancibility = dancibility;
@@ -44,6 +47,7 @@ public class SongInfoController {
         this.year.setText(year);
         this.words.setText(words);
         this.data = data;
+        this.map = map;
         ret.setAlignment(Pos.CENTER);
     }
 
@@ -56,7 +60,7 @@ public class SongInfoController {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,450,500);
             ResultsController resultsController = loader.getController();
-            resultsController.addData(data);
+            resultsController.addData(data, map);
 
             stage.setTitle("Results");
             stage.setScene(scene);

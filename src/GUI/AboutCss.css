@@ -1,7 +1,6 @@
 .root {
-	-fx-background-image: url("pic/cassette4.jpg");
-	-fx-background-size:auto;
-	-fx-background-repeat:repeat;
+	-fx-background-image: url("pic/disks.jpg");
+	-fx-background-size:cover;
 }
 
 .TextArea{

@@ -60,18 +60,15 @@ public class SongComparator implements Comparator<ArrayList<String>> {
         float result3 = 0;
 
         if(this.index1 > -1 && this.wantedResult1 > -1){
-            result1 = Math.abs(this.wantedResult1) -
-                    Math.abs(Float.parseFloat(val.get(this.index1)));
+            result1 = Math.abs(this.wantedResult1 - Float.parseFloat(val.get(this.index1)));
         }
 
         if(this.index2 > -1 && this.wantedResult2 > -1){
-            result2 = Math.abs(this.wantedResult2) -
-                    Math.abs(Float.parseFloat(val.get(this.index2)));
+            result2 = Math.abs(this.wantedResult2 - Float.parseFloat(val.get(this.index2)));
         }
 
         if(this.index3 > -1 && this.wantedResult3 > -1){
-            result3 = Math.abs(this.wantedResult3) -
-                    Math.abs(Float.parseFloat(val.get(this.index3)));
+            result3 = Math.abs(this.wantedResult3 - Float.parseFloat(val.get(this.index3)));
         }
 
         float dist = result1 + result2 + result3;

@@ -28,11 +28,17 @@ public class Main extends Application {
         Connection connection = Connection.getInstance();
         boolean tryAgain = true;
         while(tryAgain) {
+            // try to open a connection to the controller
             try {
                 connection.OpenConnection();
                 tryAgain = false;
             } catch (Exception e) {
+                // display appropriate message
                 tryAgain = Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR, "yesno");
+                // if user clicked no then close the application
+                if(!tryAgain) {
+                    primaryStage.close();
+                }
             }
         }
     }
@@ -40,14 +46,21 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         Connection connection = Connection.getInstance();
+        // try to close the connection to the controller
         try {
             connection.CloseConnection();
         } catch (Exception e) {
             e.toString();
         }
+        // stop the application
         super.stop();
     }
 
+    /**
+     *
+     * Activates the application.
+     * @param args the arguments to the main
+     */
     public static void main(String[] args) {
         launch(args);
     }

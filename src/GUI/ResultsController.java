@@ -134,7 +134,7 @@ public class ResultsController {
         addData(Connection.getInstance().query(map), map);
     }
 
-    protected void addData(TableInfo info, Map<String, ArrayList<String>> map) {
+    void addData(TableInfo info, Map<String, ArrayList<String>> map) {
         this.results.getItems().clear();
         this.results.getColumns().clear();
         data = info;
@@ -267,7 +267,7 @@ public class ResultsController {
 //            this.words = words;
 //        }
 
-        public SongRow(ArrayList<String> data) {
+        SongRow(ArrayList<String> data) {
             //this.song_id = data.get(0);
             this.name = data.get(0);
             this.dancibility = data.get(1);

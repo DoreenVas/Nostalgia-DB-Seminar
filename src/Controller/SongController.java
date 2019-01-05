@@ -216,14 +216,13 @@ public class SongController {
             for(int j = 0; j < temp.length; j++){
                 newRow.add(j,temp[j]);
             }
-            if(countRows < 50){
-                tempArrayList.add(i,newRow);
-            }
-            else{
+            if(countRows > 50){
                 countRows = 0;
                 newArrayList.add(tempArrayList);
                 tempArrayList = new ArrayList<>();
             }
+            tempArrayList.add(countRows,newRow);
+            countRows++;
         }
 
         if(tempArrayList.size() > 0){

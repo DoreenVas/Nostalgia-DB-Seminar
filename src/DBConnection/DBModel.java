@@ -124,15 +124,17 @@ public class DBModel implements Model {
 
     private DataContainer activateAppropriateSongQuery(SongQueryInfo info) throws SQLException {
         DataContainer dataContainer = null;
-        boolean first = true;
+        boolean first = true, yearInserted = false;
         float val;
         StringBuilder songConditions = new StringBuilder();
         if(info.getYear() != -1) {
             songConditions.append("song.year=").append(info.getYear());
             first = false;
+            yearInserted = true;
         } else if(info.getFrom() != -1) {
             songConditions.append("song.year between ").append(info.getFrom()).append(" and ").append(info.getTo());
             first = false;
+            yearInserted = true;
         } else if(info.getLyrics() != null) {
             return getLyrics(info.getLyrics());
         }
@@ -154,6 +156,9 @@ public class DBModel implements Model {
             val = info.getDuration().getValue();
             songConditions.append("song.duration between ").append(val - durationRate).append(" and ")
                     .append(val + durationRate);
+        }
+        if(yearInserted) {
+            songConditions.append(" order by song.year asc ");
         }
 
         if(info.getGenere() != null) {

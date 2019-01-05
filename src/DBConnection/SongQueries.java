@@ -118,9 +118,19 @@ public class SongQueries {
         String query = builder.build();
         String[] columns = {"words"};
         String[] res = Executor.executeQuery(myStatement, query, columns);
+        res = lyricsCombiner(res);
         String[] countField = {"count(*)"};
         int count = Integer.parseInt(Executor.executeQuery(myStatement, builder.addCount(query), countField)[0]);
         return new DataContainer(res, columns, count);
+    }
+
+    private String[] lyricsCombiner(String[] res) {
+        String[] words = new String[1];
+        words[0] = "";
+        for(int i = 0; i < res.length; i++) {
+            words[0] += res[i] + "\n";
+        }
+        return words;
     }
 
     /**

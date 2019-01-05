@@ -90,8 +90,8 @@ public class SongController {
                     age = Integer.parseInt(str[0]);
                     break;
                 case "duration":
-                    float time = minutesToseconds(entry.getValue().get(0));
-                    DurationContainer durationContainer = new DurationContainer(time);
+                    duration = minutesToseconds(entry.getValue().get(0));
+                    DurationContainer durationContainer = new DurationContainer(duration);
                     queryInfo.setDuration(durationContainer);
                     break;
                 case "tempo":

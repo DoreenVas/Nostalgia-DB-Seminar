@@ -151,8 +151,11 @@ public class SongController {
         ArrayList<ArrayList<ArrayList<String>>> data;
 
         //order the rows only if the next line is not true
-        if((duration == -1 && tempo == -1 && popularity == -1) || shouldOrderResults){
+        if((duration == -1 && tempo == -1 && popularity == -1)){
             data = resultsOfSearchUnordered(dc.getData());
+        }
+        else if(shouldOrderResults){
+            data = resultsOfSearch(dc.getData());
         }
         else{
             data = resultsOfSearchOrdered(fields,dc.getData(),duration,tempo,popularity);
@@ -197,6 +200,30 @@ public class SongController {
     }
 
 
+    /**
+     *
+     * @param str
+     * @return an arraylist of results
+     */
+    private ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch(String[] str){
+        ArrayList<ArrayList<ArrayList<String>>> newArrayList = new ArrayList<>();
+        ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
+        ArrayList<String> newRow = null;
+
+        String[] temp = null;
+        for(int i = 0; i < str.length; i++){
+            newRow = new ArrayList<String>();
+            temp = str[i].split(",");
+            for(int j = 0; j < temp.length; j++){
+                newRow.add(j,temp[j]);
+            }
+            tempArrayList.add(newRow);
+        }
+        newArrayList.add(tempArrayList);
+
+        return newArrayList;
+
+    }
     /**
      *
      * @param str

@@ -221,7 +221,7 @@ public class SongController {
                 case "duration":
                     durationIndex = i;
                     break;
-                case "popularity":
+                case "hotness":
                     popularityIndex = i;
                     break;
                 default:

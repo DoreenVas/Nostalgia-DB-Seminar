@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
@@ -25,10 +22,13 @@ public class ResultsController {
     private TableView<SongRow> results;
     @FXML
     private Label countLabel;
+    @FXML
+    private Button goBackButton;
+    @FXML
+    private Button goForwardButton;
     Map<String, ArrayList<String>> map;
-    private TableInfo data;
+    private TableInfo data = null;
     private int groupIndex = 0;
-    private int doubleClick = 0;
 
     @FXML
     private void display() {
@@ -137,6 +137,9 @@ public class ResultsController {
     void addData(TableInfo info, Map<String, ArrayList<String>> map) {
         this.results.getItems().clear();
         this.results.getColumns().clear();
+        if(data == null) {
+            goBackButton.setDisable(true);
+        }
         data = info;
         this.map = map;
         ArrayList<String> fields = info.getFields();
@@ -157,6 +160,31 @@ public class ResultsController {
                 display();
             }
         });
+    }
+
+    @FXML
+    protected void goForward() {
+        int size = data.getFieldsValues().size();
+        if(groupIndex < size) {
+            groupIndex++;
+            goBackButton.setDisable(false);
+            addData(data, map);
+        }
+        if(groupIndex == size - 1) {
+            goForwardButton.setDisable(true);
+        }
+    }
+
+    @FXML
+    protected void goBack() {
+        if(groupIndex > 0) {
+            --groupIndex;
+            goForwardButton.setDisable(false);
+            addData(data, map);
+        }
+        if(groupIndex == 0) {
+            goBackButton.setDisable(true);
+        }
     }
 
 //    @FXML

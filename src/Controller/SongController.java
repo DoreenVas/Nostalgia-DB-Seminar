@@ -56,7 +56,7 @@ public class SongController {
         DataContainer dc = null;
         float duration = -1;
         float popularity = -1;
-
+        boolean lyricsFlag = false;
 
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
         {
@@ -115,15 +115,11 @@ public class SongController {
                     queryInfo.setAlbum(album);
                     break;
                 case "lyrics":
+                    lyricsFlag = true;
                     temp = matchStringToPattern(entry.getValue().get(0));
                     LyricsContainer lyricsContainer = new LyricsContainer(temp);
                     queryInfo.setLyrics(lyricsContainer);
                     break;
-//                case "hotness":
-//                    tempo = Float.parseFloat(entry.getValue().get(0));
-//                    HotnessContainer hotnessContainer = new HotnessContainer(tempo);
-//                    queryInfo.setHotness(hotnessContainer);
-//                    break;
             }
         }
         if(yearOrAge){
@@ -134,17 +130,44 @@ public class SongController {
         queryInfo.setTo(to);
         dc = this.model.getData(queryInfo);
 
+        //create and return the TableInfo
+        return createTableInfo(dc,duration,tempo,popularity,lyricsFlag);
+    }
+
+    /**
+     *
+     * @param dc
+     * @param duration
+     * @param tempo
+     * @param popularity
+     * @param shouldOrderResults
+     * @return a TableInfo object
+     */
+    private TableInfo createTableInfo(DataContainer dc, float duration, float tempo,
+                                      float popularity, boolean shouldOrderResults){
         int row = dc.getCount();
         int col = dc.getColumns().length;
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
-        //ArrayList<ArrayList<String>> data = parse2DArrayList(dc.getData());
-        ArrayList<ArrayList<ArrayList<String>>> data = resultsOfSearch(fields,
-                dc.getData(),duration,tempo,popularity);
+        ArrayList<ArrayList<ArrayList<String>>> data;
+
+        //order the rows only if the next line is not true
+        if((duration == -1 && tempo == -1 && popularity == -1) || shouldOrderResults){
+            data = resultsOfSearchUnordered(dc.getData());
+        }
+        else{
+            data = resultsOfSearchOrdered(fields,dc.getData(),duration,tempo,popularity);
+        }
+
         TableInfo ti = new TableInfo(col,row,fields,data);
         return ti;
     }
 
-
+    /**
+     *
+     * @param size
+     * @param arr
+     * @return a string representation of a given string arraylist
+     */
     private String[] parseFromArrayToList(int size, ArrayList<String> arr){
         String[] str = new String[size];
         for(int i = 0; i < size; i++){
@@ -153,6 +176,11 @@ public class SongController {
         return str;
     }
 
+    /**
+     *
+     * @param str
+     * @return parse a given string list into arraylist
+     */
     private ArrayList<String> parseToArrayList(String[] str){
         ArrayList<String> newArrayList = new ArrayList<String>();
         int len = str.length;
@@ -168,31 +196,62 @@ public class SongController {
         return newArrayList;
     }
 
-    /*
-    private ArrayList<ArrayList<String>> parse2DArrayList(String[] str){
-        ArrayList<ArrayList<String>> newArrayList = new ArrayList<>();
+
+    /**
+     *
+     * @param str
+     * @return  an unordered arraylist that contains in each cell an arraylists of 50
+     * rows. each row is an arraylist of results.
+     */
+    private ArrayList<ArrayList<ArrayList<String>>> resultsOfSearchUnordered(String[] str){
+        ArrayList<ArrayList<ArrayList<String>>> newArrayList = new ArrayList<>();
+        ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
         ArrayList<String> newRow = null;
 
         String[] temp = null;
+        int countRows = 0;
         for(int i = 0; i < str.length; i++){
             newRow = new ArrayList<String>();
             temp = str[i].split(",");
             for(int j = 0; j < temp.length; j++){
                 newRow.add(j,temp[j]);
             }
-            newArrayList.add(i,newRow);
+            if(countRows < 50){
+                tempArrayList.add(i,newRow);
+            }
+            else{
+                countRows = 0;
+                newArrayList.add(tempArrayList);
+                tempArrayList = new ArrayList<>();
+            }
         }
+
+        if(tempArrayList.size() > 0){
+            newArrayList.add(tempArrayList);
+        }
+
         return newArrayList;
     }
-*/
-    // method to change letters to lower and then only the first letter to upper
+
+
+    /**
+     *
+     * @param str
+     * @return change all letters to lower case except for the first letter,
+     * which should be upper case.
+     */
     private String matchStringToPattern(String str){
         str = str.toLowerCase();
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
         return str;
     }
 
-    // method to change time from minutes to seconds
+
+    /**
+     *
+     * @param duration
+     * @return convert time from minutes to seconds
+     */
     private float minutesToseconds(String duration){
         String[] time = duration.replace(".", " ").split(" ");
         //time[0] - is the minutes
@@ -202,12 +261,12 @@ public class SongController {
     }
 
 
-// should return the data in arraylist in which every place is 50 rows of songs
-    public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch
-    (ArrayList<String> fields, String[] str, float duration, float tempo, float popularity){
-
-        SongComparator comparator = new SongComparator();
-
+    /**
+     * update the needed indexes in the Song comparator
+     * @param fields
+     * @param comparator
+     */
+    private void updateComparatorIndexes(ArrayList<String> fields, SongComparator comparator){
         //get the index of tempo, duration, popularity and update the comparator values accordingly
         int tempoIndex = -1;
         int durationIndex = -1;
@@ -231,13 +290,29 @@ public class SongController {
         comparator.setIndex1(tempoIndex);
         comparator.setIndex2(popularityIndex);
         comparator.setIndex3(durationIndex);
+    }
+
+
+    /**
+     * the method uses comparator and priority queue
+     * @param fields
+     * @param str
+     * @param duration
+     * @param tempo
+     * @param popularity
+     * @return an nordered arraylist that contains in each cell an arraylists of 50
+     *      * rows. each row is an arraylist of results.
+     */
+    public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearchOrdered
+    (ArrayList<String> fields, String[] str, float duration, float tempo, float popularity){
+
+        SongComparator comparator = new SongComparator();
+        updateComparatorIndexes(fields,comparator);
         comparator.setWantedResult1(tempo);
         comparator.setWantedResult2(popularity);
         comparator.setWantedResult3(duration);
 
-        /*
-        order the songs, using a priority queue
-         */
+        /* order the songs, using a priority queue */
         PriorityQueue<ArrayList<String>> pQueue =
                 new PriorityQueue<ArrayList<String>>(str.length,comparator);
 

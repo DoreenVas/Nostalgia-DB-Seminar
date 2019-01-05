@@ -236,7 +236,7 @@ public class SongController {
             for(int j = 0; j < temp.length; j++){
                 newRow.add(j,temp[j]);
             }
-            if(countRows > 50){
+            if(countRows >= 50){
                 countRows = 0;
                 newArrayList.add(tempArrayList);
                 tempArrayList = new ArrayList<>();

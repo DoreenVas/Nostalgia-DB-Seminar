@@ -150,12 +150,12 @@ public class SongController {
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
         ArrayList<ArrayList<ArrayList<String>>> data;
 
-        //order the rows only if the next line is not true
-        if((duration == -1 && tempo == -1 && popularity == -1)){
-            data = resultsOfSearchUnordered(dc.getData());
-        }
-        else if(shouldOrderResults){
+        //order the rows only if the next conditions are not true
+        if(shouldOrderResults){
             data = resultsOfSearch(dc.getData());
+        }
+        else if((duration == -1 && tempo == -1 && popularity == -1)){
+            data = resultsOfSearchUnordered(dc.getData());
         }
         else{
             data = resultsOfSearchOrdered(fields,dc.getData(),duration,tempo,popularity);

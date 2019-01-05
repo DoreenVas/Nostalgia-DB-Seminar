@@ -59,17 +59,17 @@ public class SongComparator implements Comparator<ArrayList<String>> {
         float result2 = 0;
         float result3 = 0;
 
-        if(this.index1 > -1){
+        if(this.index1 > -1 && this.wantedResult1 > -1){
             result1 = Math.abs(this.wantedResult1) -
                     Math.abs(Float.parseFloat(val.get(this.index1)));
         }
 
-        if(this.index2 > -1){
+        if(this.index2 > -1 && this.wantedResult2 > -1){
             result2 = Math.abs(this.wantedResult2) -
                     Math.abs(Float.parseFloat(val.get(this.index2)));
         }
 
-        if(this.index3 > -1){
+        if(this.index3 > -1 && this.wantedResult3 > -1){
             result3 = Math.abs(this.wantedResult3) -
                     Math.abs(Float.parseFloat(val.get(this.index3)));
         }

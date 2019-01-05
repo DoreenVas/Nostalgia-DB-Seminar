@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -134,7 +135,8 @@ public class SongController {
         int row = dc.getCount();
         int col = dc.getColumns().length;
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
-        ArrayList<ArrayList<String>> data = parse2DArrayList(dc.getData());
+        //ArrayList<ArrayList<String>> data = parse2DArrayList(dc.getData());
+        ArrayList<ArrayList<ArrayList<String>>> data = resultsOfSearch(fields,dc.getData());
         TableInfo ti = new TableInfo(col,row,fields,data);
         return ti;
     }
@@ -163,6 +165,7 @@ public class SongController {
         return newArrayList;
     }
 
+    /*
     private ArrayList<ArrayList<String>> parse2DArrayList(String[] str){
         ArrayList<ArrayList<String>> newArrayList = new ArrayList<>();
         ArrayList<String> newRow = null;
@@ -178,7 +181,7 @@ public class SongController {
         }
         return newArrayList;
     }
-
+*/
     // method to change letters to lower and then only the first letter to upper
     private String matchStringToPattern(String str){
         str = str.toLowerCase();
@@ -195,12 +198,72 @@ public class SongController {
         return seconds;
     }
 
+
 // should return the data in arraylist in which every place is 50 rows of songs
+    public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch(ArrayList<String> fields, String[] str){
 
+        SongComparator comparator = new SongComparator();
 
+        //get the index of tempo, duration, popularity and update the comparator values accordingly
+        int tempoIndex = 0;
+        int durationIndex = 0;
+        int popularityIndex = 0;
 
+        for(int i=0; i<fields.size(); i++){
+            switch(fields.get(i).toLowerCase()){
+                case "tempo":
+                    tempoIndex = i;
+                    break;
+                case "duration":
+                    durationIndex = i;
+                    break;
+                case "popularity":
+                    popularityIndex = i;
+                    break;
+                default:
+                    break;
+            }
+        }
+        comparator.setIndex1(tempoIndex);
+        comparator.setIndex2(popularityIndex);
+        comparator.setIndex3(durationIndex);
 
+        /*
+        order the songs, using a priority queue
+         */
+        PriorityQueue<ArrayList<String>> pQueue =
+                new PriorityQueue<ArrayList<String>>(str.length,comparator);
+
+        ArrayList<ArrayList<ArrayList<String>>> newArrayList = new ArrayList<>();
+        ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
+        ArrayList<String> newRow = null;
+
+        String[] temp = null;
+        for(int i = 0; i < str.length; i++){
+            newRow = new ArrayList<String>();
+            temp = str[i].split(",");
+            for(int j = 0; j < temp.length; j++){
+                newRow.add(j,temp[j]);
+            }
+            pQueue.add(newRow);
+        }
+
+        /*
+        now all all ordered rows to an array list:
+        every 50 rows are collected into one index of an arraylist.
+         */
+        int i = 0;
+        while(!pQueue.isEmpty()){
+            if(i<50){
+                tempArrayList.add(i,pQueue.poll());
+                i++;
+            }
+            else{
+                i=0;
+                newArrayList.add(tempArrayList);
+            }
+        }
+
+        return newArrayList;
+    }
 }
-
-
-//map.put("dog", "type of animal");

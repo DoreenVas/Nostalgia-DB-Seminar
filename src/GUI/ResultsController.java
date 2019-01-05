@@ -27,6 +27,7 @@ public class ResultsController {
     private Label countLabel;
     Map<String, ArrayList<String>> map;
     private TableInfo data;
+    private int groupIndex = 0;
     private int doubleClick = 0;
 
     @FXML
@@ -53,7 +54,7 @@ public class ResultsController {
             values.add(row.getName());
             requestLyrics.put("lyrics", values);
             TableInfo info = connection.query(requestLyrics);
-            String words = info.getFieldsValues().get(0).get(0);
+            String words = info.getFieldsValues().get(0).get(0).get(0);
             if(words.equals("null")) {
                 words = "The lyrics for this song are unavailable.\nSorry for the inconvenience";
             }
@@ -117,7 +118,7 @@ public class ResultsController {
             arr.add(String.valueOf(Integer.parseInt(age) + 10));
             map.replace("age", arr);
         } else {
-            year = Integer.parseInt(data.getFieldsValues().get(0).get(6));
+            year = Integer.parseInt(data.getFieldsValues().get(0).get(0).get(6));
             ArrayList<String> arr = new ArrayList<>();
             year += 10;
             arr.add(String.valueOf(year));
@@ -134,7 +135,6 @@ public class ResultsController {
     }
 
     protected void addData(TableInfo info, Map<String, ArrayList<String>> map) {
-        countLabel.setText("Displaying " + info.getFieldsValues().size() + " results out of " + info.getRowsNum());
         this.results.getItems().clear();
         this.results.getColumns().clear();
         data = info;
@@ -145,7 +145,10 @@ public class ResultsController {
             addColumn(field, field);
         }
 
-        for (ArrayList<String> row : info.getFieldsValues()) {
+        ArrayList<ArrayList<String>> group = info.getFieldsValues().get(groupIndex);
+        countLabel.setText("Displaying " + group.size() + " results out of " + info.getRowsNum());
+
+        for (ArrayList<String> row : group) {
             SongRow item = new SongRow(row);
             this.results.getItems().addAll(item);
         }

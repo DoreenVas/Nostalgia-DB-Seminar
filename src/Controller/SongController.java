@@ -271,7 +271,7 @@ public class SongController {
                 tempArrayList = new ArrayList<>();
             }
         }
-        if(tempArrayList != null){
+        if(tempArrayList.size() > 0){
             newArrayList.add(tempArrayList);
         }
 

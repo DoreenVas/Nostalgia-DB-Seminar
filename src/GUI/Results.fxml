@@ -14,12 +14,12 @@
       <TableView fx:id="results" layoutY="64.0" prefHeight="303.0" prefWidth="574.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0" />
       <HBox alignment="CENTER" layoutY="350.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" text="&lt;-" />
+            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#goBack" text="&lt;-" />
             <Button mnemonicParsing="false" onAction="#display" text="Display selected">
                <HBox.margin>
                   <Insets left="20.0" right="20.0" />
                </HBox.margin></Button>
-            <Button mnemonicParsing="false" text="-&gt;" />
+            <Button fx:id="goForwardButton" mnemonicParsing="false" onAction="#goForward" text="-&gt;" />
          </children>
       </HBox>
       <ImageView fitHeight="30.0" fitWidth="40.0" layoutX="18.0" layoutY="11.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">

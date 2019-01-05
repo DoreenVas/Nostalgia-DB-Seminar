@@ -208,17 +208,10 @@ public class SongController {
     private ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch(String[] str){
         ArrayList<ArrayList<ArrayList<String>>> newArrayList = new ArrayList<>();
         ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
-        ArrayList<String> newRow = null;
+        ArrayList<String> newRow = new ArrayList<>();
 
-        String[] temp = null;
-        for(int i = 0; i < str.length; i++){
-            newRow = new ArrayList<String>();
-            temp = str[i].split(",");
-            for(int j = 0; j < temp.length; j++){
-                newRow.add(j,temp[j]);
-            }
-            tempArrayList.add(newRow);
-        }
+        newRow.add(str[0]);
+        tempArrayList.add(newRow);
         newArrayList.add(tempArrayList);
 
         return newArrayList;

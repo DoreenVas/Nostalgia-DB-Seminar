@@ -50,11 +50,13 @@ public class SongController {
         int age = -1;
         int from = -1;
         int to =-1;
-        float pop = -1;
         float tempo = -1;
         String[] str;
         String temp = null;
         DataContainer dc = null;
+        float duration = -1;
+        float popularity = -1;
+
 
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
         {
@@ -103,8 +105,8 @@ public class SongController {
                     queryInfo.setArtist(artistContainer);
                     break;
                 case "popularity":
-                    pop = Float.parseFloat(entry.getValue().get(0));
-                    PopularityContainer popularityContainer = new PopularityContainer(pop);
+                    popularity = Float.parseFloat(entry.getValue().get(0));
+                    PopularityContainer popularityContainer = new PopularityContainer(popularity);
                     queryInfo.setPopularity(popularityContainer);
                     break;
                 case "album_name":
@@ -136,7 +138,8 @@ public class SongController {
         int col = dc.getColumns().length;
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
         //ArrayList<ArrayList<String>> data = parse2DArrayList(dc.getData());
-        ArrayList<ArrayList<ArrayList<String>>> data = resultsOfSearch(fields,dc.getData());
+        ArrayList<ArrayList<ArrayList<String>>> data = resultsOfSearch(fields,
+                dc.getData(),duration,tempo,popularity);
         TableInfo ti = new TableInfo(col,row,fields,data);
         return ti;
     }
@@ -200,14 +203,15 @@ public class SongController {
 
 
 // should return the data in arraylist in which every place is 50 rows of songs
-    public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch(ArrayList<String> fields, String[] str){
+    public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch
+    (ArrayList<String> fields, String[] str, float duration, float tempo, float popularity){
 
         SongComparator comparator = new SongComparator();
 
         //get the index of tempo, duration, popularity and update the comparator values accordingly
-        int tempoIndex = 0;
-        int durationIndex = 0;
-        int popularityIndex = 0;
+        int tempoIndex = -1;
+        int durationIndex = -1;
+        int popularityIndex = -1;
 
         for(int i=0; i<fields.size(); i++){
             switch(fields.get(i).toLowerCase()){
@@ -227,6 +231,9 @@ public class SongController {
         comparator.setIndex1(tempoIndex);
         comparator.setIndex2(popularityIndex);
         comparator.setIndex3(durationIndex);
+        comparator.setWantedResult1(tempo);
+        comparator.setWantedResult2(popularity);
+        comparator.setWantedResult3(duration);
 
         /*
         order the songs, using a priority queue

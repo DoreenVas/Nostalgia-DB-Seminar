@@ -12,12 +12,24 @@ import java.util.Optional;
  */
 public class Alerter {
 
+    /**
+     * Displaying the message given in an alert.
+     * @param message
+     * @param type
+     */
     public static void showAlert(String message, Alert.AlertType type) {
         Alert alert = new Alert(type, message);
         alert.setHeaderText(null);
         alert.showAndWait();
     }
 
+    /**
+     * A different alert type, displayed with a message.
+     * @param message
+     * @param type
+     * @param buttonTypes
+     * @return True or False according to the clicked button by the user
+     */
     public static boolean showAlert(String message, Alert.AlertType type, String buttonTypes) {
         Alert alert = new Alert(type, message);
         ButtonType yes = new ButtonType("Yes"), no = new ButtonType("No");

@@ -11,11 +11,17 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Map;
 
+/***
+ * The Search Controller - controls the search features.
+ */
 public class SearchController extends Search {
 
     public static final int minWidth = 650;
     public static final int minHeight = 480;
 
+    /***
+     * Loading the advanced search window when the correct button is clicked.
+     */
     @FXML
     protected void advanced() {
         try {
@@ -40,6 +46,11 @@ public class SearchController extends Search {
         }
     }
 
+    /***
+     * Adding values to the map that will be send to the Controller for the query.
+     * Adding only values that are not null(were given by the user).
+     * @param map
+     */
     protected void addValues(Map<String, ArrayList<String>> map) {
         if (era.isDisable() == false){
             ArrayList<String> arr = new ArrayList<>();

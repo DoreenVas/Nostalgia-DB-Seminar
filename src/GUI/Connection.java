@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ *
+ */
 public class Connection {
     private static Connection connection;
     private ControllerInterface songController;

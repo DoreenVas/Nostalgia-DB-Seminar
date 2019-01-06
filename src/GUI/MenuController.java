@@ -10,6 +10,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/***
+ * The Menu Controller - displays the main window of the application.
+ */
 public class MenuController {
     @FXML
     private Button about;
@@ -21,6 +24,9 @@ public class MenuController {
     public static final int minWidth = 450;
     public static final int minHeight = 500;
 
+    /***
+     * Loading the about window when the "about" button is clicked.
+     */
     @FXML
     protected void about() {
         try {
@@ -41,6 +47,9 @@ public class MenuController {
         }
     }
 
+    /***
+     * Loading the Search window when the "start" button is clicked.
+     */
     @FXML
     protected void start() {
         try {
@@ -61,6 +70,9 @@ public class MenuController {
         }
     }
 
+    /***
+     * Exiting the application.
+     */
     @FXML
     protected void exit() {
         Stage stage = (Stage) exit.getScene().getWindow();

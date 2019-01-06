@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The Waiting controller - displayed while waiting for the query to return.
+ */
 public class WaitingController {
     @FXML
     private Label loading;

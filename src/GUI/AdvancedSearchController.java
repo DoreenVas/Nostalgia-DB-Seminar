@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * The Advanced Search Controller - controls the advanced features.
+ */
 public class AdvancedSearchController extends Search {
 
     @FXML
@@ -35,6 +38,9 @@ public class AdvancedSearchController extends Search {
     public static final int minWidth = 650;
     public static final int minHeight = 660;
 
+    /***
+     * Loading the simple search window when the correct button is clicked.
+     */
     @FXML
     protected void simpleSearch() {
         try {
@@ -60,6 +66,11 @@ public class AdvancedSearchController extends Search {
         }
     }
 
+    /***
+     * Adding values to the map that will be send to the Controller for the query.
+     * Adding only values that are not null(were given by the user).
+     * @param map
+     */
     protected void addValues(Map<String, ArrayList<String>> map ){
         if (era.isDisable() == false){
             ArrayList<String> arr = new ArrayList<>();

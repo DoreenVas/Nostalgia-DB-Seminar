@@ -2,6 +2,9 @@ package GUI;
 
 import java.util.ArrayList;
 
+/***
+ * Container for the song information to be displayed in SongInfo Controller.
+ */
 public class SongDisplayData {
     private String id = null;
     private String name = null;
@@ -15,6 +18,12 @@ public class SongDisplayData {
     private String artist = null;
     private String album = null;
 
+    /**
+     * Constructor - Initializing
+     * @param data
+     * @param artist
+     * @param album
+     */
     public SongDisplayData(ArrayList<String> data, String artist, String album) {
         this.id = data.get(0);
         this.name = data.get(1);
@@ -28,6 +37,12 @@ public class SongDisplayData {
         this.album = album;
     }
 
+    /**
+     * Constructor
+     * @param data
+     * @param artist
+     * @param album
+     */
     public SongDisplayData(String[] data, String artist, String album) {
         this.id = data[0];
         this.name = data[1];
@@ -41,12 +56,20 @@ public class SongDisplayData {
         this.album = album;
     }
 
+    /**
+     * Setting the duration of the song to the given duration.
+     * @param duration
+     */
     private void setDuration(float duration) {
         int minutes = (int)(duration / 60);
         int seconds = (int)(duration - minutes * 60);
         this.duration = String.valueOf(minutes) + "m " + String.valueOf(seconds) + "s";
     }
 
+    /**
+     * Getter
+     * @return name
+     */
     public String getName() {
         if(name == null) {
             return "Sorry, we do not have this songs name.";
@@ -54,6 +77,10 @@ public class SongDisplayData {
         return name;
     }
 
+    /**
+     * Getter
+     * @return dancibility
+     */
     public String getDancibility() {
         if(dancibility == null) {
             return "Sorry, we do not have this songs dancibility.";
@@ -61,6 +88,10 @@ public class SongDisplayData {
         return dancibility;
     }
 
+    /**
+     * Getter
+     * @return duration
+     */
     public String getDuration() {
         if(duration == null) {
             return "Sorry, we do not have this songs duration.";
@@ -68,6 +99,10 @@ public class SongDisplayData {
         return duration;
     }
 
+    /**
+     * Getter
+     * @return hotness
+     */
     public String getHotness() {
         if(hotness == null) {
             return "Sorry, we do not have this songs popularity.";
@@ -75,6 +110,10 @@ public class SongDisplayData {
         return hotness;
     }
 
+    /**
+     * Getter
+     * @return loudness
+     */
     public String getLoudness() {
         if(loudness == null) {
             return "Sorry, we do not have this songs loudness.";
@@ -82,6 +121,10 @@ public class SongDisplayData {
         return loudness;
     }
 
+    /**
+     * Getter
+     * @return tempo
+     */
     public String getTempo() {
         if(tempo == null) {
             return "Sorry, we do not have this songs tempo.";
@@ -89,6 +132,10 @@ public class SongDisplayData {
         return tempo;
     }
 
+    /**
+     * Getter
+     * @return words
+     */
     public String getWords() {
         if(words == null) {
             return "Sorry, we do not have the lyrics for this song.";
@@ -96,6 +143,10 @@ public class SongDisplayData {
         return words;
     }
 
+    /**
+     * Getter
+     * @return year
+     */
     public String getYear() {
         if(year == null) {
             return "Sorry, we do not have this songs year.";
@@ -103,6 +154,10 @@ public class SongDisplayData {
         return year;
     }
 
+    /**
+     * Getter
+     * @return ID
+     */
     public String getId() {
         if(id == null) {
             return "Sorry, we do not have this songs id.";
@@ -110,6 +165,10 @@ public class SongDisplayData {
         return id;
     }
 
+    /**
+     * Getter
+     * @return artist
+     */
     public String getArtist() {
         if(artist == null) {
             return "Sorry, we do not have this songs artist.";
@@ -117,6 +176,10 @@ public class SongDisplayData {
         return artist;
     }
 
+    /**
+     * Getter
+     * @return album
+     */
     public String getAlbum() {
         if(album == null) {
             return "Sorry, we do not have this songs album.";
@@ -124,6 +187,10 @@ public class SongDisplayData {
         return album;
     }
 
+    /**
+     * Setter
+     * @param words
+     */
     public void setWords(String words) {
         this.words = words;
     }

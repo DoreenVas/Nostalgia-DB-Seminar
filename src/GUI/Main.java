@@ -9,8 +9,16 @@ import javafx.scene.control.Alert;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * The main class.
+ */
 public class Main extends Application {
 
+    /**
+     * Displays the Menu of the application.
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
@@ -55,6 +63,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Stopping the connection to the DB when the application is closed.
+     * @throws Exception
+     */
     @Override
     public void stop() throws Exception {
         try {
@@ -69,7 +81,6 @@ public class Main extends Application {
     }
 
     /**
-     *
      * Activates the application.
      * @param args the arguments to the main
      */

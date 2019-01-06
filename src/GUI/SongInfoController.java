@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * The song information controller.
+ */
 public class SongInfoController {
 
     @FXML
@@ -43,6 +46,13 @@ public class SongInfoController {
     public static final int minWidth = 450;
     public static final int minHeight = 500;
 
+    /**
+     * Initializing the data
+     * @param displayData
+     * @param data
+     * @param map
+     * @param index
+     */
     public void initialize(SongDisplayData displayData, TableInfo data,
                            Map<String, ArrayList<String>> map, int index) {
         this.index = index;
@@ -60,6 +70,9 @@ public class SongInfoController {
         ret.setAlignment(Pos.CENTER);
     }
 
+    /***
+     * Loading the results window when the "back" button is clicked.
+     */
     @FXML
     private void goBack() {
         try {

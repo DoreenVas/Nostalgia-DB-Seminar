@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.*;
 
+/***
+ * The result Controller - controls the display of information received from the queries.
+ */
 public class ResultsController {
 
     @FXML
@@ -22,6 +25,7 @@ public class ResultsController {
     private Button goBackButton;
     @FXML
     private Button goForwardButton;
+
     private Map<String, ArrayList<String>> map;
     private TableInfo data = null;
     // the index of the current batch of results to display
@@ -34,7 +38,6 @@ public class ResultsController {
     private static String[] displayColumns = {"name", "duration", "artist", "album", "year"};
 
     /**
-     *
      * Initializes needed parameters.
      * @param index the starting index for displaying
      */
@@ -42,6 +45,9 @@ public class ResultsController {
         groupIndex = index;
     }
 
+    /***
+     * Loading the song info window to display specific song information, depending on the clicked song.
+     */
     @FXML
     private void display() {
         TableView.TableViewSelectionModel selectionModel = results.getSelectionModel();
@@ -85,6 +91,9 @@ public class ResultsController {
         }
     }
 
+    /***
+     * Loading the menu window when the "home" symbol or button is clicked.
+     */
     @FXML
     protected void home() {
         try {
@@ -106,6 +115,9 @@ public class ResultsController {
         }
     }
 
+    /***
+     * Loading the search window when the "arrow" symbol  is clicked.
+     */
     @FXML
     protected void simpleSearch() {
         try {
@@ -130,6 +142,9 @@ public class ResultsController {
         }
     }
 
+    /***
+     * returning same query properties results only for the next decade.
+     */
     @FXML
     protected void backToTheFuture() {
         ArrayList<String> arr = new ArrayList<>();
@@ -176,7 +191,6 @@ public class ResultsController {
     }
 
     /**
-     *
      * Adds data from the given information to the table.
      * @param info the data
      * @param map the queries info to save
@@ -228,7 +242,6 @@ public class ResultsController {
     }
 
     /**
-     *
      * Requests the given songs artist from the connection to the model and returns its result.
      * @param songId the wanted song
      * @return the given songs artist
@@ -254,7 +267,6 @@ public class ResultsController {
     }
 
     /**
-     *
      * Requests the given songs album from the connection to the model and returns its result.
      * @param songId the wanted song
      * @return the given songs album
@@ -280,7 +292,6 @@ public class ResultsController {
     }
 
     /**
-     *
      * Gets the connection to the model.
      * @return the connection to the model if could connect, null otherwise
      */
@@ -297,6 +308,9 @@ public class ResultsController {
         return connection;
     }
 
+    /***
+     * next batch of results
+     */
     @FXML
     protected void goForward() {
         int size = data.getFieldsValues().size();
@@ -308,6 +322,9 @@ public class ResultsController {
         }
     }
 
+    /***
+     * previous batch of results.
+     */
     @FXML
     protected void goBack() {
         // if the index is bigger than 0
@@ -318,6 +335,11 @@ public class ResultsController {
         }
     }
 
+    /***
+     * Adds the given field as a column with the display name.
+     * @param field
+     * @param displayName
+     */
     @FXML
     private void addColumn(String field, String displayName) {
         // create a new table column

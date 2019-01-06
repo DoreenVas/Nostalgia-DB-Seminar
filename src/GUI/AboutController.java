@@ -17,6 +17,9 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/***
+ * The about Controller - controls the information window.
+ */
 public class AboutController implements Initializable {
     @FXML
     private Button back;
@@ -26,6 +29,11 @@ public class AboutController implements Initializable {
     public static final int minWidth = 600;
     public static final int minHeight = 410;
 
+    /***
+     * Reading the information from the About.txt file
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String text = "", line = "";
@@ -45,6 +53,9 @@ public class AboutController implements Initializable {
         aboutText.setText(text);
     }
 
+    /***
+     * Returning to the Menu window.
+     */
     @FXML
     protected void back() {
         try {

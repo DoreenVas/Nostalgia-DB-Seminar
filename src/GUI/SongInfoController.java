@@ -1,10 +1,12 @@
 package GUI;
 
+import Resources.AlertMessages;
 import Resources.TableInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -71,7 +73,7 @@ public class SongInfoController {
             stage.setScene(scene);
             stage.show();
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 }

@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.AlertMessages;
 import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,7 +49,7 @@ public class AdvancedSearchController extends Search {
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 

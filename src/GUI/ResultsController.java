@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.AlertMessages;
 import Resources.TableInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.*;
 
 public class ResultsController {
@@ -22,12 +22,19 @@ public class ResultsController {
     private Button goBackButton;
     @FXML
     private Button goForwardButton;
-    Map<String, ArrayList<String>> map;
+    private Map<String, ArrayList<String>> map;
     private TableInfo data = null;
+    // the index of the current batch of results to display
     private int groupIndex = 0;
 
+    // the columns to display in the results
     private static String[] displayColumns = {"name", "duration", "artist", "album", "year"};
 
+    /**
+     *
+     * Initializes needed parameters.
+     * @param index the starting index for displaying
+     */
     void initialize(int index) {
         groupIndex = index;
     }
@@ -68,7 +75,7 @@ public class ResultsController {
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
@@ -82,15 +89,17 @@ public class ResultsController {
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
             stage.show();
+            // set stage to the center of the screen
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     protected void simpleSearch() {
         try {
+            // load the simple search
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Search.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -100,29 +109,32 @@ public class ResultsController {
             stage.setTitle("Search");
             stage.setScene(scene);
             stage.show();
+            // set stage to the center of the screen
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     protected void backToTheFuture() {
+        ArrayList<String> arr = new ArrayList<>();
         int year;
+        // check for maps parameters (manipulates them to get the next 10 years)
         if(map.containsKey("era")) {
+            // get the era
             String[] era = map.get("era").get(0).replace("'", " ").split(" ");
             int num = Integer.parseInt(era[0]) + 10;
-            ArrayList<String> arr = new ArrayList<>();
             arr.add(String.valueOf(num) + "'" + era[1]);
             map.replace("era", arr);
         } else if(map.containsKey("birthYear")) {
+            // get the age
             String age = map.get("age").get(0);
-            ArrayList<String> arr = new ArrayList<>();
             arr.add(String.valueOf(Integer.parseInt(age) + 10));
             map.replace("age", arr);
         } else {
+            // get the year
             year = Integer.parseInt(data.getFieldsValues().get(0).get(0).get(6));
-            ArrayList<String> arr = new ArrayList<>();
             year += 10;
             arr.add(String.valueOf(year));
             map.put("from", arr);
@@ -130,69 +142,108 @@ public class ResultsController {
             arr.add(String.valueOf(year + 9));
             map.put("to", arr);
         }
+        // send new query information to the connection
         TableInfo info = Connection.getInstance().query(map, "song");
+        // if the result was empty
         if(info == null) {
             return;
         }
+        // add the returned data to the table
         addData(Connection.getInstance().query(map, "song"), map);
     }
 
+    /**
+     *
+     * Adds data from the given information to the table.
+     * @param info the data
+     * @param map the queries info to save
+     */
     void addData(TableInfo info, Map<String, ArrayList<String>> map) {
+        // clear the table
         this.results.getItems().clear();
         this.results.getColumns().clear();
+        // if an invalid index was given
+        if(groupIndex >= info.getFieldsValues().size() || groupIndex < 0) {
+            groupIndex = 0;
+        }
+        // if the current index is the first
         if(groupIndex == 0) {
             goBackButton.setDisable(true);
         }
+        // if the current index is the last
         if(info.getFieldsValues().size() - 1 == groupIndex) {
             goForwardButton.setDisable(true);
         }
         data = info;
         this.map = map;
-        ArrayList<String> fields = info.getFields();
+        //ArrayList<String> fields = info.getFields();
 
 //        for (int i = 1; i < fields.size(); i++) {
 //            String field = fields.get(i);
 //            addColumn(field, field);
 //        }
 
+        // add all of the columns to display to the tables
         for (String field : displayColumns) {
             addColumn(field, field);
         }
-
+        // get the group to display
         ArrayList<ArrayList<String>> group = info.getFieldsValues().get(groupIndex);
         countLabel.setText("Displaying " + group.size() + " results out of " + info.getRowsNum());
-
+        // go over the groups items and add them to the table
         for (ArrayList<String> row : group) {
             SongDisplayData item = new SongDisplayData(row, getArtist(row.get(0)), getAlbum(row.get(0)));
             this.results.getItems().addAll(item);
         }
+        // set each results clicked event
         this.results.setOnMouseClicked((event) -> {
+            // if the result was double clicked
             if(event.getClickCount() == 2) {
                 display();
             }
         });
     }
 
+    /**
+     *
+     * Requests the given songs artist from the connection to the model and returns its result.
+     * @param songId the wanted song
+     * @return the given songs artist
+     */
     private String getArtist(String songId) {
+        // get the connection
         Connection connection = Connection.getInstance();
         Map<String, ArrayList<String>> map = new HashMap<>();
         ArrayList<String> values = new ArrayList<>();
+        // add the given song to the map
         values.add(songId);
         map.put("song_id", values);
+        // ask for the result
         TableInfo artistInfo = connection.query(map, "artist");
+        // if there was no result
         if(artistInfo == null) {
             return "Artist not in DataBase";
         }
         return artistInfo.getFieldsValues().get(0).get(0).get(0);
     }
 
+    /**
+     *
+     * Requests the given songs album from the connection to the model and returns its result.
+     * @param songId the wanted song
+     * @return the given songs album
+     */
     private String getAlbum(String songId) {
+        // get the connection
         Connection connection = Connection.getInstance();
         Map<String, ArrayList<String>> map = new HashMap<>();
         ArrayList<String> values = new ArrayList<>();
+        // add the given song to the map
         values.add(songId);
         map.put("song_id", values);
+        // ask for the result
         TableInfo albumInfo = connection.query(map, "album");
+        // if there was no result
         if(albumInfo == null) {
             return "Album not in DataBase";
         }
@@ -202,6 +253,7 @@ public class ResultsController {
     @FXML
     protected void goForward() {
         int size = data.getFieldsValues().size();
+        // if the index is smaller than the amount of the groups
         if(groupIndex < size) {
             groupIndex++;
             goBackButton.setDisable(false);
@@ -211,6 +263,7 @@ public class ResultsController {
 
     @FXML
     protected void goBack() {
+        // if the index is bigger than 0
         if(groupIndex > 0) {
             --groupIndex;
             goForwardButton.setDisable(false);
@@ -220,136 +273,11 @@ public class ResultsController {
 
     @FXML
     private void addColumn(String field, String displayName) {
+        // create a new table column
         TableColumn<SongDisplayData, String> column = new TableColumn<>(field);
         column.setCellValueFactory(new PropertyValueFactory<>(field));
         column.setText(displayName);
+        // set the column to be ib the table
         this.results.getColumns().add(column);
     }
-
-//    public class SongRow {
-//        private String name;
-//        private String duration;
-//        private String year;
-//        private String artist;
-//        private String album;
-//
-//        SongRow(ArrayList<String> data) {
-//            this.name = data.get(0);
-//            this.duration = String.valueOf(Float.parseFloat(data.get(2)) / 60);
-//            this.year = data.get(6);
-//        }
-//
-//        public SongRow(String[] data) {
-//            this.name = data[0];
-//            this.duration = String.valueOf(Float.parseFloat(data[2]) / 60);
-//            this.year = data[6];
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        public String getDuration() {
-//            return duration;
-//        }
-//
-//        public String getYear() {
-//            return year;
-//        }
-//
-//        public String getAlbum() {
-//            return album;
-//        }
-//
-//        public String getArtist() {
-//            return artist;
-//        }
-//    }
-
-//    public class SongRow { //public class SongData {
-//        private String id;
-//        private String name;
-//        private String dancibility;
-//        private String duration;
-//        private String tempo;
-//        private String hotness;
-//        private String loudness;
-//        private String year;
-//        private String words = null;
-//        private String artist;
-//        private String album;
-//
-//        public SongRow(ArrayList<String> data, String artist, String album) {
-//            this.id = data.get(0);
-//            this.name = data.get(1);
-//            this.dancibility = data.get(2);
-//            this.duration = String.valueOf(Float.parseFloat(data.get(3)) / 60);
-//            this.tempo = data.get(4);
-//            this.hotness = data.get(5);
-//            this.loudness = data.get(6);
-//            this.year = data.get(7);
-//            this.artist = artist;
-//            this.album = album;
-//        }
-//
-//        public SongRow(String[] data, String artist, String album) {
-//            this.id = data[0];
-//            this.name = data[1];
-//            this.dancibility = data[2];
-//            this.duration = String.valueOf(Float.parseFloat(data[3]) / 60);
-//            this.tempo = data[4];
-//            this.hotness = data[5];
-//            this.loudness = data[6];
-//            this.year = data[7];
-//            this.artist = artist;
-//            this.album = album;
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        public String getDancibility() {
-//            return dancibility;
-//        }
-//
-//        public String getDuration() {
-//            return duration;
-//        }
-//
-//        public String getHotness() {
-//            return hotness;
-//        }
-//
-//        public String getLoudness() {
-//            return loudness;
-//        }
-//
-//        public String getTempo() {
-//            return tempo;
-//        }
-//
-//        public String getWords() {
-//            if(words == null) {
-//                return "Sorry, we do not have the lyrics for this song.";
-//            }
-//            return words;
-//        }
-//
-//        public String getYear() {
-//            return year;
-//        }
-//
-//        public String getId() {
-//            return id;
-//        }
-//
-//        public String getArtist() {
-//            return artist;
-//        }
-//
-//        public String getAlbum() {
-//            return album;
-//        }
-//    }
 }

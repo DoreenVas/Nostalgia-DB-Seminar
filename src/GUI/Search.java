@@ -1,5 +1,6 @@
 package GUI;
 
+import Resources.AlertMessages;
 import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -67,7 +68,7 @@ public abstract class Search {
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
@@ -119,7 +120,7 @@ public abstract class Search {
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
             return false;
         }
         return true;

@@ -29,4 +29,8 @@ public class AlertMessages {
     public static String failedDisconnection() {
         return "Couldn't close the connection to db.\nTry again?";
     }
+
+    public static String pageLoadingFailure() {
+        return "Couldn't load the requested page.";
+    }
 }

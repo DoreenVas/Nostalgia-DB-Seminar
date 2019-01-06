@@ -5,12 +5,32 @@ public class ArtistQueryInfo {
     private GenreContainer genere;
     private AlbumContainer album;
     private SongContainer song;
+    private FamiliarityContainer familiarity;
+    private PopularityContainer popularity;
 
     public ArtistQueryInfo() {
-        artist = null;
-        genere = null;
-        album = null;
-        song = null;
+        this.artist = null;
+        this.genere = null;
+        this.album = null;
+        this.song = null;
+        this.familiarity = null;
+        this.popularity = null;
+    }
+
+    public PopularityContainer getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(PopularityContainer popularity) {
+        this.popularity = popularity;
+    }
+
+    public FamiliarityContainer getFamiliarity() {
+        return familiarity;
+    }
+
+    public void setFamiliarity(FamiliarityContainer familiarity) {
+        this.familiarity = familiarity;
     }
 
     public AlbumContainer getAlbum() {

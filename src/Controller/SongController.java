@@ -10,7 +10,7 @@ import DBConnection.DBModel;
 import DBConnection.Model;
 import Resources.*;
 
-public class SongController {
+public class SongController extends ControllerAbstract{
     // an array from model: [fields, "count", info1, info2, ...]
     //private ArrayList<String> modelInfo;
 
@@ -20,22 +20,15 @@ public class SongController {
     //dictionary from the gui
     //Map<String, ArrayList<String>> infoFromGUI;
 
-    private Model model;
+    //private Model model;
 
-    public SongController() throws IOException {
+    public SongController() throws IOException,SQLException {
         //this.infoFromGUI = new HashMap<String, ArrayList<String>>();
         //this.modelInfo = new ArrayList<>();
-        this.model = new DBModel();
+        //this.model = new DBModel();
             //model.openConnection();
     }
 
-    public void closeModelConnection() throws SQLException {
-        this.model.closeConnection();
-    }
-
-    public void openModelConnection() throws SQLException{
-        this.model.openConnection();
-    }
 
     /**
      * get the values from the model.
@@ -60,7 +53,6 @@ public class SongController {
 
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
         {
-            System.out.println(entry.getKey() + "/" + entry.getValue());
             switch (entry.getKey()){
                 case "genre":
                     int len = entry.getValue().size();
@@ -128,7 +120,7 @@ public class SongController {
         queryInfo.setYear(year);
         queryInfo.setFrom(from);
         queryInfo.setTo(to);
-        dc = this.model.getData(queryInfo);
+        dc = model.getData(queryInfo);
 
         //create and return the TableInfo
         return createTableInfo(dc,duration,tempo,popularity,lyricsFlag);
@@ -163,40 +155,6 @@ public class SongController {
 
         TableInfo ti = new TableInfo(col,row,fields,data);
         return ti;
-    }
-
-    /**
-     *
-     * @param size
-     * @param arr
-     * @return a string representation of a given string arraylist
-     */
-    private String[] parseFromArrayToList(int size, ArrayList<String> arr){
-        String[] str = new String[size];
-        for(int i = 0; i < size; i++){
-            str[i] = arr.get(i);
-        }
-        return str;
-    }
-
-    /**
-     *
-     * @param str
-     * @return parse a given string list into arraylist
-     */
-    private ArrayList<String> parseToArrayList(String[] str){
-        ArrayList<String> newArrayList = new ArrayList<String>();
-        int len = str.length;
-        String[] temp = null;
-        for(int i = 0; i < len; i++){
-            if(str[i].contains(".")) {
-                temp = str[i].replace(".", " ").split(" ");
-                newArrayList.add(temp[1]);
-            } else {
-                newArrayList.add(str[i]);
-            }
-        }
-        return newArrayList;
     }
 
 
@@ -250,19 +208,6 @@ public class SongController {
         }
 
         return newArrayList;
-    }
-
-
-    /**
-     *
-     * @param str
-     * @return change all letters to lower case except for the first letter,
-     * which should be upper case.
-     */
-    private String matchStringToPattern(String str){
-        str = str.toLowerCase();
-        str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
-        return str;
     }
 
 

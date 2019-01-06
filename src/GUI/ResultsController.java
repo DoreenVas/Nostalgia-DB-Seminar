@@ -33,6 +33,10 @@ public class ResultsController {
 
     private static String[] displayColumns = {"name", "artist", "album", "year"};
 
+    void initialize(int index) {
+        groupIndex = index;
+    }
+
     @FXML
     private void display() {
         TableView.TableViewSelectionModel selectionModel = results.getSelectionModel();
@@ -62,7 +66,7 @@ public class ResultsController {
                 words = "The lyrics for this song are unavailable.\nSorry for the inconvenience.";
             }
 
-            songInfoController.initialize(row, data, map);
+            songInfoController.initialize(row, data, map, groupIndex);
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
@@ -140,7 +144,7 @@ public class ResultsController {
     void addData(TableInfo info, Map<String, ArrayList<String>> map) {
         this.results.getItems().clear();
         this.results.getColumns().clear();
-        if(data == null) {
+        if(groupIndex == 0) {
             goBackButton.setDisable(true);
         }
         data = info;

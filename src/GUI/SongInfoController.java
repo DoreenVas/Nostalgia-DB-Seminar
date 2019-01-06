@@ -36,9 +36,11 @@ public class SongInfoController {
     private Button ret;
     Map<String, ArrayList<String>> map;
     private TableInfo data;
+    private int index;
 
     public void initialize(SongDisplayData displayData, TableInfo data,
-                           Map<String, ArrayList<String>> map) {
+                           Map<String, ArrayList<String>> map, int index) {
+        this.index = index;
         this.name.setText(displayData.getName());
         this.name.setAlignment(Pos.CENTER);
         this.duration.setText(displayData.getDuration());
@@ -62,6 +64,7 @@ public class SongInfoController {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,450,500);
             ResultsController resultsController = loader.getController();
+            resultsController.initialize(index);
             resultsController.addData(data, map);
 
             stage.setTitle("Results");

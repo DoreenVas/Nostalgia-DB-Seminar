@@ -2,12 +2,9 @@ package Controller;
 
 import DBConnection.DBModel;
 import DBConnection.Model;
-import Resources.TableInfo;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class ControllerAbstract implements ControllerInterface {
 

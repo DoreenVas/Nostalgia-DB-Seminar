@@ -1,5 +1,9 @@
 package Resources;
 
+/**
+ * Holds an album id.
+ * Used to distinguish between different data.
+ */
 public class AlbumIdContainer implements Container<String> {
 
     private String albumId;

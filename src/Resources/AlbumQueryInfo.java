@@ -1,5 +1,8 @@
 package Resources;
 
+/**
+ * Holds all of the album query info the model can get from the controller.
+ */
 public class AlbumQueryInfo {
     private AlbumIdContainer album;
     private SongIdContainer song;

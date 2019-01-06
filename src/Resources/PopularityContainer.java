@@ -1,5 +1,9 @@
 package Resources;
 
+/**
+ * Holds a songs popularity value.
+ * Used to distinguish between different data.
+ */
 public class PopularityContainer implements Container<Float> {
 
     private float popularity;

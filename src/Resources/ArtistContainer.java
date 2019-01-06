@@ -1,7 +1,9 @@
 package Resources;
 
-import java.sql.SQLException;
-
+/**
+ * Holds an artist information.
+ * Used to distinguish between different data.
+ */
 public class ArtistContainer implements Container<String> {
 
     private String artist;

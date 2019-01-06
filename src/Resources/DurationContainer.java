@@ -1,5 +1,9 @@
 package Resources;
 
+/**
+ * Holds an songs duration.
+ * Used to distinguish between different data.
+ */
 public class DurationContainer implements Container<Float> {
 
     private float duration;

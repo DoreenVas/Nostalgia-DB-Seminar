@@ -17,10 +17,7 @@ public class TableInfo {
     fields.
     for example, the fields: [name, id,....] the values will be: [[name,id...],[name,id...]...]
      */
-   // private ArrayList<ArrayList<String>> fieldsValues;
     private ArrayList<ArrayList<ArrayList<String>>> fieldsValues;
-
-    //dictionary from the gui
 
     public TableInfo(int colsNum, int rowsNum, ArrayList<String> fields,
                      ArrayList<ArrayList<ArrayList<String>>> fieldsValues){
@@ -45,23 +42,4 @@ public class TableInfo {
     public ArrayList<ArrayList<ArrayList<String>>> getFieldsValues(){
         return this.fieldsValues;
     }
-
-    public void setColsNum(int col){
-        this.colsNum = col;
-    }
-
-    public void setRowsNum(int row){
-        this.rowsNum = row;
-    }
-
-    public void addField(String field){
-        this.fields.add(field);
-    }
-
-    /*
-    public void addValue(ArrayList<String> val){
-        this.fieldsValues.add(val);
-    }
-*/
-    //public void addFieldsAndValues(String )
 }

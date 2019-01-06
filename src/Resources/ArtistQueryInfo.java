@@ -1,5 +1,8 @@
 package Resources;
 
+/**
+ * Holds all of the artist query info the model can get from the controller.
+ */
 public class ArtistQueryInfo {
     private ArtistContainer artist;
     private GenreContainer genere;

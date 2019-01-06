@@ -2,13 +2,14 @@ package GUI;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogEvent;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Holds all of the alerts the application can invoke.
+ */
 public class Alerter {
 
     public static void showAlert(String message, Alert.AlertType type) {

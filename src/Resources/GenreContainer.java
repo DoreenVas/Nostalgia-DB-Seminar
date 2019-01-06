@@ -1,5 +1,9 @@
 package Resources;
 
+/**
+ * Holds a list of genres.
+ * Used to distinguish between different data.
+ */
 public class GenreContainer implements Container<String[]> {
 
     private String[] genre;

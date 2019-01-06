@@ -1,5 +1,9 @@
 package Resources;
 
+
+/**
+ * Holds all of the song query info the model can get from the controller.
+ */
 public class SongQueryInfo {
     private int year;
     private int from;

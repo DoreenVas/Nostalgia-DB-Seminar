@@ -1,5 +1,9 @@
 package Resources;
 
+/**
+ * Holds a songs tempo value.
+ * Used to distinguish between different data.
+ */
 public class TempoContainer implements Container<Float> {
 
     private float tempo;

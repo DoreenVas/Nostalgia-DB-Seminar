@@ -1,5 +1,8 @@
 package Resources;
 
+/**
+ * Holds all of the alert messages the application can display.
+ */
 public class AlertMessages {
 
     public static String failedConnection() {

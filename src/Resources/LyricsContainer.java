@@ -1,15 +1,19 @@
 package Resources;
 
+/**
+ * Holds a songs identifier.
+ * Used to distinguish between different data.
+ */
 public class LyricsContainer implements Container<String> {
 
-    private String songName;
+    private String song;
 
     public LyricsContainer(String songName) {
-        this.songName = songName;
+        this.song = song;
     }
 
     @Override
     public String getValue() {
-        return songName;
+        return song;
     }
 }

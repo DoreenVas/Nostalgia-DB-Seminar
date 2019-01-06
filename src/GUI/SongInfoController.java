@@ -78,6 +78,7 @@ public class SongInfoController {
             stage.setHeight(ResultsController.minHeight);
             stage.setWidth(ResultsController.minWidth);
             stage.show();
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }

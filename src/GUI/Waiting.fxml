@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="350.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WaitingController">
+   <children>
+      <ImageView fitHeight="126.0" fitWidth="127.0" layoutX="112.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/animatedEllipse.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="loading" layoutX="141.0" layoutY="257.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

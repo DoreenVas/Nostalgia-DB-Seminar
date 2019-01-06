@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public abstract class Search {
 
     @FXML
@@ -94,10 +95,10 @@ public abstract class Search {
             if(checkValues() == false) {
                 return false;
             }
-            Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
-            TableInfo info = connection.query(map, "song");
+            WaitingController wait = new WaitingController();
+            TableInfo info = wait.activateWaiting(map, "song");
             if(info == null) {
                 return false;
             }

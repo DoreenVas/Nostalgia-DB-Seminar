@@ -27,7 +27,7 @@ public class ResultsController {
     // the index of the current batch of results to display
     private int groupIndex = 0;
 
-    public static final int minWidth = 550;
+    public static final int minWidth = 730;
     public static final int minHeight = 500;
 
     // the columns to display in the results

@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class ControllerAbstract implements ControllerInterface {
+
     public static Model model;
 
+
     public ControllerAbstract() throws IOException,SQLException {
-        this.model = new DBModel();
-        this.openModelConnection();
+        model = new DBModel();
+        openModelConnection();
     }
 
     public void closeModelConnection() throws SQLException {
@@ -31,7 +33,7 @@ public abstract class ControllerAbstract implements ControllerInterface {
      * @return change all letters to lower case except for the first letter,
      * which should be upper case.
      */
-    public String matchStringToPattern(String str){
+    protected String matchStringToPattern(String str){
         str = str.toLowerCase();
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
         return str;
@@ -43,7 +45,7 @@ public abstract class ControllerAbstract implements ControllerInterface {
      * @param arr
      * @return a string representation of a given string arraylist
      */
-    public String[] parseFromArrayToList(int size, ArrayList<String> arr){
+    protected String[] parseFromArrayToList(int size, ArrayList<String> arr){
         String[] str = new String[size];
         for(int i = 0; i < size; i++){
             str[i] = arr.get(i);
@@ -51,13 +53,12 @@ public abstract class ControllerAbstract implements ControllerInterface {
         return str;
     }
 
-
     /**
      *
      * @param str
      * @return parse a given string list into arraylist
      */
-    public ArrayList<String> parseToArrayList(String[] str){
+    protected ArrayList<String> parseToArrayList(String[] str){
         ArrayList<String> newArrayList = new ArrayList<String>();
         int len = str.length;
         String[] temp = null;

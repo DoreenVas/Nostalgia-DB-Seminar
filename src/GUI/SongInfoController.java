@@ -40,6 +40,9 @@ public class SongInfoController {
     private TableInfo data;
     private int index;
 
+    public static final int minWidth = 450;
+    public static final int minHeight = 500;
+
     public void initialize(SongDisplayData displayData, TableInfo data,
                            Map<String, ArrayList<String>> map, int index) {
         this.index = index;
@@ -64,13 +67,16 @@ public class SongInfoController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,450,500);
+            Scene scene = new Scene(root,ResultsController.minWidth, ResultsController.minHeight);
             ResultsController resultsController = loader.getController();
             resultsController.initialize(index);
             resultsController.addData(data, map);
-
             stage.setTitle("Results");
             stage.setScene(scene);
+            stage.setMinHeight(ResultsController.minHeight);
+            stage.setMinWidth(ResultsController.minWidth);
+            stage.setHeight(ResultsController.minHeight);
+            stage.setWidth(ResultsController.minWidth);
             stage.show();
         } catch(Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);

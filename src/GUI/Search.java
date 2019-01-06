@@ -5,15 +5,12 @@ import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +34,6 @@ public abstract class Search {
     @FXML
     protected Pane genres;
 
-    protected final int minHeight = 350;
-    protected final int minWidth = 192;
-
     public void initialize(String era, ObservableList list, String birthYear, String age, boolean rb1Selected) {
         if(rb1Selected) {
             rb1Clicked();
@@ -61,10 +55,13 @@ public abstract class Search {
         try {
             Stage stage = (Stage) rb1.getScene().getWindow();
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
-            Scene scene = new Scene(root,450,500);
+            Scene scene = new Scene(root, MenuController.minWidth, MenuController.minHeight);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
-            stage.setScene(scene);
+            stage.setMinHeight(MenuController.minHeight);
+            stage.setMinWidth(MenuController.minWidth);
+            stage.setHeight(MenuController.minHeight);
+            stage.setWidth(MenuController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -108,15 +105,15 @@ public abstract class Search {
             loader.setLocation(getClass().getResource("Results.fxml"));
             Stage stage = (Stage) results.getScene().getWindow();
             AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,450,500);
-
+            Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
             ResultsController resultsController = loader.getController();
             resultsController.addData(info, map);
-
-            stage.setMinHeight(minHeight);
-            stage.setMinWidth(minWidth);
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
+            stage.setMinHeight(ResultsController.minHeight);
+            stage.setMinWidth(ResultsController.minWidth);
+            stage.setHeight(ResultsController.minHeight);
+            stage.setWidth(ResultsController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

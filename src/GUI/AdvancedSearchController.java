@@ -32,6 +32,9 @@ public class AdvancedSearchController extends Search {
     @FXML
     private TextField album_name;
 
+    public static final int minWidth = 650;
+    public static final int minHeight = 660;
+
     @FXML
     protected void simpleSearch() {
         try {
@@ -39,13 +42,17 @@ public class AdvancedSearchController extends Search {
             loader.setLocation(getClass().getResource("Search.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             Stage stage = (Stage) rb1.getScene().getWindow();
-            Scene scene = new Scene(root,650,450);
+            Scene scene = new Scene(root,SearchController.minWidth, SearchController.minHeight);
             SearchController searchController = loader.getController();
             searchController.initialize(era.getValue(), genres.getChildren(), birthYear.getText(), age.getText(),
                     !era.isDisabled());
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
+            stage.setMinHeight(SearchController.minHeight);
+            stage.setMinWidth(SearchController.minWidth);
+            stage.setHeight(SearchController.minHeight);
+            stage.setWidth(SearchController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

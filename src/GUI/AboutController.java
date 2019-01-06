@@ -23,6 +23,9 @@ public class AboutController implements Initializable {
     @FXML
     private TextArea aboutText;
 
+    public static final int minWidth = 600;
+    public static final int minHeight = 410;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String text = "", line = "";
@@ -47,10 +50,14 @@ public class AboutController implements Initializable {
         try {
             Stage stage = (Stage) back.getScene().getWindow();
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
-            Scene scene = new Scene(root,450,500);
+            Scene scene = new Scene(root,MenuController.minWidth, MenuController.minHeight);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
+            stage.setMinHeight(MenuController.minHeight);
+            stage.setMinWidth(MenuController.minWidth);
+            stage.setHeight(MenuController.minHeight);
+            stage.setWidth(MenuController.minWidth);
             stage.show();
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
             stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);

@@ -18,15 +18,22 @@ public class MenuController {
     @FXML
     private Button exit;
 
+    public static final int minWidth = 350;
+    public static final int minHeight = 400;
+
     @FXML
     protected void about() {
         try {
             Stage stage = (Stage) about.getScene().getWindow();
             Pane root = (Pane) FXMLLoader.load(getClass().getResource("About.fxml"));
-            Scene scene = new Scene(root,600,400);
+            Scene scene = new Scene(root, AboutController.minWidth, AboutController.minHeight);
             scene.getStylesheets().add(getClass().getResource("AboutCss.css").toExternalForm());
             stage.setTitle("About");
             stage.setScene(scene);
+            stage.setMinHeight(AboutController.minHeight);
+            stage.setMinWidth(AboutController.minWidth);
+            stage.setHeight(AboutController.minHeight);
+            stage.setWidth(AboutController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -39,10 +46,14 @@ public class MenuController {
         try {
             Stage stage = (Stage) start.getScene().getWindow();
             AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Search.fxml"));
-            Scene scene = new Scene(root,650,450);
+            Scene scene = new Scene(root,SearchController.minWidth, SearchController.minHeight);
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
+            stage.setMinHeight(SearchController.minHeight);
+            stage.setMinWidth(SearchController.minWidth);
+            stage.setHeight(SearchController.minHeight);
+            stage.setWidth(SearchController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

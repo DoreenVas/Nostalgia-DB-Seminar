@@ -27,6 +27,9 @@ public class ResultsController {
     // the index of the current batch of results to display
     private int groupIndex = 0;
 
+    public static final int minWidth = 550;
+    public static final int minHeight = 500;
+
     // the columns to display in the results
     private static String[] displayColumns = {"name", "duration", "artist", "album", "year"};
 
@@ -54,9 +57,12 @@ public class ResultsController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("SongInfo.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root,450,500);
+            Scene scene = new Scene(root,SongInfoController.minWidth, SongInfoController.minHeight);
             SongInfoController songInfoController = loader.getController();
-
+            stage.setMinHeight(SongInfoController.minHeight);
+            stage.setMinWidth(SongInfoController.minWidth);
+            stage.setHeight(SongInfoController.minHeight);
+            stage.setWidth(SongInfoController.minWidth);
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> requestLyrics = new HashMap<>();
             ArrayList<String> values = new ArrayList<>();
@@ -64,7 +70,7 @@ public class ResultsController {
             requestLyrics.put("lyrics", values);
             TableInfo info = connection.query(requestLyrics, "song");
             String words = info.getFieldsValues().get(0).get(0).get(0);
-            if(words.equals("null") || words.equals("null\n") || words.equals("\nnull")) {
+            if(words.equals("null") || words.equals("null\n") || words.equals("\nnull") || words.equals("\n")) {
                 words = "The lyrics for this song are unavailable.\nSorry for the inconvenience.";
             }
             row.setWords(words);
@@ -84,10 +90,14 @@ public class ResultsController {
         try {
             Stage stage = (Stage) results.getScene().getWindow();
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
-            Scene scene = new Scene(root,450,500);
+            Scene scene = new Scene(root,MenuController.minWidth, MenuController.minHeight);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
+            stage.setMinHeight(MenuController.minHeight);
+            stage.setMinWidth(MenuController.minWidth);
+            stage.setHeight(MenuController.minHeight);
+            stage.setWidth(MenuController.minWidth);
             stage.show();
             // set stage to the center of the screen
             Centralizer.setCenter(stage);
@@ -104,10 +114,14 @@ public class ResultsController {
             loader.setLocation(getClass().getResource("Search.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             Stage stage = (Stage) results.getScene().getWindow();
-            Scene scene = new Scene(root,650,450);
+            Scene scene = new Scene(root,SearchController.minWidth, SearchController.minHeight);
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
+            stage.setMinHeight(SearchController.minHeight);
+            stage.setMinWidth(SearchController.minWidth);
+            stage.setHeight(SearchController.minHeight);
+            stage.setWidth(SearchController.minWidth);
             stage.show();
             // set stage to the center of the screen
             Centralizer.setCenter(stage);

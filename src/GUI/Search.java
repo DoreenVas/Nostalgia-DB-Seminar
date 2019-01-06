@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 
 public abstract class Search {
@@ -34,6 +36,8 @@ public abstract class Search {
     protected Button advanced;
     @FXML
     protected Pane genres;
+    @FXML
+    protected ImageView loading;
 
     public void initialize(String era, ObservableList list, String birthYear, String age, boolean rb1Selected) {
         if(rb1Selected) {
@@ -97,15 +101,38 @@ public abstract class Search {
             }
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
-            WaitingController wait = new WaitingController();
-            TableInfo info = wait.activateWaiting(map, "song");
+
+//            new Thread(() -> Alerter.showAlert("Loading", Alert.AlertType.INFORMATION)).start();
+
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            Callable<TableInfo> callable = new Callable<TableInfo>() {
+                @Override
+                public TableInfo call() throws Exception {
+                    try {
+                        TimeUnit.SECONDS.sleep(3);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Connection connection = Connection.getInstance();
+                    TableInfo info = connection.query(map, "song");
+                    if(info == null) {
+                        return null;
+                    }
+                    return info;
+                }
+            };
+            Future<TableInfo> future = executorService.submit(callable);
+            Alerter.showAlert("Loading", Alert.AlertType.INFORMATION);
+//            Connection connection = Connection.getInstance();
+//            TableInfo info = connection.query(map, "song");
+            TableInfo info = future.get();
             if(info == null) {
                 return false;
             }
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));
-            Stage stage = (Stage) results.getScene().getWindow();
+            Stage stage = (Stage)results.getScene().getWindow();
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
             ResultsController resultsController = loader.getController();

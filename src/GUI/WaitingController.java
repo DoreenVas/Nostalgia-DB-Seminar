@@ -25,32 +25,29 @@ public class WaitingController {
 
     public TableInfo activateWaiting(Map<String, ArrayList<String>> map, String table)throws IOException, SQLException {
 //        Stage stage = (Stage) loading.getScene().getWindow();
-        Stage stage = new Stage();
-        AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Waiting.fxml"));
-        Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
-        stage.setTitle("Waiting");
-        stage.setScene(scene);
-        stage.setMinHeight(WaitingController.minHeight);
-        stage.setMinWidth(WaitingController.minWidth);
-        stage.setHeight(WaitingController.minHeight);
-        stage.setWidth(WaitingController.minWidth);
-        stage.show();
-        Centralizer.setCenter(stage);
+//        FXMLLoader loader = new FXMLLoader((getClass().getResource("Waiting.fxml")));
+//        //Stage stage = new Stage();
+//        AnchorPane root = (AnchorPane) loader.load();
+//        Stage stage = (Stage)loading.getScene().getWindow();
+//        Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
+//        stage.setTitle("Waiting");
+//        stage.setScene(scene);
+//        stage.setMinHeight(WaitingController.minHeight);
+//        stage.setMinWidth(WaitingController.minWidth);
+//        stage.setHeight(WaitingController.minHeight);
+//        stage.setWidth(WaitingController.minWidth);
+//        stage.show();
+//        Centralizer.setCenter(stage);
 
         //TODO delete
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         Connection connection = Connection.getInstance();
         TableInfo info = connection.query(map, table);
         if(info == null) {
-            stage.close();
+//            stage.close();
             return null;
         }
-        stage.close();
+//        stage.close();
         return info;
     }
 

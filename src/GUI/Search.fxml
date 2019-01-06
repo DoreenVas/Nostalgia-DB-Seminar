@@ -101,6 +101,10 @@
             </Group>
             <Button fx:id="results" layoutX="133.0" layoutY="398.0" mnemonicParsing="false" onAction="#results" text="Go to results" />
             <Button fx:id="advanced" layoutX="350.0" layoutY="398.0" mnemonicParsing="false" onAction="#advanced" text="Advanced Search" />
+            <ImageView fx:id="loading" fitHeight="150.0" fitWidth="200.0" layoutX="224.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="GUI\pic\animatedEllipse.gif" />
+               </image></ImageView>
          </children>
       </Pane>
    </children>

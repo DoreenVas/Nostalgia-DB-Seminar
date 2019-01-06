@@ -5,7 +5,6 @@ import Resources.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Map;
 
 public class ArtistController extends ControllerAbstract {
@@ -42,7 +41,7 @@ public class ArtistController extends ControllerAbstract {
                     break;
                 case "song_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
-                    SongContainer song = new SongContainer(temp);
+                    SongIdContainer song = new SongIdContainer(temp);
                     queryInfo.setSong(song);
                     break;
             }

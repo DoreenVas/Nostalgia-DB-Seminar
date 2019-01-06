@@ -162,7 +162,7 @@ public class Test {
 //            System.out.println();
 
 //            System.out.println("Getting artist by song name:");
-//            myRes = model.getArtists(new SongContainer("The Court"));
+//            myRes = model.getArtists(new SongIdContainer("The Court"));
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }
@@ -179,7 +179,7 @@ public class Test {
 //            System.out.println();
 
 //            System.out.println("Getting song by song name and artist:");
-//            myRes = model.getSongs(new SongContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
+//            myRes = model.getSongs(new SongIdContainer("The Court"), new ArtistContainer("Zbigniew Preisner"));
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }

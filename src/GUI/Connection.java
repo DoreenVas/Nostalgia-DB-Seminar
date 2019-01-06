@@ -25,36 +25,27 @@ public class Connection {
     }
 
     public void OpenConnection() throws SQLException {
-        //throw new SQLException("Couldn't open connection to db.\nTry again?");
         controller.openModelConnection();
     }
 
     public void CloseConnection() throws SQLException {
-        //throw new SQLException("Couldn't close connection to db");
         controller.closeModelConnection();
     }
 
-    public TableInfo query(Map<String, ArrayList<String>> map) {
-        // for debugging
-//        String[] fields = {"song_id", "name", "dancibility", "duration", "tempo", "hotness",
-//                "loudness", "year"};
-//        ArrayList<String> fieldsList = new ArrayList<>();
-//        ArrayList<ArrayList<String>> data = new ArrayList<>();
-//        for(String field : fields) {
-//            fieldsList.add(field);
-//        }
-//        for(int i = 0; i < 100; i++) {
-//            ArrayList<String> row = new ArrayList<>();
-//            for(String field: fields) {
-//                row.add(field);
-//            }
-//            data.add(row);
-//        }
-//        TableInfo info = new TableInfo(fields.length, 100, fieldsList, data);
-//        return info;
+    public TableInfo query(Map<String, ArrayList<String>> map, String wanted) {
         TableInfo info = null;
         try {
-            info = this.controller.getInfoFromGUI(map);
+            switch(wanted) {
+                case "song":
+                    info = this.controller.getInfoFromGUI(map);
+                    break;
+                case "artist":
+                    // TODO
+                    break;
+                case "album":
+                    // TODO
+                    break;
+            }
         } catch (Exception e) {
             Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
             return null;

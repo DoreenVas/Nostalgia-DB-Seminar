@@ -96,14 +96,20 @@ public abstract class Search {
                 return false;
             }
             Connection connection = Connection.getInstance();
-//            connection.OpenConnection();
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
-            TableInfo info = connection.query(map);
+            TableInfo info = connection.query(map, "song");
             if(info == null) {
                 return false;
             }
-//            connection.CloseConnection();
+//            TableInfo artistInfo = connection.query(map, "artist");
+//            if(artistInfo == null) {
+//                return false;
+//            }
+//            TableInfo albumInfo = connection.query(map, "album");
+//            if(albumInfo == null) {
+//                return false;
+//            }
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));

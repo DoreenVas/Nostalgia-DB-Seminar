@@ -326,7 +326,7 @@ public class DBModel implements Model {
 //    }
 
     // get songs by song name
-    private DataContainer getSongs(SongContainer song) throws SQLException {
+    private DataContainer getSongs(SongIdContainer song) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(song);
     }
 
@@ -407,7 +407,7 @@ public class DBModel implements Model {
         return SongQueries.getInstance(myStatement).getSongs(genre, artist, songConditions);
     }
 
-    private DataContainer getSongs(SongContainer songName, ArtistContainer artist) throws SQLException {
+    private DataContainer getSongs(SongIdContainer songName, ArtistContainer artist) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(songName, artist);
     }
 //
@@ -519,7 +519,7 @@ public class DBModel implements Model {
         return ArtistQueries.getInstance(myStatement).getArtists(artist);
     }
 
-    private DataContainer getArtists(SongContainer songName) throws SQLException{
+    private DataContainer getArtists(SongIdContainer songName) throws SQLException{
         return ArtistQueries.getInstance(myStatement).getArtists(songName);
     }
 }

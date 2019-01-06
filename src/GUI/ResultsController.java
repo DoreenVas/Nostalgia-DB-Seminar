@@ -2,6 +2,7 @@ package GUI;
 
 import Resources.DataContainer;
 import Resources.TableInfo;
+import com.sun.deploy.util.ArrayUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -51,12 +52,12 @@ public class ResultsController {
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> requestLyrics = new HashMap<>();
             ArrayList<String> values = new ArrayList<>();
-            values.add(row.getName());
+            values.add(row.getId());
             requestLyrics.put("lyrics", values);
-            TableInfo info = connection.query(requestLyrics);
+            TableInfo info = connection.query(requestLyrics, "song");
             String words = info.getFieldsValues().get(0).get(0).get(0);
-            if(words.equals("null")) {
-                words = "The lyrics for this song are unavailable.\nSorry for the inconvenience";
+            if(words.equals("null") || words.equals("null\n") || words.equals("\nnull")) {
+                words = "The lyrics for this song are unavailable.\nSorry for the inconvenience.";
             }
 
             songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
@@ -64,6 +65,7 @@ public class ResultsController {
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
+            Centralizer.setCenter(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -127,11 +129,11 @@ public class ResultsController {
             arr.add(String.valueOf(year + 9));
             map.put("to", arr);
         }
-        TableInfo info = Connection.getInstance().query(map);
+        TableInfo info = Connection.getInstance().query(map, "song");
         if(info == null) {
             return;
         }
-        addData(Connection.getInstance().query(map), map);
+        addData(Connection.getInstance().query(map, "song"), map);
     }
 
     void addData(TableInfo info, Map<String, ArrayList<String>> map) {
@@ -144,7 +146,8 @@ public class ResultsController {
         this.map = map;
         ArrayList<String> fields = info.getFields();
 
-        for (String field : fields) {
+        for (int i = 1; i < fields.size(); i++) {
+            String field = fields.get(i);
             addColumn(field, field);
         }
 
@@ -187,92 +190,56 @@ public class ResultsController {
         }
     }
 
-//    @FXML
-//    protected void addRow() {
-//        ArrayList<String> fields = new ArrayList<>();
-//        String[] fieldsList = {"name", "dancibility", "duration", "tempo", "hotness",
-//                "loudness", "year"};
-//
-//        for(String item : fieldsList) {
-//            fields.add(item);
-//        }
-//        String[][] data = {{"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", "I am the best.\nI will win all of my battles.\nI am the best person alive, and whoever wishes to oppose me shall perish.\nIlove the color pink."},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null},
-//                {"9996", "The Hanged Man", "0.90607", "386.194", "140.185", "0.15253", "-8.087", "1998", null},
-//                {"9997", "The Wonderful World Of The Young", "0.75450", "168.019", "77.072", "0.10955", "-14.517", "1998", null},
-//                {"9998", "Sentimental Man", "0.83061", "193.724", "118.123", "0.98842", "-12.087", "2017", null},
-//                {"9999", "Zydeco In D-Minor", "0.29329", "300.826", "137.663", "0.04028", "-12.574", "1941", null},
-//                {"10000", "Shattered Life", "0.70568", "209.737", "150.575", "0.32301", "-5.324", "2005", null}};
-//        //this.data = data;
-//
-//        for (String field : fields) {
-//            addColumn(field, field);
-//        }
-//
-//        for (String[] row : data) {
-//            SongRow item = new SongRow(row);
-//            this.results.getItems().addAll(item);
-//        }
-//        this.name.setText("");
-//        this.surname.setText("");
-//    }
-
     @FXML
     protected void addColumn(String field, String displayName) {
-//        TableColumn<Person, String> nameColumn = new TableColumn<>("Name");
-//        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        TableColumn<Person, String> surnameColumn = new TableColumn<>("Surname");
-//        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-//        this.results.getColumns().add(nameColumn);
-//        this.results.getColumns().add(surnameColumn);
-
         TableColumn<SongRow, String> column = new TableColumn<>(field);
         column.setCellValueFactory(new PropertyValueFactory<>(field));
         column.setText(displayName);
         this.results.getColumns().add(column);
-
-//        TableColumn<Table, String> column = new TableColumn<>(this.column.getText());
-//        column.setCellValueFactory(new PropertyValueFactory<>(this.column.getText()));
-//        this.results.getColumns().add(column);
-//        this.column.setText("");
     }
 
-    public class SongRow {
+//    public class SongRow {
+//        private String name;
+//        private String duration;
+//        private String year;
+//        private String artist;
+//        private String album;
+//
+//        SongRow(ArrayList<String> data) {
+//            this.name = data.get(0);
+//            this.duration = String.valueOf(Float.parseFloat(data.get(2)) / 60);
+//            this.year = data.get(6);
+//        }
+//
+//        public SongRow(String[] data) {
+//            this.name = data[0];
+//            this.duration = String.valueOf(Float.parseFloat(data[2]) / 60);
+//            this.year = data[6];
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public String getDuration() {
+//            return duration;
+//        }
+//
+//        public String getYear() {
+//            return year;
+//        }
+//
+//        public String getAlbum() {
+//            return album;
+//        }
+//
+//        public String getArtist() {
+//            return artist;
+//        }
+//    }
 
-        private String song_id;
+    public class SongRow { //public class SongData {
+        private String id;
         private String name;
         private String dancibility;
         private String duration;
@@ -282,41 +249,26 @@ public class ResultsController {
         private String year;
         private String words = null;
 
-//        public SongRow(String song_id, String name, String dancibility, String duration, String tempo,
-//                       String hotness, String loudness, String year, String words) {
-//            this.song_id = song_id;
-//            this.name = name;
-//            this.dancibility = dancibility;
-//            this.duration = duration;
-//            this.tempo = tempo;
-//            this.hotness = hotness;
-//            this.loudness = loudness;
-//            this.year = year;
-//            this.words = words;
-//        }
-
-        SongRow(ArrayList<String> data) {
-            //this.song_id = data.get(0);
-            this.name = data.get(0);
-            this.dancibility = data.get(1);
-            this.duration = String.valueOf(Float.parseFloat(data.get(2)) / 60);
-            this.tempo = data.get(3);
-            this.hotness = data.get(4);
-            this.loudness = data.get(5);
-            this.year = data.get(6);
-//            this.words = data.get(8);
+        public SongRow(ArrayList<String> data) {
+            this.id = data.get(0);
+            this.name = data.get(1);
+            this.dancibility = data.get(2);
+            this.duration = String.valueOf(Float.parseFloat(data.get(3)) / 60);
+            this.tempo = data.get(4);
+            this.hotness = data.get(5);
+            this.loudness = data.get(6);
+            this.year = data.get(7);
         }
 
         public SongRow(String[] data) {
-            //this.song_id = data[0];
-            this.name = data[0];
-            this.dancibility = data[1];
-            this.duration = String.valueOf(Float.parseFloat(data[2]) / 60);
-            this.tempo = data[3];
-            this.hotness = data[4];
-            this.loudness = data[5];
-            this.year = data[6];
-//            this.words = data[8];
+            this.id = data[0];
+            this.name = data[1];
+            this.dancibility = data[2];
+            this.duration = String.valueOf(Float.parseFloat(data[3]) / 60);
+            this.tempo = data[4];
+            this.hotness = data[5];
+            this.loudness = data[6];
+            this.year = data[7];
         }
 
         public String getName() {
@@ -339,10 +291,6 @@ public class ResultsController {
             return loudness;
         }
 
-        public String getSong_id() {
-            return song_id;
-        }
-
         public String getTempo() {
             return tempo;
         }
@@ -356,6 +304,10 @@ public class ResultsController {
 
         public String getYear() {
             return year;
+        }
+
+        public String getId() {
+            return id;
         }
     }
 }

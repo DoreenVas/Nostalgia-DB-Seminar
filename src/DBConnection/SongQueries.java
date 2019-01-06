@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SongQueries {
     private static SongQueries ourInstance = new SongQueries();
     private static Statement myStatement;
-    private static String[] allSongFields = {/*"song.song_id", */"song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
+    private static String[] allSongFields = {"song.song_id", "song.name", "song.dancibility", "song.duration", "song.tempo", "song.hotness",
             "song.loudness", "song.year"/*, "song.words"*/};
     private static final float tempoRate = (float)0.3;
     private static final int durationRate = 30;
@@ -110,11 +110,25 @@ public class SongQueries {
         return new DataContainer(res,  allSongFields, count);
     }
 
+//    public DataContainer getLyrics(LyricsContainer song) throws SQLException {
+//        String[] fields = {"*"};
+//        String[] tables = {"song"};
+//        QueryBuilder builder = new QueryBuilder(fields, tables);
+//        builder = builder.addWhere().addEqualStatements("name", "\"" + song.getValue() + "\"");
+//        String query = builder.build();
+//        String[] columns = {"words"};
+//        String[] res = Executor.executeQuery(myStatement, query, columns);
+//        res = lyricsCombiner(res);
+//        String[] countField = {"count(*)"};
+//        int count = Integer.parseInt(Executor.executeQuery(myStatement, builder.addCount(query), countField)[0]);
+//        return new DataContainer(res, columns, count);
+//    }
+
     public DataContainer getLyrics(LyricsContainer song) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addEqualStatements("name", "\"" + song.getValue() + "\"");
+        builder = builder.addWhere().addEqualStatements("song_id", "\"" + song.getValue() + "\"");
         String query = builder.build();
         String[] columns = {"words"};
         String[] res = Executor.executeQuery(myStatement, query, columns);
@@ -152,7 +166,7 @@ public class SongQueries {
     }
 
     // get songs by song name
-    public DataContainer getSongs(SongContainer song) throws SQLException {
+    public DataContainer getSongs(SongIdContainer song) throws SQLException {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
@@ -196,7 +210,7 @@ public class SongQueries {
     }
 
     // get songs by artist
-    public DataContainer getSongs(SongContainer songName, ArtistContainer artist) throws SQLException {
+    public DataContainer getSongs(SongIdContainer songName, ArtistContainer artist) throws SQLException {
         String query = "select distinct * from song, album_song, artist_album, artist " +
                 "where artist.artist_name=\"" + artist.getValue() + "\" " +
                 "and artist.artist_id=artist_album.artist_id " +

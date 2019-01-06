@@ -1,7 +1,7 @@
 package DBConnection;
 
 import Resources.DataContainer;
-import Resources.SongContainer;
+import Resources.SongIdContainer;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,12 +16,12 @@ public class AlbumQueries {
         return ourInstance;
     }
 
-    public DataContainer getAlbum(SongContainer songContainer) throws SQLException{
+    public DataContainer getAlbum(SongIdContainer songContainer) throws SQLException{
         String query = "select distinct * from song, album_song, album " +
                 "where album.album_id=album_song.album_id" +
                 "and album_song.song_id=song.song_id " +
-                "and song.name=\"" + songContainer.getValue() + "\" ";
-        String[] res = Executor.executeQuery(this.myStatement, query, allAlbumFields);
+                "and song.song_id=\"" + songContainer.getValue() + "\" ";
+        String[] res = Executor.executeQuery(myStatement, query, allAlbumFields);
         int count = res.length;
         return new DataContainer(res, allAlbumFields, count);
     }

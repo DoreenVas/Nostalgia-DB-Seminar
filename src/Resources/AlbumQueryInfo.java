@@ -2,7 +2,7 @@ package Resources;
 
 public class AlbumQueryInfo {
     private AlbumContainer album;
-    private SongContainer song;
+    private SongIdContainer song;
     private ArtistContainer artist;
 
     public AlbumQueryInfo() {
@@ -11,7 +11,7 @@ public class AlbumQueryInfo {
         artist = null;
     }
 
-    public SongContainer getSong() {
+    public SongIdContainer getSong() {
         return song;
     }
 
@@ -23,7 +23,7 @@ public class AlbumQueryInfo {
         return album;
     }
 
-    public void setSong(SongContainer song) {
+    public void setSong(SongIdContainer song) {
         this.song = song;
     }
 

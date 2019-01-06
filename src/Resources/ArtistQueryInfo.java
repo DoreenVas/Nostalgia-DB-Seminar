@@ -4,7 +4,7 @@ public class ArtistQueryInfo {
     private ArtistContainer artist;
     private GenreContainer genere;
     private AlbumContainer album;
-    private SongContainer song;
+    private SongIdContainer song;
     private FamiliarityContainer familiarity;
     private PopularityContainer popularity;
 
@@ -45,7 +45,7 @@ public class ArtistQueryInfo {
         return genere;
     }
 
-    public SongContainer getSong() {
+    public SongIdContainer getSong() {
         return song;
     }
 
@@ -61,7 +61,7 @@ public class ArtistQueryInfo {
         this.genere = genere;
     }
 
-    public void setSong(SongContainer song) {
+    public void setSong(SongIdContainer song) {
         this.song = song;
     }
 }

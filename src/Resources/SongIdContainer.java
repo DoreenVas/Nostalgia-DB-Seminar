@@ -1,10 +1,10 @@
 package Resources;
 
-public class SongContainer implements Container<String> {
+public class SongIdContainer implements Container<String> {
 
     private String songName;
 
-    public SongContainer(String songName) {
+    public SongIdContainer(String songName) {
         this.songName = songName;
     }
 

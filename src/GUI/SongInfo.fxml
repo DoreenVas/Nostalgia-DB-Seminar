@@ -13,9 +13,9 @@
       <Label layoutX="43.0" layoutY="90.0" text="Hotness:" />
       <Label layoutX="43.0" layoutY="120.0" text="Year:" AnchorPane.leftAnchor="43.0" />
       <Label layoutX="43.0" layoutY="150.0" text="Words:" AnchorPane.leftAnchor="43.0" />
-      <Label fx:id="name" layoutX="160.0" layoutY="14.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+      <Label fx:id="name" layoutX="160.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <font>
-            <Font size="27.0" />
+            <Font size="20.0" />
          </font></Label>
       <Label fx:id="duration" layoutX="105.0" layoutY="60.0" text="Label" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="60.0" />
       <Label fx:id="hotness" layoutX="105.0" layoutY="90.0" text="Label" AnchorPane.topAnchor="90.0" />

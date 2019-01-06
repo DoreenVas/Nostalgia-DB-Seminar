@@ -7,37 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ArtistController extends ControllerAbstract {
+public class AlbumController extends ControllerAbstract {
 
-    public ArtistController() throws IOException, SQLException{
-
+    public AlbumController() throws IOException, SQLException {
     }
-
 
     @Override
     public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException {
-        ArtistQueryInfo queryInfo = new ArtistQueryInfo();
+        AlbumQueryInfo queryInfo = new AlbumQueryInfo();
         String temp;
         DataContainer dc = null;
 
-        for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
-        {
-            switch (entry.getKey()){
-                case "familiriaty":
-                    float val = entry.getValue().size();
-                    FamiliarityContainer familiarityContainer = new FamiliarityContainer(val);
-
+        for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet()) {
+            switch (entry.getKey()) {
+                case "album_name":
+                    temp = matchStringToPattern(entry.getValue().get(0));
+                    AlbumContainer albumContainer = new AlbumContainer(temp);
+                    queryInfo.setAlbum(albumContainer);
                     break;
                 case "artist_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
                     ArtistContainer artistContainer = new ArtistContainer(temp);
                     queryInfo.setArtist(artistContainer);
-                    break;
-                case "popularity":
-                    float popularity = Float.parseFloat(entry.getValue().get(0));
-                    PopularityContainer popularityContainer = new PopularityContainer(popularity);
-                    queryInfo.setPopularity(popularityContainer);
-
                     break;
                 case "song_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
@@ -55,11 +46,10 @@ public class ArtistController extends ControllerAbstract {
 
 
     /**
-     *
      * @param dc
      * @return
      */
-    private TableInfo createTableInfo(DataContainer dc){
+    private TableInfo createTableInfo(DataContainer dc) {
         int row = dc.getCount();
         int col = dc.getColumns().length;
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
@@ -69,7 +59,7 @@ public class ArtistController extends ControllerAbstract {
         tempArrayList.add(parseToArrayList(dc.getData()));
         data.add(tempArrayList);
 
-        TableInfo ti = new TableInfo(col,row,fields,data);
+        TableInfo ti = new TableInfo(col, row, fields, data);
         return ti;
     }
 }

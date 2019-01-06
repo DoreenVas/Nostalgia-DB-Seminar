@@ -39,7 +39,7 @@ public class SongInfoController {
     private TextArea words;
     @FXML
     private Button ret;
-    Map<String, ArrayList<String>> map;
+    private Map<String, ArrayList<String>> map;
     private TableInfo data;
     private int index;
 

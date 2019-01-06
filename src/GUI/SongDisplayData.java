@@ -123,4 +123,8 @@ public class SongDisplayData {
         }
         return album;
     }
+
+    public void setWords(String words) {
+        this.words = words;
+    }
 }

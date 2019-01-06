@@ -128,7 +128,7 @@ public class SongQueries {
         String[] fields = {"*"};
         String[] tables = {"song"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        builder = builder.addWhere().addEqualStatements("song_id", "\"" + song.getValue() + "\"");
+        builder = builder.addWhere().addEqualStatements("song_id", song.getValue());
         String query = builder.build();
         String[] columns = {"words"};
         String[] res = Executor.executeQuery(myStatement, query, columns);

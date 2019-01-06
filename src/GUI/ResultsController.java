@@ -60,6 +60,7 @@ public class ResultsController {
             if(words.equals("null") || words.equals("null\n") || words.equals("\nnull")) {
                 words = "The lyrics for this song are unavailable.\nSorry for the inconvenience.";
             }
+            row.setWords(words);
 
             songInfoController.initialize(row, data, map, groupIndex);
             stage.setTitle("Song");

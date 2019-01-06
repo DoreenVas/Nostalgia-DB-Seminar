@@ -1,5 +1,8 @@
 package GUI;
 
+import Controller.AlbumController;
+import Controller.ArtistController;
+import Controller.ControllerInterface;
 import Controller.SongController;
 import Resources.TableInfo;
 import javafx.scene.control.Alert;
@@ -10,7 +13,9 @@ import java.util.Map;
 
 public class Connection {
     private static Connection connection = new Connection();
-    private SongController controller;
+    private ControllerInterface songController;
+    private ControllerInterface artistController;
+    private ControllerInterface albumController;
 
     public static Connection getInstance() {
         return connection;
@@ -18,18 +23,20 @@ public class Connection {
 
     private Connection() {
         try {
-            controller = new SongController();
+            songController = new SongController();
+            artistController = new ArtistController();
+            albumController = new AlbumController();
         } catch (Exception e) {
             Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     public void OpenConnection() throws SQLException {
-        controller.openModelConnection();
+        songController.openModelConnection();
     }
 
     public void CloseConnection() throws SQLException {
-        controller.closeModelConnection();
+        songController.closeModelConnection();
     }
 
     public TableInfo query(Map<String, ArrayList<String>> map, String wanted) {
@@ -37,13 +44,13 @@ public class Connection {
         try {
             switch(wanted) {
                 case "song":
-                    info = this.controller.getInfoFromGUI(map);
+                    info = this.songController.getInfoFromGUI(map);
                     break;
                 case "artist":
-                    // TODO
+                    info = this.artistController.getInfoFromGUI(map);
                     break;
                 case "album":
-                    // TODO
+                    info = this.albumController.getInfoFromGUI(map);
                     break;
             }
         } catch (Exception e) {

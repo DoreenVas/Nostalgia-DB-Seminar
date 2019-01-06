@@ -3,7 +3,7 @@ package Resources;
 public class ArtistQueryInfo {
     private ArtistContainer artist;
     private GenreContainer genere;
-    private AlbumContainer album;
+    private AlbumIdContainer album;
     private SongIdContainer song;
     private FamiliarityContainer familiarity;
     private PopularityContainer popularity;
@@ -33,7 +33,7 @@ public class ArtistQueryInfo {
         this.familiarity = familiarity;
     }
 
-    public AlbumContainer getAlbum() {
+    public AlbumIdContainer getAlbum() {
         return album;
     }
 
@@ -49,7 +49,7 @@ public class ArtistQueryInfo {
         return song;
     }
 
-    public void setAlbum(AlbumContainer album) {
+    public void setAlbum(AlbumIdContainer album) {
         this.album = album;
     }
 

@@ -9,7 +9,7 @@ public class SongQueryInfo {
     private PopularityContainer popularity;
     private DurationContainer duration;
     private ArtistContainer artist;
-    private AlbumContainer album;
+    private AlbumIdContainer album;
     private LyricsContainer lyrics;
 
     public SongQueryInfo() {
@@ -89,11 +89,11 @@ public class SongQueryInfo {
         this.artist = artist;
     }
 
-    public AlbumContainer getAlbum() {
+    public AlbumIdContainer getAlbum() {
         return album;
     }
 
-    public void setAlbum(AlbumContainer album) {
+    public void setAlbum(AlbumIdContainer album) {
         this.album = album;
     }
 

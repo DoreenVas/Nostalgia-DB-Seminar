@@ -196,7 +196,7 @@ public class Test {
 
 //            System.out.println("Getting song by genre, artist and album:");
 //            myRes = model.getSongs(new GenreContainer(genre), new ArtistContainer("Ross"),
-//                    new AlbumContainer("I Promise My Heart"));
+//                    new AlbumIdContainer("I Promise My Heart"));
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }
@@ -204,7 +204,7 @@ public class Test {
 //            System.out.println();
 
 //            System.out.println("Getting song by artist and album:");
-//            myRes = model.getSongs(new ArtistContainer("Ross"), new AlbumContainer("I Promise My Heart"),
+//            myRes = model.getSongs(new ArtistContainer("Ross"), new AlbumIdContainer("I Promise My Heart"),
 //                    "");
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
@@ -213,7 +213,7 @@ public class Test {
 //            System.out.println();
 
 //            System.out.println("Getting song by album:");
-//            myRes = model.getSongs(new AlbumContainer("I Promise My Heart"), "");
+//            myRes = model.getSongs(new AlbumIdContainer("I Promise My Heart"), "");
 //            for (String line : myRes.getData()) {
 //                System.out.println(line);
 //            }

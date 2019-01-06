@@ -100,10 +100,18 @@ public class DBModel implements Model {
     }
 
     private DataContainer activateAppropriateAlbumQuery(AlbumQueryInfo info) throws SQLException {
+        DataContainer dataContainer = null;
 
         // TODO:*** needs to be implemented***
 
-        return null;
+        if(info.getSong() != null) {
+            dataContainer = getAlbum(info.getSong());
+        }
+        else if(info.getAlbum() != null) {
+            dataContainer = getAlbum(info.getAlbum());
+        }
+
+        return dataContainer;
     }
 
     private DataContainer activateAppropriateArtistQuery(ArtistQueryInfo info) throws SQLException {
@@ -304,7 +312,7 @@ public class DBModel implements Model {
         return SongQueries.getInstance(myStatement).getSongs(tempo);
     }
 
-    private DataContainer getSongs(ArtistContainer artist, AlbumContainer album, String songConditions) throws SQLException {
+    private DataContainer getSongs(ArtistContainer artist, AlbumIdContainer album, String songConditions) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(artist, album, songConditions);
     }
 
@@ -330,7 +338,7 @@ public class DBModel implements Model {
         return SongQueries.getInstance(myStatement).getSongs(song);
     }
 
-    private DataContainer getSongs(AlbumContainer album, String songConditions) throws SQLException {
+    private DataContainer getSongs(AlbumIdContainer album, String songConditions) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(album, songConditions);
     }
 
@@ -494,7 +502,7 @@ public class DBModel implements Model {
     }
 
     private DataContainer getSongs(GenreContainer genre, ArtistContainer artist,
-                                  AlbumContainer album, String songConditions) throws SQLException {
+                                   AlbumIdContainer album, String songConditions) throws SQLException {
         return SongQueries.getInstance(myStatement).getSongs(genre, artist, album, songConditions);
     }
 
@@ -521,5 +529,13 @@ public class DBModel implements Model {
 
     private DataContainer getArtists(SongIdContainer songName) throws SQLException{
         return ArtistQueries.getInstance(myStatement).getArtists(songName);
+    }
+
+    public DataContainer getAlbum(SongIdContainer songContainer) throws SQLException{
+        return AlbumQueries.getInstance(myStatement).getAlbum(songContainer);
+    }
+
+    DataContainer getAlbum(AlbumIdContainer albumContainer) throws SQLException {
+        return AlbumQueries.getInstance(myStatement).getAlbum(albumContainer);
     }
 }

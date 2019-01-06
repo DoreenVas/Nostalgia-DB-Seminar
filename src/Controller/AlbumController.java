@@ -22,7 +22,7 @@ public class AlbumController extends ControllerAbstract {
             switch (entry.getKey()) {
                 case "album_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
-                    AlbumContainer albumContainer = new AlbumContainer(temp);
+                    AlbumIdContainer albumContainer = new AlbumIdContainer(temp);
                     queryInfo.setAlbum(albumContainer);
                     break;
                 case "artist_name":
@@ -30,7 +30,7 @@ public class AlbumController extends ControllerAbstract {
                     ArtistContainer artistContainer = new ArtistContainer(temp);
                     queryInfo.setArtist(artistContainer);
                     break;
-                case "song_name":
+                case "song_id":
                     temp = matchStringToPattern(entry.getValue().get(0));
                     SongIdContainer song = new SongIdContainer(temp);
                     queryInfo.setSong(song);
@@ -56,7 +56,16 @@ public class AlbumController extends ControllerAbstract {
         ArrayList<ArrayList<ArrayList<String>>> data = new ArrayList<>();
         ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
 
-        tempArrayList.add(parseToArrayList(dc.getData()));
+        ArrayList<String> newRow = new ArrayList<>();
+        for(String item : dc.getData()) {
+            String[] temp = item.split(",");
+            for (int j = 0; j < temp.length; j++) {
+                newRow.add(j, temp[j]);
+            }
+            tempArrayList.add(newRow);
+        }
+
+        //tempArrayList.add(parseToArrayList(dc.getData()));
         data.add(tempArrayList);
 
         TableInfo ti = new TableInfo(col, row, fields, data);

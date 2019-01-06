@@ -20,7 +20,7 @@ import java.util.*;
 public class ResultsController {
 
     @FXML
-    private TableView<SongRow> results;
+    private TableView<SongDisplayData> results;
     @FXML
     private Label countLabel;
     @FXML
@@ -31,10 +31,12 @@ public class ResultsController {
     private TableInfo data = null;
     private int groupIndex = 0;
 
+    private static String[] displayColumns = {"name", "artist", "album", "year"};
+
     @FXML
     private void display() {
         TableView.TableViewSelectionModel selectionModel = results.getSelectionModel();
-        SongRow row;
+        SongDisplayData row;
         if(selectionModel.getSelectedItems().size() != 0) {
             row = results.getSelectionModel().getSelectedItem();
         } else {
@@ -60,8 +62,7 @@ public class ResultsController {
                 words = "The lyrics for this song are unavailable.\nSorry for the inconvenience.";
             }
 
-            songInfoController.initialize(row.getName(), row.getDancibility(), row.getDuration(), row.getTempo(),
-                    row.getHotness(), row.getLoudness(), row.getYear(), words, data, map);
+            songInfoController.initialize(row, data, map);
             stage.setTitle("Song");
             stage.setScene(scene);
             stage.show();
@@ -146,25 +147,20 @@ public class ResultsController {
         this.map = map;
         ArrayList<String> fields = info.getFields();
 
-        for (int i = 1; i < fields.size(); i++) {
-            String field = fields.get(i);
+//        for (int i = 1; i < fields.size(); i++) {
+//            String field = fields.get(i);
+//            addColumn(field, field);
+//        }
+
+        for (String field : displayColumns) {
             addColumn(field, field);
         }
 
         ArrayList<ArrayList<String>> group = info.getFieldsValues().get(groupIndex);
         countLabel.setText("Displaying " + group.size() + " results out of " + info.getRowsNum());
 
-//            TableInfo artistInfo = connection.query(map, "artist");
-//            if(artistInfo == null) {
-//                return false;
-//            }
-//            TableInfo albumInfo = connection.query(map, "album");
-//            if(albumInfo == null) {
-//                return false;
-//            }
-
         for (ArrayList<String> row : group) {
-            SongRow item = new SongRow(row);
+            SongDisplayData item = new SongDisplayData(row, getArtist(row.get(0)), getAlbum(row.get(0)));
             this.results.getItems().addAll(item);
         }
         this.results.setOnMouseClicked((event) -> {
@@ -172,6 +168,32 @@ public class ResultsController {
                 display();
             }
         });
+    }
+
+    private String getArtist(String songId) {
+        Connection connection = Connection.getInstance();
+        Map<String, ArrayList<String>> map = new HashMap<>();
+        ArrayList<String> values = new ArrayList<>();
+        values.add(songId);
+        map.put("song_id", values);
+        TableInfo artistInfo = connection.query(map, "artist");
+        if(artistInfo == null) {
+            return "Artist not in DataBase";
+        }
+        return artistInfo.getFieldsValues().get(0).get(0).get(0);
+    }
+
+    private String getAlbum(String songId) {
+        Connection connection = Connection.getInstance();
+        Map<String, ArrayList<String>> map = new HashMap<>();
+        ArrayList<String> values = new ArrayList<>();
+        values.add(songId);
+        map.put("song_id", values);
+        TableInfo albumInfo = connection.query(map, "album");
+        if(albumInfo == null) {
+            return "Album not in DataBase";
+        }
+        return albumInfo.getFieldsValues().get(0).get(0).get(0);
     }
 
     @FXML
@@ -201,7 +223,7 @@ public class ResultsController {
 
     @FXML
     protected void addColumn(String field, String displayName) {
-        TableColumn<SongRow, String> column = new TableColumn<>(field);
+        TableColumn<SongDisplayData, String> column = new TableColumn<>(field);
         column.setCellValueFactory(new PropertyValueFactory<>(field));
         column.setText(displayName);
         this.results.getColumns().add(column);
@@ -247,90 +269,90 @@ public class ResultsController {
 //        }
 //    }
 
-    public class SongRow { //public class SongData {
-        private String id;
-        private String name;
-        private String dancibility;
-        private String duration;
-        private String tempo;
-        private String hotness;
-        private String loudness;
-        private String year;
-        private String words = null;
-        private String artist;
-        private String album;
-
-        public SongRow(ArrayList<String> data, String artist, String album) {
-            this.id = data.get(0);
-            this.name = data.get(1);
-            this.dancibility = data.get(2);
-            this.duration = String.valueOf(Float.parseFloat(data.get(3)) / 60);
-            this.tempo = data.get(4);
-            this.hotness = data.get(5);
-            this.loudness = data.get(6);
-            this.year = data.get(7);
-            this.artist = artist;
-            this.album = album;
-        }
-
-        public SongRow(String[] data, String artist, String album) {
-            this.id = data[0];
-            this.name = data[1];
-            this.dancibility = data[2];
-            this.duration = String.valueOf(Float.parseFloat(data[3]) / 60);
-            this.tempo = data[4];
-            this.hotness = data[5];
-            this.loudness = data[6];
-            this.year = data[7];
-            this.artist = artist;
-            this.album = album;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDancibility() {
-            return dancibility;
-        }
-
-        public String getDuration() {
-            return duration;
-        }
-
-        public String getHotness() {
-            return hotness;
-        }
-
-        public String getLoudness() {
-            return loudness;
-        }
-
-        public String getTempo() {
-            return tempo;
-        }
-
-        public String getWords() {
-            if(words == null) {
-                return "Sorry, we do not have the lyrics for this song.";
-            }
-            return words;
-        }
-
-        public String getYear() {
-            return year;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getArtist() {
-            return artist;
-        }
-
-        public String getAlbum() {
-            return album;
-        }
-    }
+//    public class SongRow { //public class SongData {
+//        private String id;
+//        private String name;
+//        private String dancibility;
+//        private String duration;
+//        private String tempo;
+//        private String hotness;
+//        private String loudness;
+//        private String year;
+//        private String words = null;
+//        private String artist;
+//        private String album;
+//
+//        public SongRow(ArrayList<String> data, String artist, String album) {
+//            this.id = data.get(0);
+//            this.name = data.get(1);
+//            this.dancibility = data.get(2);
+//            this.duration = String.valueOf(Float.parseFloat(data.get(3)) / 60);
+//            this.tempo = data.get(4);
+//            this.hotness = data.get(5);
+//            this.loudness = data.get(6);
+//            this.year = data.get(7);
+//            this.artist = artist;
+//            this.album = album;
+//        }
+//
+//        public SongRow(String[] data, String artist, String album) {
+//            this.id = data[0];
+//            this.name = data[1];
+//            this.dancibility = data[2];
+//            this.duration = String.valueOf(Float.parseFloat(data[3]) / 60);
+//            this.tempo = data[4];
+//            this.hotness = data[5];
+//            this.loudness = data[6];
+//            this.year = data[7];
+//            this.artist = artist;
+//            this.album = album;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public String getDancibility() {
+//            return dancibility;
+//        }
+//
+//        public String getDuration() {
+//            return duration;
+//        }
+//
+//        public String getHotness() {
+//            return hotness;
+//        }
+//
+//        public String getLoudness() {
+//            return loudness;
+//        }
+//
+//        public String getTempo() {
+//            return tempo;
+//        }
+//
+//        public String getWords() {
+//            if(words == null) {
+//                return "Sorry, we do not have the lyrics for this song.";
+//            }
+//            return words;
+//        }
+//
+//        public String getYear() {
+//            return year;
+//        }
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public String getArtist() {
+//            return artist;
+//        }
+//
+//        public String getAlbum() {
+//            return album;
+//        }
+//    }
 }

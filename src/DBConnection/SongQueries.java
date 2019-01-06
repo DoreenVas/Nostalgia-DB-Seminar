@@ -269,7 +269,7 @@ public class SongQueries {
         return query;
     }
 
-    DataContainer getSongs(ArtistContainer artist, AlbumContainer album, String songConditions) throws SQLException {
+    DataContainer getSongs(ArtistContainer artist, AlbumIdContainer album, String songConditions) throws SQLException {
         //StringBuilder query = new StringBuilder();
         String query = "select * from song, album_song, artist_album, artist, album " +
                 "where artist.artist_name=\"" + artist.getValue() + "\" " +
@@ -285,7 +285,7 @@ public class SongQueries {
         return new DataContainer(res, allSongFields, count);
     }
 
-    public DataContainer getSongs(AlbumContainer album, String songConditions) throws SQLException {
+    public DataContainer getSongs(AlbumIdContainer album, String songConditions) throws SQLException {
         //StringBuilder query = new StringBuilder();
         String query = "select * from song, album_song, album " +
                 "where album.album_id=album_song.album_id " +
@@ -357,7 +357,7 @@ public class SongQueries {
 
     // get songs by genre, artist
 //    public DataContainer getSongs(GenreContainer genre, ArtistContainer artist,
-//                                  AlbumContainer album) throws SQLException {
+//                                  AlbumIdContainer album) throws SQLException {
 //        StringBuilder query = new StringBuilder("select * from song, album, genre, artist, artist_album," +
 //                " album_song, artist_genre " +
 //                "where ");
@@ -380,7 +380,7 @@ public class SongQueries {
 
     // get songs by genre, artist
     public DataContainer getSongs(GenreContainer genre, ArtistContainer artist,
-                                  AlbumContainer album, String songConditions) throws SQLException {
+                                  AlbumIdContainer album, String songConditions) throws SQLException {
         StringBuilder query = new StringBuilder("select * from song, " +
                 "(select distinct song_id from album_song, " +
                 "(select artist_album.album_id from artist_album, album, " +

@@ -19,7 +19,7 @@ class ArtistQueries {
 
     }
 
-//    DataContainer getArtists(GenreContainer genre, ArtistContainer artist, AlbumContainer album)
+//    DataContainer getArtists(GenreContainer genre, ArtistContainer artist, AlbumIdContainer album)
 //            throws SQLException {
 //
 //    }
@@ -28,11 +28,11 @@ class ArtistQueries {
 //
 //    }
 //
-//    DataContainer getArtists(GenreContainer genre, AlbumContainer album) throws SQLException {
+//    DataContainer getArtists(GenreContainer genre, AlbumIdContainer album) throws SQLException {
 //
 //    }
 //
-//    DataContainer getArtists(ArtistContainer artist, AlbumContainer album) throws SQLException {
+//    DataContainer getArtists(ArtistContainer artist, AlbumIdContainer album) throws SQLException {
 //
 //    }
 
@@ -65,7 +65,7 @@ class ArtistQueries {
         return new DataContainer(res, allArtistFields, count);
     }
 
-    DataContainer getArtists(AlbumContainer album) throws SQLException {
+    DataContainer getArtists(AlbumIdContainer album) throws SQLException {
 
 
         // *** needs checking***

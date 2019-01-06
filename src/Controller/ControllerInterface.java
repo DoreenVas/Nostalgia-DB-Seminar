@@ -7,5 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public interface ControllerInterface {
-    public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException;
+    TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException;
+    void closeModelConnection() throws SQLException;
+    void openModelConnection() throws SQLException;
 }

@@ -25,27 +25,29 @@ public class SongInfoController {
     @FXML
     private Label year;
     @FXML
+    private Label tempo;
+    @FXML
+    private Label artist;
+    @FXML
+    private Label album;
+    @FXML
     private TextArea words;
     @FXML
     private Button ret;
-    private String tempo;
-    private String loudness;
-    private String dancibility;
     Map<String, ArrayList<String>> map;
     private TableInfo data;
 
-    public void initialize(String name, String dancibility, String duration, String tempo,
-                           String hotness, String loudness, String year, String words, TableInfo data,
+    public void initialize(SongDisplayData displayData, TableInfo data,
                            Map<String, ArrayList<String>> map) {
-        this.name.setText(name);
+        this.name.setText(displayData.getName());
         this.name.setAlignment(Pos.CENTER);
-//        this.dancibility = dancibility;
-        this.duration.setText(duration);
-//        this.tempo = tempo;
-        this.hotness.setText(hotness);
-//        this.loudness = loudness;
-        this.year.setText(year);
-        this.words.setText(words);
+        this.duration.setText(displayData.getDuration());
+        this.hotness.setText(displayData.getHotness());
+        this.year.setText(displayData.getYear());
+        this.words.setText(displayData.getWords());
+        this.tempo.setText(displayData.getTempo());
+        this.artist.setText(displayData.getArtist());
+        this.album.setText(displayData.getAlbum());
         this.data = data;
         this.map = map;
         ret.setAlignment(Pos.CENTER);
@@ -69,15 +71,4 @@ public class SongInfoController {
             e.printStackTrace();
         }
     }
-
-//    public void initialize(String[] data) {
-//        this.name.setText(data[0]);
-////        this.dancibility = data[1];
-//        this.duration.setText(data[2]);
-////        this.tempo = data[3];
-//        this.hotness.setText(data[4]);
-////        this.loudness = data[5];
-//        this.year.setText(data[6]);
-//        this.words.setText(data[7]);
-//    }
 }

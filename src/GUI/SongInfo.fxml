@@ -9,22 +9,28 @@
 
 <AnchorPane minHeight="250.0" minWidth="150.0" prefHeight="401.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SongInfoController">
    <children>
-      <Label layoutX="43.0" layoutY="60.0" text="Duration:" AnchorPane.leftAnchor="43.0" />
-      <Label layoutX="43.0" layoutY="90.0" text="Hotness:" />
-      <Label layoutX="43.0" layoutY="120.0" text="Year:" AnchorPane.leftAnchor="43.0" />
-      <Label layoutX="43.0" layoutY="150.0" text="Words:" AnchorPane.leftAnchor="43.0" />
+      <Label layoutX="42.0" layoutY="130.0" text="Duration:" AnchorPane.leftAnchor="42.0" />
+      <Label layoutX="229.0" layoutY="130.0" text="Popularity:" />
+      <Label layoutX="42.0" layoutY="160.0" text="Year:" AnchorPane.leftAnchor="42.0" />
+      <Label layoutX="43.0" layoutY="190.0" text="Words:" AnchorPane.leftAnchor="43.0" />
       <Label fx:id="name" layoutX="160.0" layoutY="14.0" style="-fx-font-weight: bold;" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <font>
             <Font size="20.0" />
          </font></Label>
-      <Label fx:id="duration" layoutX="105.0" layoutY="60.0" text="Label" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="60.0" />
-      <Label fx:id="hotness" layoutX="105.0" layoutY="90.0" text="Label" AnchorPane.topAnchor="90.0" />
-      <Label fx:id="year" layoutX="105.0" layoutY="120.0" text="Label" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="120.0" />
-      <TextArea fx:id="words" editable="false" layoutX="43.0" layoutY="180.0" prefHeight="200.0" prefWidth="298.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="175.0" />
+      <Label fx:id="duration" layoutX="105.0" layoutY="130.0" text="Label" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="130.0" />
+      <Label fx:id="hotness" layoutX="300.0" layoutY="130.0" text="Label" AnchorPane.topAnchor="130.0" />
+      <Label fx:id="year" layoutX="105.0" layoutY="160.0" text="Label" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="160.0" />
+      <TextArea fx:id="words" editable="false" layoutX="43.0" layoutY="211.0" prefHeight="160.0" prefWidth="294.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="211.0" />
       <VBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button fx:id="ret" mnemonicParsing="false" onAction="#goBack" text="Return" />
          </children>
       </VBox>
+      <Label layoutX="42.0" layoutY="70.0" text="Artist:" />
+      <Label fx:id="artist" layoutX="105.0" layoutY="70.0" text="Label" />
+      <Label layoutX="42.0" layoutY="100.0" text="Album:" />
+      <Label fx:id="album" layoutX="105.0" layoutY="100.0" text="Label" />
+      <Label layoutX="229.0" layoutY="160.0" text="Tempo" />
+      <Label fx:id="tempo" layoutX="300.0" layoutY="160.0" text="Label" />
    </children>
 </AnchorPane>

@@ -20,11 +20,11 @@ public abstract class ControllerAbstract implements ControllerInterface {
     }
 
     public void closeModelConnection() throws SQLException {
-        this.model.closeConnection();
+        model.closeConnection();
     }
 
     public void openModelConnection() throws SQLException{
-        this.model.openConnection();
+        model.openConnection();
     }
 
     /**
@@ -70,6 +70,41 @@ public abstract class ControllerAbstract implements ControllerInterface {
                 newArrayList.add(str[i]);
             }
         }
+        return newArrayList;
+    }
+
+    /**
+     *
+     * @param str
+     * @return  an unordered arraylist that contains in each cell an arraylists of 50
+     * rows. each row is an arraylist of results.
+     */
+    private ArrayList<ArrayList<ArrayList<String>>> resultsOfSearchUnordered(String[] str){
+        ArrayList<ArrayList<ArrayList<String>>> newArrayList = new ArrayList<>();
+        ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
+        ArrayList<String> newRow = null;
+
+        String[] temp = null;
+        int countRows = 0;
+        for(int i = 0; i < str.length; i++){
+            newRow = new ArrayList<String>();
+            temp = str[i].split(",");
+            for(int j = 0; j < temp.length; j++){
+                newRow.add(j,temp[j]);
+            }
+            if(countRows >= 50){
+                countRows = 0;
+                newArrayList.add(tempArrayList);
+                tempArrayList = new ArrayList<>();
+            }
+            tempArrayList.add(countRows,newRow);
+            countRows++;
+        }
+
+        if(tempArrayList.size() > 0){
+            newArrayList.add(tempArrayList);
+        }
+
         return newArrayList;
     }
 }

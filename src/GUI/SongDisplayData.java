@@ -3,17 +3,17 @@ package GUI;
 import java.util.ArrayList;
 
 public class SongDisplayData {
-    private String id;
-    private String name;
-    private String dancibility;
-    private String duration;
-    private String tempo;
-    private String hotness;
-    private String loudness;
-    private String year;
+    private String id = null;
+    private String name = null;
+    private String dancibility = null;
+    private String duration = null;
+    private String tempo = null;
+    private String hotness = null;
+    private String loudness = null;
+    private String year = null;
     private String words = null;
-    private String artist;
-    private String album;
+    private String artist = null;
+    private String album = null;
 
     public SongDisplayData(ArrayList<String> data, String artist, String album) {
         this.id = data.get(0);
@@ -42,26 +42,44 @@ public class SongDisplayData {
     }
 
     public String getName() {
+        if(name == null) {
+            return "Sorry, we do not have this songs name.";
+        }
         return name;
     }
 
     public String getDancibility() {
+        if(dancibility == null) {
+            return "Sorry, we do not have this songs dancibility.";
+        }
         return dancibility;
     }
 
     public String getDuration() {
+        if(duration == null) {
+            return "Sorry, we do not have this songs duration.";
+        }
         return duration;
     }
 
     public String getHotness() {
+        if(hotness == null) {
+            return "Sorry, we do not have this songs popularity.";
+        }
         return hotness;
     }
 
     public String getLoudness() {
+        if(loudness == null) {
+            return "Sorry, we do not have this songs loudness.";
+        }
         return loudness;
     }
 
     public String getTempo() {
+        if(tempo == null) {
+            return "Sorry, we do not have this songs tempo.";
+        }
         return tempo;
     }
 
@@ -73,18 +91,30 @@ public class SongDisplayData {
     }
 
     public String getYear() {
+        if(year == null) {
+            return "Sorry, we do not have this songs year.";
+        }
         return year;
     }
 
     public String getId() {
+        if(id == null) {
+            return "Sorry, we do not have this songs id.";
+        }
         return id;
     }
 
     public String getArtist() {
+        if(artist == null) {
+            return "Sorry, we do not have this songs artist.";
+        }
         return artist;
     }
 
     public String getAlbum() {
+        if(album == null) {
+            return "Sorry, we do not have this songs album.";
+        }
         return album;
     }
 }

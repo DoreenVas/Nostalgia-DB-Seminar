@@ -25,7 +25,20 @@ public class Main extends Application {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-        Connection connection = Connection.getInstance();
+        Connection connection = null;
+        try {
+            connection = Connection.getInstance();
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            primaryStage.close();
+            stop();
+            return;
+        }
+        if(connection == null) {
+            primaryStage.close();
+            stop();
+            return;
+        }
         boolean tryAgain = true;
         while(tryAgain) {
             // try to open a connection to the controller
@@ -45,12 +58,12 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        Connection connection = Connection.getInstance();
-        // try to close the connection to the controller
         try {
+            Connection connection = Connection.getInstance();
+            // try to close the connection to the controller
             connection.CloseConnection();
         } catch (Exception e) {
-            e.toString();
+
         }
         // stop the application
         super.stop();

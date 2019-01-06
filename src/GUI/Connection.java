@@ -7,28 +7,28 @@ import Controller.SongController;
 import Resources.TableInfo;
 import javafx.scene.control.Alert;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Connection {
-    private static Connection connection = new Connection();
+    private static Connection connection;
     private ControllerInterface songController;
     private ControllerInterface artistController;
     private ControllerInterface albumController;
 
-    public static Connection getInstance() {
+    public static Connection getInstance() throws IOException, SQLException {
+        if(connection == null) {
+            connection = new Connection();
+        }
         return connection;
     }
 
-    private Connection() {
-        try {
-            songController = new SongController();
-            artistController = new ArtistController();
-            albumController = new AlbumController();
-        } catch (Exception e) {
-            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
-        }
+    private Connection() throws IOException, SQLException {
+        songController = new SongController();
+        artistController = new ArtistController();
+        albumController = new AlbumController();
     }
 
     public void OpenConnection() throws SQLException {

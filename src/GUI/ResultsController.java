@@ -143,13 +143,22 @@ public class ResultsController {
             map.put("to", arr);
         }
         // send new query information to the connection
-        TableInfo info = Connection.getInstance().query(map, "song");
+        TableInfo info = null;
+        try {
+            info = Connection.getInstance().query(map, "song");
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+        }
         // if the result was empty
         if(info == null) {
             return;
         }
         // add the returned data to the table
-        addData(Connection.getInstance().query(map, "song"), map);
+        try {
+            addData(Connection.getInstance().query(map, "song"), map);
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     /**
@@ -212,7 +221,10 @@ public class ResultsController {
      */
     private String getArtist(String songId) {
         // get the connection
-        Connection connection = Connection.getInstance();
+        Connection connection = getConnection();
+        if(connection == null) {
+            return "";
+        }
         Map<String, ArrayList<String>> map = new HashMap<>();
         ArrayList<String> values = new ArrayList<>();
         // add the given song to the map
@@ -235,7 +247,10 @@ public class ResultsController {
      */
     private String getAlbum(String songId) {
         // get the connection
-        Connection connection = Connection.getInstance();
+        Connection connection = getConnection();
+        if(connection == null) {
+            return "";
+        }
         Map<String, ArrayList<String>> map = new HashMap<>();
         ArrayList<String> values = new ArrayList<>();
         // add the given song to the map
@@ -248,6 +263,24 @@ public class ResultsController {
             return "Album not in DataBase";
         }
         return albumInfo.getFieldsValues().get(0).get(0).get(0);
+    }
+
+    /**
+     *
+     * Gets the connection to the model.
+     * @return the connection to the model if could connect, null otherwise
+     */
+    private Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = Connection.getInstance();
+        } catch (Exception e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+        }
+        if(connection == null) {
+            return null;
+        }
+        return connection;
     }
 
     @FXML

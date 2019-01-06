@@ -14,9 +14,8 @@ public abstract class ControllerAbstract implements ControllerInterface {
     public static Model model;
 
 
-    public ControllerAbstract() throws IOException,SQLException {
+    public ControllerAbstract() throws IOException {
         model = new DBModel();
-        openModelConnection();
     }
 
     public void closeModelConnection() throws SQLException {

@@ -18,8 +18,8 @@ public class MenuController {
     @FXML
     private Button exit;
 
-    public static final int minWidth = 350;
-    public static final int minHeight = 400;
+    public static final int minWidth = 450;
+    public static final int minHeight = 500;
 
     @FXML
     protected void about() {

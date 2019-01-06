@@ -19,7 +19,7 @@ public class SongDisplayData {
         this.id = data.get(0);
         this.name = data.get(1);
         this.dancibility = data.get(2);
-        this.duration = String.valueOf(Float.parseFloat(data.get(3)) / 60);
+        setDuration(Float.parseFloat(data.get(3)));
         this.tempo = data.get(4);
         this.hotness = data.get(5);
         this.loudness = data.get(6);
@@ -32,13 +32,19 @@ public class SongDisplayData {
         this.id = data[0];
         this.name = data[1];
         this.dancibility = data[2];
-        this.duration = String.valueOf(Float.parseFloat(data[3]) / 60);
+        setDuration(Float.parseFloat(data[3]));
         this.tempo = data[4];
         this.hotness = data[5];
         this.loudness = data[6];
         this.year = data[7];
         this.artist = artist;
         this.album = album;
+    }
+
+    private void setDuration(float duration) {
+        int minutes = (int)(duration / 60);
+        int seconds = (int)(duration - minutes * 60);
+        this.duration = String.valueOf(minutes) + "m " + String.valueOf(seconds) + "s";
     }
 
     public String getName() {

@@ -15,7 +15,7 @@ public class DBModel implements Model {
     private static String[] allAlbumFields = {"album.album_id", "album.album_name"};
     private static final float tempoRate = (float)0.3;
     private static final int durationRate = 30;
-    private static final float popularityRate = (float)0.0035;
+    private static final float popularityRate = (float)0.05;
 
     private Connection myConn;
     private Statement myStatement;
@@ -150,8 +150,8 @@ public class DBModel implements Model {
         if(info.getTempo() != null) {
             first = needToAddAnd(first, songConditions);
             val = info.getTempo().getValue();
-            songConditions.append("song.tempo between ").append(val - tempoRate).append(" and ")
-                    .append(val + tempoRate);
+            songConditions.append("song.tempo between ").append(val - val * tempoRate).append(" and ")
+                    .append(val + val * tempoRate);
         }
         if(info.getPopularity() != null) {
             first = needToAddAnd(first, songConditions);
@@ -506,36 +506,38 @@ public class DBModel implements Model {
         return SongQueries.getInstance(myStatement).getSongs(genre, artist, album, songConditions);
     }
 
-
-    // !!! Irrelevant for now!!!
-    /**
-     *
-     * @return A string array of all the hot artists.
-     */
-    /*public String[] getHotArtists(double familiarity) {
-        String query = "select * from artist where familiarity > " + familiarity;
-        return Executor.executeQuery(myStatement, query, allArtistFields);
-    }*/
-    // !!! do not touch !!!
-
     /**
      *
      * @param artist the wanted artists name
      * @return the given artists info
+     * @throws SQLException throws exception if there was a problem executing the query
      */
     private DataContainer getArtists(ArtistContainer artist) throws SQLException{
         return ArtistQueries.getInstance(myStatement).getArtists(artist);
     }
 
+    /**
+     *
+     * @param songName the song to look for its artist
+     * @return the songs artists info
+     * @throws SQLException throws exception if there was a problem executing the query
+     */
     private DataContainer getArtists(SongIdContainer songName) throws SQLException{
         return ArtistQueries.getInstance(myStatement).getArtists(songName);
     }
 
-    public DataContainer getAlbum(SongIdContainer songContainer) throws SQLException{
+    private DataContainer getAlbum(SongIdContainer songContainer) throws SQLException{
         return AlbumQueries.getInstance(myStatement).getAlbum(songContainer);
     }
 
-    DataContainer getAlbum(AlbumIdContainer albumContainer) throws SQLException {
+    /**
+     *
+     * Gets an albums info by id
+     * @param albumContainer the wanted album
+     * @return the albums info
+     * @throws SQLException throws exception if there was a problem executing the query
+     */
+    private DataContainer getAlbum(AlbumIdContainer albumContainer) throws SQLException {
         return AlbumQueries.getInstance(myStatement).getAlbum(albumContainer);
     }
 }

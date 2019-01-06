@@ -82,7 +82,7 @@
                         <CheckBox layoutX="46.0" layoutY="8.0" mnemonicParsing="false" text="pop" />
                         <CheckBox layoutX="46.0" layoutY="40.0" mnemonicParsing="false" text="hip hop" />
                         <CheckBox layoutX="46.0" layoutY="74.0" mnemonicParsing="false" text="rock" />
-                        <CheckBox layoutX="179.0" layoutY="74.0" mnemonicParsing="false" text="jass" />
+                        <CheckBox layoutX="179.0" layoutY="74.0" mnemonicParsing="false" text="jazz" />
                         <CheckBox layoutX="179.0" layoutY="40.0" mnemonicParsing="false" text="blues" />
                         <CheckBox layoutX="179.0" layoutY="8.0" mnemonicParsing="false" text="metal" />
                         <CheckBox layoutX="301.0" layoutY="74.0" mnemonicParsing="false" text="rap" />

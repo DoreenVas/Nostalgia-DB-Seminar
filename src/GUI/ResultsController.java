@@ -1,18 +1,13 @@
 package GUI;
 
-import Resources.DataContainer;
 import Resources.TableInfo;
-import com.sun.deploy.util.ArrayUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.PickResult;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -31,7 +26,7 @@ public class ResultsController {
     private TableInfo data = null;
     private int groupIndex = 0;
 
-    private static String[] displayColumns = {"name", "artist", "album", "year"};
+    private static String[] displayColumns = {"name", "duration", "artist", "album", "year"};
 
     void initialize(int index) {
         groupIndex = index;
@@ -147,6 +142,9 @@ public class ResultsController {
         if(groupIndex == 0) {
             goBackButton.setDisable(true);
         }
+        if(info.getFieldsValues().size() - 1 == groupIndex) {
+            goForwardButton.setDisable(true);
+        }
         data = info;
         this.map = map;
         ArrayList<String> fields = info.getFields();
@@ -208,9 +206,6 @@ public class ResultsController {
             goBackButton.setDisable(false);
             addData(data, map);
         }
-        if(groupIndex == size - 1) {
-            goForwardButton.setDisable(true);
-        }
     }
 
     @FXML
@@ -220,13 +215,10 @@ public class ResultsController {
             goForwardButton.setDisable(false);
             addData(data, map);
         }
-        if(groupIndex == 0) {
-            goBackButton.setDisable(true);
-        }
     }
 
     @FXML
-    protected void addColumn(String field, String displayName) {
+    private void addColumn(String field, String displayName) {
         TableColumn<SongDisplayData, String> column = new TableColumn<>(field);
         column.setCellValueFactory(new PropertyValueFactory<>(field));
         column.setText(displayName);

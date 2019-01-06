@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.Group?>
@@ -25,7 +18,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdvancedSearchController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdvancedSearchController">
     <children>
         <Pane layoutX="-3.0" layoutY="7.0" prefHeight="650.0" prefWidth="650.0">
             <children>
@@ -88,7 +81,7 @@
                                 <CheckBox layoutX="46.0" layoutY="8.0" mnemonicParsing="false" text="pop" />
                                 <CheckBox layoutX="46.0" layoutY="40.0" mnemonicParsing="false" text="hip hop" />
                                 <CheckBox layoutX="46.0" layoutY="74.0" mnemonicParsing="false" text="rock" />
-                                <CheckBox layoutX="179.0" layoutY="74.0" mnemonicParsing="false" text="jass" />
+                                <CheckBox layoutX="179.0" layoutY="74.0" mnemonicParsing="false" text="jazz" />
                                 <CheckBox layoutX="179.0" layoutY="40.0" mnemonicParsing="false" text="blues" />
                                 <CheckBox layoutX="179.0" layoutY="8.0" mnemonicParsing="false" text="metal" />
                                 <CheckBox layoutX="301.0" layoutY="74.0" mnemonicParsing="false" text="rap" />

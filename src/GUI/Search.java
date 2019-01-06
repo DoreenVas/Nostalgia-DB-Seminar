@@ -102,14 +102,6 @@ public abstract class Search {
             if(info == null) {
                 return false;
             }
-//            TableInfo artistInfo = connection.query(map, "artist");
-//            if(artistInfo == null) {
-//                return false;
-//            }
-//            TableInfo albumInfo = connection.query(map, "album");
-//            if(albumInfo == null) {
-//                return false;
-//            }
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));

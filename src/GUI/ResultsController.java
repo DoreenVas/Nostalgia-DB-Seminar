@@ -154,6 +154,15 @@ public class ResultsController {
         ArrayList<ArrayList<String>> group = info.getFieldsValues().get(groupIndex);
         countLabel.setText("Displaying " + group.size() + " results out of " + info.getRowsNum());
 
+//            TableInfo artistInfo = connection.query(map, "artist");
+//            if(artistInfo == null) {
+//                return false;
+//            }
+//            TableInfo albumInfo = connection.query(map, "album");
+//            if(albumInfo == null) {
+//                return false;
+//            }
+
         for (ArrayList<String> row : group) {
             SongRow item = new SongRow(row);
             this.results.getItems().addAll(item);
@@ -248,8 +257,10 @@ public class ResultsController {
         private String loudness;
         private String year;
         private String words = null;
+        private String artist;
+        private String album;
 
-        public SongRow(ArrayList<String> data) {
+        public SongRow(ArrayList<String> data, String artist, String album) {
             this.id = data.get(0);
             this.name = data.get(1);
             this.dancibility = data.get(2);
@@ -258,9 +269,11 @@ public class ResultsController {
             this.hotness = data.get(5);
             this.loudness = data.get(6);
             this.year = data.get(7);
+            this.artist = artist;
+            this.album = album;
         }
 
-        public SongRow(String[] data) {
+        public SongRow(String[] data, String artist, String album) {
             this.id = data[0];
             this.name = data[1];
             this.dancibility = data[2];
@@ -269,6 +282,8 @@ public class ResultsController {
             this.hotness = data[5];
             this.loudness = data[6];
             this.year = data[7];
+            this.artist = artist;
+            this.album = album;
         }
 
         public String getName() {
@@ -308,6 +323,14 @@ public class ResultsController {
 
         public String getId() {
             return id;
+        }
+
+        public String getArtist() {
+            return artist;
+        }
+
+        public String getAlbum() {
+            return album;
         }
     }
 }

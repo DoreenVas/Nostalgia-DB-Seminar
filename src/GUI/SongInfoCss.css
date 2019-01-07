@@ -1,0 +1,5 @@
+.root {
+	-fx-background-image: url("pic/about.jpeg");
+	/*'auto', 'cover', 'contain', or  'stretch' */
+	-fx-background-size:stretch;
+}

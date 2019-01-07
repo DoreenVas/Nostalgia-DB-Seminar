@@ -1,10 +1,10 @@
 .root {
-	-fx-background-image: url("pic/menuPic.jpg");
+	-fx-background-image: url("pic/main.jpg");
 	-fx-background-size: cover;
 }
 
 .button {
-    -fx-background-color: rgb(45, 169, 229); /* Blue */
+    -fx-background-color:coral;
     -fx-color: white;
     -fx-padding: 6px 20px;
     -fx-text-align: center;
@@ -15,5 +15,5 @@
 }
 
 .button:hover {
-    -fx-background-color: white;
+    -fx-background-color: gold;
 }

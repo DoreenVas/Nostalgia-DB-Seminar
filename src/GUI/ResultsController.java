@@ -66,6 +66,8 @@ public class ResultsController {
             loader.setLocation(getClass().getResource("SongInfo.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,SongInfoController.minWidth, SongInfoController.minHeight);
+            scene.getStylesheets().add(getClass().getResource("SongInfoCss.css").toExternalForm());
+
             SongInfoController songInfoController = loader.getController();
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> requestLyrics = new HashMap<>();

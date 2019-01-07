@@ -4,7 +4,7 @@ package Resources;
  * A class holder for the data returned by the model.
  */
 public class DataContainer {
-
+    // member
     private int count;
     private String[] columns;
     private String[] data;

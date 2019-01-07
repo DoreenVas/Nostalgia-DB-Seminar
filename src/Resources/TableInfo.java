@@ -19,6 +19,13 @@ public class TableInfo {
      */
     private ArrayList<ArrayList<ArrayList<String>>> fieldsValues;
 
+    /***
+     * Constructor
+     * @param colsNum number of columns in the table
+     * @param rowsNum number of rows in the table
+     * @param fields the fields in table
+     * @param fieldsValues the values of each field (for each row)
+     */
     public TableInfo(int colsNum, int rowsNum, ArrayList<String> fields,
                      ArrayList<ArrayList<ArrayList<String>>> fieldsValues){
         this.colsNum = colsNum;
@@ -27,18 +34,34 @@ public class TableInfo {
         this.fieldsValues = fieldsValues;
     }
 
+    /***
+     * returns the number of columns
+     * @return the number of columns in the table
+     */
     public int getColsNum(){
         return this.colsNum;
     }
 
+    /***
+     * returns the number of rows in the table
+     * @return the number of rows in the table
+     */
     public int getRowsNum(){
         return this.rowsNum;
     }
 
+    /***
+     * returns the fields of the table
+     * @return a list with the fields of the table
+     */
     public ArrayList<String> getFields(){
         return this.fields;
     }
 
+    /***
+     * returns the values of fields of the table
+     * @return a list with the values of fields in the table (the values for each row)
+     */
     public ArrayList<ArrayList<ArrayList<String>>> getFieldsValues(){
         return this.fieldsValues;
     }

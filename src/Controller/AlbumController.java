@@ -7,8 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/***
+ * A class for album controller
+ */
 public class AlbumController extends ControllerAbstract {
 
+    /***
+     * Constructor
+     * @throws IOException IOException
+     * @throws SQLException SQLException
+     */
     public AlbumController() throws IOException, SQLException {
     }
 
@@ -17,7 +25,7 @@ public class AlbumController extends ControllerAbstract {
         AlbumQueryInfo queryInfo = new AlbumQueryInfo();
         String temp;
         DataContainer dc = null;
-
+        // go over the key and values
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet()) {
             switch (entry.getKey()) {
                 case "album_name":
@@ -49,13 +57,16 @@ public class AlbumController extends ControllerAbstract {
 
 
     /**
-     * @param dc
-     * @return
+     * @param dc a dataContainer
+     * @return a tableInfo object
      */
     private TableInfo createTableInfo(DataContainer dc) {
+        // get number of rows and columns in the table
         int row = dc.getCount();
         int col = dc.getColumns().length;
+        // get the fields of the table
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
+        // get the data of the table
         ArrayList<ArrayList<ArrayList<String>>> data = new ArrayList<>();
         ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
 

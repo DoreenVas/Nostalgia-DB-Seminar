@@ -7,8 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/***
+ * A class for artist controller
+ */
 public class ArtistController extends ControllerAbstract {
 
+    /***
+     * Constructor
+     * @throws IOException IOException
+     * @throws SQLException SQLException
+     */
     public ArtistController() throws IOException, SQLException{
 
     }
@@ -19,15 +27,10 @@ public class ArtistController extends ControllerAbstract {
         ArtistQueryInfo queryInfo = new ArtistQueryInfo();
         String temp;
         DataContainer dc = null;
-
+        // go over the key and values
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
         {
             switch (entry.getKey()){
-                case "familiarity":
-                    float val = entry.getValue().size();
-                    FamiliarityContainer familiarityContainer = new FamiliarityContainer(val);
-
-                    break;
                 case "artist_name":
                     temp = matchStringToPattern(entry.getValue().get(0));
                     ArtistContainer artistContainer = new ArtistContainer(temp);
@@ -57,14 +60,16 @@ public class ArtistController extends ControllerAbstract {
 
 
     /**
-     *
-     * @param dc
-     * @return
+     * @param dc a dataContainer
+     * @return a tableInfo object
      */
     private TableInfo createTableInfo(DataContainer dc){
+        // get number of rows and columns in the table
         int row = dc.getCount();
         int col = dc.getColumns().length;
+        // get the fields of the table
         ArrayList<String> fields = parseToArrayList(dc.getColumns());
+        // get the data of the table
         ArrayList<ArrayList<ArrayList<String>>> data = new ArrayList<>();
         ArrayList<ArrayList<String>> tempArrayList = new ArrayList<>();
 

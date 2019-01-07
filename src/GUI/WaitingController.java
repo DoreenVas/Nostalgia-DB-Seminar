@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sun.awt.Mutex;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,14 +25,21 @@ public class WaitingController {
     @FXML
     private Label loading;
     private Map<String, ArrayList<String>> map;
-    private TableInfo info;
+    private Stage prev = null;
 
-    public static final int minWidth = 250;
-    public static final int minHeight = 10;
+    public static final int minWidth = 160;
+    public static final int minHeight = 200;
 
-    public void stop() {
+    public void stop(TableInfo info, Stage prev2) {
         try {
-            Stage perv = (Stage) loading.getScene().getWindow();
+            // if the information wasn't defined
+            if(info == null) {
+                prev2.show();
+                Alerter.showAlert(AlertMessages.emptyResult(), Alert.AlertType.INFORMATION);
+                return;
+            }
+            // switch to results view
+            Stage prev = (Stage) loading.getScene().getWindow();
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));
@@ -44,24 +53,14 @@ public class WaitingController {
             resultsController.addData(info, map);
             stage.show();
             Centralizer.setCenter(stage);
-            perv.close();
+            prev.close();
         } catch (Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
-
-    public TableInfo activateWaiting(Map<String, ArrayList<String>> map) throws IOException, SQLException {
-//        try {
-//            TimeUnit.SECONDS.sleep(3);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+    public void activateWaiting(Map<String, ArrayList<String>> map) throws IOException, SQLException {
         this.map = map;
-        Connection connection = Connection.getInstance();
-        info = connection.query(map, "song");
-
-        return info;
     }
 
 }

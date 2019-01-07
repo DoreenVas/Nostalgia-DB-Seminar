@@ -3,6 +3,7 @@ package GUI;
 import Resources.AlertMessages;
 import Resources.DBConnectionException;
 import Resources.TableInfo;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.concurrent.*;
 
 
 public abstract class Search {
@@ -77,6 +78,7 @@ public abstract class Search {
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
+
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -102,7 +104,6 @@ public abstract class Search {
         age.setDisable(false);
     }
 
-
     /**
      *
      * loads waiting window untill results page loads
@@ -119,23 +120,50 @@ public abstract class Search {
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
 
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Waiting.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
-            stage.setScene(scene);
+            stage.setResizable(false);
+            WaitingController waitingController = loader.getController();
+            waitingController.activateWaiting(map);
+
+            // create a new thread that runs the switching of the scenes
+            Thread t = new Thread(() -> {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                    Connection connection = Connection.getInstance();
+                    TableInfo info = connection.query(map, "song");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            waitingController.stop(info, prev);
+                        }
+                    });
+                } catch (Exception e) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            stage.close();
+                            prev.show();
+                            // check the type of error
+                            if(e.getClass() == DBConnectionException.class && e.getMessage().contains("no results")) {
+                                Alerter.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
+                            } else {
+                                Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+                            }
+                        }
+                    });
+                }
+            });
+            // activate thread
+            t.start();
             stage.setTitle("Loading");
+            stage.setScene(scene);
             stage.show();
             Centralizer.setCenter(stage);
 
-            WaitingController waitingController = loader.getController();
-            TableInfo info = waitingController.activateWaiting(map);
-            if (info == null) {
-                stage.close();
-                return false;
-            }
-            waitingController.stop();
+            // close current window
             prev.close();
         } catch(Exception e) {
             stage.close();
@@ -150,6 +178,11 @@ public abstract class Search {
         return true;
     }
 
+    /**
+     *
+     * Checks the values that the user filled in the fields.
+     * @return true if all information inserted is valid, false otherwise
+     */
     protected boolean checkValues(){
         if (era.isDisable() == true){
             String birthYear = this.birthYear.getText();

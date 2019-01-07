@@ -11,3 +11,9 @@
 .text-area{
     -fx-font-weight: bold
 }
+
+.button{
+    -fx-background-color:darkred;
+    -fx-text-fill:white;
+    -fx-font-weight: bold
+}

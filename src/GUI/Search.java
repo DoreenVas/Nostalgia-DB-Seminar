@@ -96,9 +96,6 @@ public abstract class Search {
         age.setDisable(false);
     }
 
-    private void load() {
-
-    }
 
     @FXML
     protected boolean results() {
@@ -116,8 +113,6 @@ public abstract class Search {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
             stage.setScene(scene);
-            WaitingController waitingController = loader.getController();
-            waitingController.activateWaiting(map);
             stage.setMinHeight(WaitingController.minHeight);
             stage.setMinWidth(WaitingController.minWidth);
             stage.setHeight(WaitingController.minHeight);
@@ -126,6 +121,11 @@ public abstract class Search {
             Centralizer.setCenter(stage);
             stage.show();
             prev.close();
+
+            WaitingController waitingController = loader.getController();
+            TableInfo info = waitingController.activateWaiting(map);
+            if (info == null)
+                return false;
             waitingController.stop();
         } catch(Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);

@@ -11,7 +11,7 @@ class ArtistQueries {
     // members
     private static ArtistQueries ourInstance = new ArtistQueries();
     private static Statement myStatement;
-    private static String[] allArtistFields = {/*"artist.artist_id", */"artist.artist_name", "artist.familiarity", "artist.hotness"};
+    private static String[] allArtistFields = {/*"artist.artist_id", */"artist.artist_name", "artist.hotness"};
 
     /****
      * Constructor of singleton

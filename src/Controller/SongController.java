@@ -9,23 +9,17 @@ import java.util.Map;
 
 import Resources.*;
 
+/***
+ * A song controller class
+ */
 public class SongController extends ControllerAbstract{
-    // an array from model: [fields, "count", info1, info2, ...]
-    //private ArrayList<String> modelInfo;
 
-    // an object which holds the information needed for the gui
-    //private TableInfo infGiv;
-
-    //dictionary from the gui
-    //Map<String, ArrayList<String>> infoFromGUI;
-
-    //private Model model;
-
+    /***
+     * Constructor
+     * @throws IOException IOException
+     * @throws SQLException SQLException
+     */
     public SongController() throws IOException,SQLException {
-        //this.infoFromGUI = new HashMap<String, ArrayList<String>>();
-        //this.modelInfo = new ArrayList<>();
-        //this.model = new DBModel();
-            //model.openConnection();
     }
 
 
@@ -33,11 +27,12 @@ public class SongController extends ControllerAbstract{
      * get the values from the model.
      * then, needs to parse the info:
      * first line is the field, the second to end is: "value1", "value2"...
-     * @param infoFromGUI
+     * @param infoFromGUI a map of all the info from the gui
      */
     public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException {
         SongQueryInfo queryInfo = new SongQueryInfo();
         boolean yearOrAge = false;
+        // initialize the values of the fields
         int year = -1;
         int age = -1;
         int from = -1;
@@ -49,7 +44,7 @@ public class SongController extends ControllerAbstract{
         float duration = -1;
         float popularity = -1;
         boolean lyricsFlag = false;
-
+        // go over the keys and values
         for (Map.Entry<String, ArrayList<String>> entry : infoFromGUI.entrySet())
         {
             switch (entry.getKey()){
@@ -130,11 +125,11 @@ public class SongController extends ControllerAbstract{
 
     /**
      *
-     * @param dc
-     * @param duration
-     * @param tempo
-     * @param popularity
-     * @param shouldOrderResults
+     * @param dc a data container
+     * @param duration the duration of the song
+     * @param tempo the tempo of the song
+     * @param popularity the popularity of the song
+     * @param shouldOrderResults true if we should order the results, false otherwise
      * @return a TableInfo object
      */
     private TableInfo createTableInfo(DataContainer dc, float duration, float tempo,
@@ -162,7 +157,7 @@ public class SongController extends ControllerAbstract{
 
     /**
      *
-     * @param str
+     * @param str a row in the table
      * @return an arraylist of results
      */
     private ArrayList<ArrayList<ArrayList<String>>> resultsOfSearch(String[] str){
@@ -179,7 +174,7 @@ public class SongController extends ControllerAbstract{
     }
     /**
      *
-     * @param str
+     * @param str a row in the table
      * @return  an unordered arraylist that contains in each cell an arraylists of 50
      * rows. each row is an arraylist of results.
      */
@@ -215,22 +210,22 @@ public class SongController extends ControllerAbstract{
 
     /**
      *
-     * @param duration
+     * @param duration the duration of the song
      * @return convert time from minutes to seconds
      */
     private float minutesToseconds(String duration){
         String[] time = duration.replace(".", " ").split(" ");
         //time[0] - is the minutes
         //time[1] - the seconds
-        float seconds = Float.parseFloat(time[0])*60 + Integer.parseInt(time[1]);;
+        float seconds = Float.parseFloat(time[0])*60 + Integer.parseInt(time[1]);
         return seconds;
     }
 
 
     /**
      * update the needed indexes in the Song comparator
-     * @param fields
-     * @param comparator
+     * @param fields the fields of the table
+     * @param comparator a song comparator
      */
     private void updateComparatorIndexes(ArrayList<String> fields, SongComparator comparator){
         //get the index of tempo, duration, popularity and update the comparator values accordingly
@@ -261,19 +256,20 @@ public class SongController extends ControllerAbstract{
 
     /**
      * the method uses comparator and priority queue
-     * @param fields
-     * @param str
-     * @param duration
-     * @param tempo
-     * @param popularity
+     * @param fields the fields of the table
+     * @param str a row in the table
+     * @param duration the duration of the song
+     * @param tempo the tempo of the song
+     * @param popularity the popularity of the song
      * @return an nordered arraylist that contains in each cell an arraylists of 50
      *      * rows. each row is an arraylist of results.
      */
     public ArrayList<ArrayList<ArrayList<String>>> resultsOfSearchOrdered
     (ArrayList<String> fields, String[] str, float duration, float tempo, float popularity){
-
+        // initialize the comparator
         SongComparator comparator = new SongComparator();
         updateComparatorIndexes(fields,comparator);
+        // initialize the values of tempo, popularity and duration
         comparator.setWantedResult1(tempo);
         comparator.setWantedResult2(popularity);
         comparator.setWantedResult3(duration);

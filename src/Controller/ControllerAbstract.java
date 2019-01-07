@@ -6,27 +6,42 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/***
+ * An abstract class for the controller
+ */
 public abstract class ControllerAbstract implements ControllerInterface {
-
+    // members
     public static Model model;
 
-
+    /***
+     * Constructor for singleton
+     * @throws IOException
+     */
     public ControllerAbstract() throws IOException {
         model = new DBModel();
     }
 
+    /***
+     * closes the connection to the database
+     * @throws SQLException if closing the connection failed
+     */
     public void closeModelConnection() throws SQLException {
         model.closeConnection();
     }
 
+    /***
+     * opens the connection to the database
+     * @throws SQLException if opening the connection to the database failed
+     */
     public void openModelConnection() throws SQLException{
         model.openConnection();
     }
 
     /**
-     *
-     * @param str
-     * @return change all letters to lower case except for the first letter,
+     *  change all letters to lower case except for the first letter,
+     *  which should be upper case.
+     * @param str the string
+     * @return the string where letters are modified to lower case except for the first letter,
      * which should be upper case.
      */
     protected String matchStringToPattern(String str){
@@ -37,8 +52,8 @@ public abstract class ControllerAbstract implements ControllerInterface {
 
     /**
      *
-     * @param size
-     * @param arr
+     * @param size the size of the array
+     * @param arr the array
      * @return a string representation of a given string arraylist
      */
     protected String[] parseFromArrayToList(int size, ArrayList<String> arr){
@@ -51,7 +66,7 @@ public abstract class ControllerAbstract implements ControllerInterface {
 
     /**
      *
-     * @param str
+     * @param str the string
      * @return parse a given string list into arraylist
      */
     protected ArrayList<String> parseToArrayList(String[] str){

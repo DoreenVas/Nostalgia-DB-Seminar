@@ -26,15 +26,15 @@ public class SongDisplayData {
      */
     public SongDisplayData(ArrayList<String> data, String artist, String album) {
         this.id = data.get(0);
-        this.name = data.get(1);
+        this.name = removeNonEnglish(data.get(1));
         this.dancibility = data.get(2);
         setDuration(Float.parseFloat(data.get(3)));
         this.tempo = data.get(4);
         this.hotness = data.get(5);
         this.loudness = data.get(6);
         this.year = data.get(7);
-        this.artist = artist;
-        this.album = album;
+        this.artist = removeNonEnglish(artist);
+        this.album = removeNonEnglish(album);
     }
 
     /**
@@ -45,15 +45,28 @@ public class SongDisplayData {
      */
     public SongDisplayData(String[] data, String artist, String album) {
         this.id = data[0];
-        this.name = data[1];
+        this.name = removeNonEnglish(data[1]);
         this.dancibility = data[2];
         setDuration(Float.parseFloat(data[3]));
         this.tempo = data[4];
         this.hotness = data[5];
         this.loudness = data[6];
         this.year = data[7];
-        this.artist = artist;
-        this.album = album;
+        this.artist = removeNonEnglish(artist);
+        this.album = removeNonEnglish(album);
+    }
+
+    private String removeNonEnglish(String str) {
+        StringBuilder builder = new StringBuilder();
+        for(String word : str.split(" ")) {
+            for (char let : word.toCharArray()) {
+                if ((let > 64 && let < 91) || (let > 96 && let < 123)) {
+                    builder.append(let);
+                }
+            }
+            builder.append(" ");
+        }
+        return builder.toString();
     }
 
     /**

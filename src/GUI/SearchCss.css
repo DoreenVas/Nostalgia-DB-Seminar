@@ -1,5 +1,5 @@
 .root {
-	-fx-background-color:papayawhip;
+	-fx-background-color:darkcyan;
 }
 
 .choice-box {
@@ -8,4 +8,8 @@
 
 .choice-box .context-menu {
     -fx-pref-width: 188;
+}
+
+.Label{
+    -fx-color:white;
 }

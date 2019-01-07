@@ -232,20 +232,20 @@ public class DBModel implements Model {
         }
 
         // if the info contains genre info
-        if(info.getGenere() != null) {
+        if(info.getGenre() != null) {
             // if the info contains artist info
             if(info.getArtist() != null) {
                 // if the info contains album info
                 if(info.getAlbum() != null) {
-                    dataContainer = getSongs(info.getGenere(), info.getArtist(), info.getAlbum(), songConditions.toString());
+                    dataContainer = getSongs(info.getGenre(), info.getArtist(), info.getAlbum(), songConditions.toString());
                     return dataContainer;
                 }
                 // if the info doesn't contain tempos info
-                dataContainer = getSongs(info.getGenere(), info.getArtist(), songConditions.toString());
+                dataContainer = getSongs(info.getGenre(), info.getArtist(), songConditions.toString());
                 return dataContainer;
             }
             // if the info doesn't contain artist info
-            dataContainer = getSongs(info.getGenere(), songConditions.toString());
+            dataContainer = getSongs(info.getGenre(), songConditions.toString());
             return dataContainer;
         }
         // if the info contains artist info

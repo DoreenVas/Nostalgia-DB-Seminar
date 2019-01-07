@@ -25,7 +25,7 @@ public class Connection {
     /**
      *
      * Returns the classes instance.
-     * @return the calsses current instance
+     * @return the classes current instance
      * @throws IOException thrown from inner function
      * @throws SQLException thrown from inner function
      */

@@ -1,15 +1,21 @@
 .root {
-	-fx-background-color:darkcyan;
+	/*-fx-background-color:darkcyan;*/
+	-fx-background-image: url("pic/search.jpeg");
+    -fx-background-size: cover;
 }
 
 .choice-box {
     -fx-pref-width: 188;
+
 }
 
 .choice-box .context-menu {
     -fx-pref-width: 188;
+
 }
 
-.Label{
-    -fx-color:white;
+.label{
+    /*-fx-text-fill: white;*/
+
 }
+

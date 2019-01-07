@@ -39,10 +39,10 @@ public class WaitingController {
             stage.setTitle("Results");
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.show();
-            Centralizer.setCenter(stage);
             ResultsController resultsController = loader.getController();
             resultsController.addData(info, map);
+            stage.show();
+            Centralizer.setCenter(stage);
             perv.close();
         } catch (Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);

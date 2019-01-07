@@ -84,4 +84,13 @@ public class AlertMessages {
     public static String readFromFileError(String fileName) {
         return "couldn't read from " + fileName + " file.";
     }
+
+    /**
+     *
+     * Holds a sending map to controller failure message to display.
+     * @return the page loading failure message content
+     */
+    public static String errorSendingMapToController() {
+        return "Error sending information to the Controller.";
+    }
 }

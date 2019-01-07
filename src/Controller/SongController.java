@@ -30,6 +30,10 @@ public class SongController extends ControllerAbstract{
      * @param infoFromGUI a map of all the info from the gui
      */
     public TableInfo getInfoFromGUI(Map<String, ArrayList<String>> infoFromGUI) throws SQLException {
+        if(infoFromGUI == null) {
+            throw new SQLException(AlertMessages.errorSendingMapToController());
+        }
+
         SongQueryInfo queryInfo = new SongQueryInfo();
         boolean yearOrAge = false;
         // initialize the values of the fields

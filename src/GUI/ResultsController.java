@@ -179,7 +179,7 @@ public class ResultsController {
         try {
             info = Connection.getInstance().query(map, "song");
         } catch (Exception e) {
-            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
         }
         // if the result was empty
         if(info == null) {

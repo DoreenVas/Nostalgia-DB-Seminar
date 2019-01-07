@@ -18,7 +18,7 @@ public class DBModel implements Model {
     // all of the album table fields to get when executing a query
     private static String[] allAlbumFields = {"album.album_id", "album.album_name"};
     // epsilon values for range of queries
-    private static final float tempoRate = (float)0.3;
+    private static final float tempoRate = 30;
     private static final int durationRate = 30;
     private static final float popularityRate = (float)0.05;
 
@@ -91,7 +91,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }
@@ -104,7 +104,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }
@@ -117,7 +117,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }
@@ -209,8 +209,8 @@ public class DBModel implements Model {
         if(info.getTempo() != null) {
             first = SongQueries.needToAddAnd(first, songConditions);
             val = info.getTempo().getValue();
-            songConditions.append("song.tempo between ").append(val - val * tempoRate).append(" and ")
-                    .append(val + val * tempoRate);
+            songConditions.append("song.tempo between ").append(val - tempoRate).append(" and ")
+                    .append(val + tempoRate);
         }
         // if the info contains popularity info
         if(info.getPopularity() != null) {

@@ -1,7 +1,6 @@
 package DBConnection;
 
 import Resources.AlertMessages;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,13 +76,4 @@ class Executor {
         }
         return builder.toString();
     }
-
-//    private static StringBuilder addFirstRow(String[] columns) {
-//        StringBuilder builder = new StringBuilder();
-//        for(int i = 0; i < columns.length - 1; i++) {
-//            builder.append(columns[i]).append(",");
-//        }
-//        builder.append(columns[columns.length - 1]).append("\n");
-//        return builder;
-//    }
 }

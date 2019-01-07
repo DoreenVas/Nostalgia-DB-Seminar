@@ -99,6 +99,8 @@ public abstract class Search {
 
     @FXML
     protected boolean results() {
+        Stage prev = (Stage)rb1.getScene().getWindow();
+        Stage stage = new Stage();
         try {
             if(checkValues() == false) {
                 return false;
@@ -106,8 +108,7 @@ public abstract class Search {
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
 
-            Stage prev = (Stage)rb1.getScene().getWindow();
-            Stage stage = new Stage();
+
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Waiting.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -120,14 +121,17 @@ public abstract class Search {
             stage.setTitle("Loading");
             Centralizer.setCenter(stage);
             stage.show();
-            prev.close();
 
             WaitingController waitingController = loader.getController();
             TableInfo info = waitingController.activateWaiting(map);
-            if (info == null)
+            if (info == null) {
+                stage.close();
                 return false;
+            }
             waitingController.stop();
+            prev.close();
         } catch(Exception e) {
+            stage.close();
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
             return false;
         }

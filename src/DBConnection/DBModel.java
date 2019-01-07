@@ -91,7 +91,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }
@@ -104,7 +104,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }
@@ -117,7 +117,7 @@ public class DBModel implements Model {
             return null;
         }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
-            throw new SQLException(AlertMessages.emptyResult());
+            throw new DBConnectionException(AlertMessages.emptyResult());
         }
         return dataContainer;
     }

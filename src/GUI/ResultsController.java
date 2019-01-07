@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 import java.util.*;
 
 /***
@@ -148,6 +150,7 @@ public class ResultsController {
     @FXML
     protected void backToTheFuture() {
         ArrayList<String> arr = new ArrayList<>();
+        groupIndex = 0;
         int year;
         // check for maps parameters (manipulates them to get the next 10 years)
         if(map.containsKey("era")) {
@@ -258,7 +261,13 @@ public class ResultsController {
         values.add(songId);
         map.put("song_id", values);
         // ask for the result
-        TableInfo artistInfo = connection.query(map, "artist");
+        TableInfo artistInfo = null;
+        try {
+            artistInfo = connection.query(map, "artist");
+        } catch (SQLException e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            return "Artist not in DataBase";
+        }
         // if there was no result
         if(artistInfo == null) {
             return "Artist not in DataBase";
@@ -283,7 +292,13 @@ public class ResultsController {
         values.add(songId);
         map.put("song_id", values);
         // ask for the result
-        TableInfo albumInfo = connection.query(map, "album");
+        TableInfo albumInfo = null;
+        try {
+            albumInfo = connection.query(map, "album");
+        } catch (SQLException e) {
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            return "Album not in DataBase";
+        }
         // if there was no result
         if(albumInfo == null) {
             return "Album not in DataBase";

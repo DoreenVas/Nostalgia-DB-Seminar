@@ -129,7 +129,7 @@ public abstract class Search {
             prev.close();
         } catch(Exception e) {
             stage.close();
-            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
+            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
             return false;
         }
         return true;

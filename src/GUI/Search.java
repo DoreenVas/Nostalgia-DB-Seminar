@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,37 +104,54 @@ public abstract class Search {
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
 
+            Stage stage = (Stage)rb1.getScene().getWindow();
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("Waiting.fxml"));
+////            AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Waiting.fxml"));
+//            AnchorPane root = (AnchorPane) loader.load();
+//            Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
+//            stage.setMinHeight(WaitingController.minHeight);
+//            stage.setMinWidth(WaitingController.minWidth);
+//            stage.setHeight(WaitingController.minHeight);
+//            stage.setWidth(WaitingController.minWidth);
+//            WaitingController waitingController = loader.getController();
+//            waitingController.activateWaiting(map, "song");
+//            stage.setTitle("Loading");
+//            stage.setScene(scene);
+//            stage.show();
+//            Centralizer.setCenter(stage);
+
 //            new Thread(() -> Alerter.showAlert("Loading", Alert.AlertType.INFORMATION)).start();
 
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            Callable<TableInfo> callable = new Callable<TableInfo>() {
-                @Override
-                public TableInfo call() throws Exception {
-                    try {
-                        TimeUnit.SECONDS.sleep(3);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Connection connection = Connection.getInstance();
-                    TableInfo info = connection.query(map, "song");
-                    if(info == null) {
-                        return null;
-                    }
-                    return info;
-                }
-            };
-            Future<TableInfo> future = executorService.submit(callable);
-            Alerter.showAlert("Loading", Alert.AlertType.INFORMATION);
-//            Connection connection = Connection.getInstance();
-//            TableInfo info = connection.query(map, "song");
-            TableInfo info = future.get();
+//            ExecutorService executorService = Executors.newSingleThreadExecutor();
+//            Callable<TableInfo> callable = new Callable<TableInfo>() {
+//                @Override
+//                public TableInfo call() throws Exception {
+//                    try {
+//                        TimeUnit.SECONDS.sleep(5);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Connection connection = Connection.getInstance();
+//                    TableInfo info = connection.query(map, "song");
+//                    if(info == null) {
+//                        return null;
+//                    }
+//                    return info;
+//                }
+//            };
+//            Future<TableInfo> future = executorService.submit(callable);
+
+//            Alerter.showAlert("Loading", Alert.AlertType.INFORMATION);
+            Connection connection = Connection.getInstance();
+            TableInfo info = connection.query(map, "song");
+//            TableInfo info = future.get();
             if(info == null) {
                 return false;
             }
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("Results.fxml"));
-            Stage stage = (Stage)results.getScene().getWindow();
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
             ResultsController resultsController = loader.getController();

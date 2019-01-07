@@ -120,6 +120,9 @@ public class SongController extends ControllerAbstract{
         queryInfo.setFrom(from);
         queryInfo.setTo(to);
         dc = model.getData(queryInfo);
+        if(dc == null) {
+            return null;
+        }
 
         //create and return the TableInfo
         return createTableInfo(dc,duration,tempo,popularity,lyricsFlag);

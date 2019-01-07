@@ -87,6 +87,9 @@ public class DBModel implements Model {
     public DataContainer getData(SongQueryInfo info) throws SQLException {
         DataContainer dataContainer = activateAppropriateSongQuery(info);
         // if the container is empty
+        if(dataContainer == null) {
+            return null;
+        }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
             throw new SQLException(AlertMessages.emptyResult());
         }
@@ -97,6 +100,9 @@ public class DBModel implements Model {
     public DataContainer getData(ArtistQueryInfo info) throws SQLException {
         DataContainer dataContainer = activateAppropriateArtistQuery(info);
         // if the container is empty
+        if(dataContainer == null) {
+            return null;
+        }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
             throw new SQLException(AlertMessages.emptyResult());
         }
@@ -107,6 +113,9 @@ public class DBModel implements Model {
     public DataContainer getData(AlbumQueryInfo info) throws SQLException {
         DataContainer dataContainer = activateAppropriateAlbumQuery(info);
         // if the container is empty
+        if(dataContainer == null) {
+            return null;
+        }
         if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
             throw new SQLException(AlertMessages.emptyResult());
         }
@@ -128,6 +137,9 @@ public class DBModel implements Model {
         // if the info contains a songs info
         if(info.getSong() != null) {
             dataContainer = getAlbum(info.getSong());
+            if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
+                return null;
+            }
         }
         // if the info contains an albums info
         else if(info.getAlbum() != null) {
@@ -152,6 +164,9 @@ public class DBModel implements Model {
         // if the info contains a songs info
         if(info.getSong() != null) {
             dataContainer = getArtists(info.getSong());
+            if(dataContainer.getCount() == 1 && dataContainer.getData()[0].equals("")) {
+                return null;
+            }
         }
         // if the info contains an artists info
         else if(info.getArtist() != null) {

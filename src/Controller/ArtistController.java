@@ -48,7 +48,9 @@ public class ArtistController extends ControllerAbstract {
         }
 
         dc = model.getData(queryInfo);
-
+        if(dc == null) {
+            return null;
+        }
         //create and return the TableInfo
         return createTableInfo(dc);
     }

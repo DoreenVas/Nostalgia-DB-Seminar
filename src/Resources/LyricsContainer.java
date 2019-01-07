@@ -8,7 +8,7 @@ public class LyricsContainer implements Container<String> {
 
     private String song;
 
-    public LyricsContainer(String songName) {
+    public LyricsContainer(String song) {
         this.song = song;
     }
 

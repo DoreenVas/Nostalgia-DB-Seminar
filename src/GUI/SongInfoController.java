@@ -84,6 +84,7 @@ public class SongInfoController {
             ResultsController resultsController = loader.getController();
             resultsController.initialize(index);
             resultsController.addData(data, map);
+            scene.getStylesheets().add(getClass().getResource("ResultCss.css").toExternalForm());
             stage.setTitle("Results");
             stage.setScene(scene);
             stage.setResizable(false);

@@ -36,6 +36,7 @@ public class WaitingController {
             loader.setLocation(getClass().getResource("Results.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
+            scene.getStylesheets().add(getClass().getResource("ResultCss.css").toExternalForm());
             stage.setTitle("Results");
             stage.setScene(scene);
             stage.setResizable(false);

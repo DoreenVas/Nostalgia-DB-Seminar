@@ -7,6 +7,9 @@ import Resources.SongIdContainer;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * A class holding all of the album table queries, also in charge of executing them.
+ */
 public class AlbumQueries {
     // members
     private static AlbumQueries ourInstance = new AlbumQueries();

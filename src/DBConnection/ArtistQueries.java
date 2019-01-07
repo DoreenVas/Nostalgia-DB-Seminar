@@ -1,10 +1,12 @@
 package DBConnection;
 
 import Resources.*;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * A class holding all of the artist table queries, also in charge of executing them.
+ */
 class ArtistQueries {
     // members
     private static ArtistQueries ourInstance = new ArtistQueries();

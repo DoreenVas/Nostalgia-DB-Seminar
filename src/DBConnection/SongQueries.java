@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * A class holding all of the song table queries, also in charge of executing them.
+ */
 public class SongQueries {
     private static SongQueries ourInstance = new SongQueries();
     private static Statement myStatement;

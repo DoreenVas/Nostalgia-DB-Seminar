@@ -1,22 +1,14 @@
 package GUI;
 
 import Resources.AlertMessages;
-import Resources.TableInfo;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /***

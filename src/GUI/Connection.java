@@ -73,24 +73,19 @@ public class Connection {
      * @param wanted the wanted table string
      * @return the result of the query on given info
      */
-    public TableInfo query(Map<String, ArrayList<String>> map, String wanted) {
+    public TableInfo query(Map<String, ArrayList<String>> map, String wanted) throws SQLException {
         TableInfo info = null;
-        try {
-            // check for wanted table
-            switch(wanted) {
-                case "song":
-                    info = this.songController.getInfoFromGUI(map);
-                    break;
-                case "artist":
-                    info = this.artistController.getInfoFromGUI(map);
-                    break;
-                case "album":
-                    info = this.albumController.getInfoFromGUI(map);
-                    break;
-            }
-        } catch (Exception e) {
-            Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
-            return null;
+        // check for wanted table
+        switch(wanted) {
+            case "song":
+                info = this.songController.getInfoFromGUI(map);
+                break;
+            case "artist":
+                info = this.artistController.getInfoFromGUI(map);
+                break;
+            case "album":
+                info = this.albumController.getInfoFromGUI(map);
+                break;
         }
         return info;
     }

@@ -1,6 +1,7 @@
 package GUI;
 
 import Resources.AlertMessages;
+import Resources.DBConnectionException;
 import Resources.TableInfo;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,7 +40,18 @@ public abstract class Search {
     @FXML
     protected ImageView loading;
 
+    /**
+     *
+     * Initialize the search page.
+     * Add the given information to the page.
+     * @param era the era selected
+     * @param list the list of genre objects
+     * @param birthYear the birth year inserted
+     * @param age the age inserted
+     * @param rb1Selected the select value of rb1 button
+     */
     public void initialize(String era, ObservableList list, String birthYear, String age, boolean rb1Selected) {
+        // if rb1 is selected
         if(rb1Selected) {
             rb1Clicked();
             rb1.selectedProperty().setValue(true);
@@ -58,6 +70,7 @@ public abstract class Search {
     @FXML
     protected void home() {
         try {
+            // switch to main menu
             Stage stage = (Stage) rb1.getScene().getWindow();
             VBox root = (VBox) FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene scene = new Scene(root, MenuController.minWidth, MenuController.minHeight);
@@ -94,6 +107,11 @@ public abstract class Search {
     }
 
 
+    /**
+     *
+     * loads waiting window untill results page loads
+     * @return true is was successful, else false
+     */
     @FXML
     protected boolean results() {
         Stage prev = (Stage)rb1.getScene().getWindow();
@@ -129,7 +147,12 @@ public abstract class Search {
             prev.close();
         } catch(Exception e) {
             stage.close();
-            Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
+            // check the type of error
+            if(e.getClass() == DBConnectionException.class && e.getMessage().contains("no results")) {
+                Alerter.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
+            } else {
+                Alerter.showAlert(e.getMessage(), Alert.AlertType.ERROR);
+            }
             return false;
         }
         return true;
@@ -156,5 +179,4 @@ public abstract class Search {
     }
 
     abstract void addValues(Map<String, ArrayList<String>> map);
-
 }

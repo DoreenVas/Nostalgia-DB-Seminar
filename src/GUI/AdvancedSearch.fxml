@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.Group?>
@@ -18,7 +25,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdvancedSearchController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdvancedSearchController">
     <children>
         <Pane layoutX="-3.0" layoutY="7.0" prefHeight="650.0" prefWidth="650.0">
             <children>
@@ -98,9 +105,9 @@
                         </Pane>
                     </children>
                 </Group>
-                <Button fx:id="results" layoutX="124.0" layoutY="583.0" mnemonicParsing="false" onAction="#results" text="Go to results" />
-                <Button fx:id="search" layoutX="338.0" layoutY="582.0" mnemonicParsing="false" onAction="#simpleSearch" text="simple Search" />
-                <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="556.0" prefWidth="0.0" />
+                <Button fx:id="results" layoutX="180.0" layoutY="575.0" mnemonicParsing="false" onAction="#results" text="Go to results" />
+                <Button fx:id="search" layoutX="370.0" layoutY="575.0" mnemonicParsing="false" onAction="#simpleSearch" text="simple Search" />
+                <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="517.0" prefWidth="4.0" />
             <Label layoutX="100.0" layoutY="374.0" text="Song Tempo:">
                <font>
                   <Font name="System Bold" size="14.0" />

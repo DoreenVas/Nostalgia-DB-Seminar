@@ -1,6 +1,7 @@
 .root {
-	-fx-background-image: url("pic/disks.jpg");
-	-fx-background-size:cover;
+	-fx-background-image: url("pic/disk2.jpg");
+	/*'auto', 'cover', 'contain', or  'stretch' */
+	-fx-background-size:stretch;
 }
 
 .TextArea{

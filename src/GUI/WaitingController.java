@@ -55,11 +55,12 @@ public class WaitingController {
             Centralizer.setCenter(stage);
             prev.close();
         } catch (Exception e) {
+            e.printStackTrace();
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
         }
     }
 
-    public void activateWaiting(Map<String, ArrayList<String>> map) throws IOException, SQLException {
+    public void activateWaiting(Map<String, ArrayList<String>> map) {
         this.map = map;
     }
 

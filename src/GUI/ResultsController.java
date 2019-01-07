@@ -144,6 +144,7 @@ public class ResultsController {
     protected void backToTheFuture() {
         ArrayList<String> arr = new ArrayList<>();
         groupIndex = 0;
+        goForwardButton.setDisable(false);
         int year;
         // check for maps parameters (manipulates them to get the next 10 years)
         if(map.containsKey("era")) {

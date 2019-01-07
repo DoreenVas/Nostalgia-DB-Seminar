@@ -44,7 +44,7 @@ public class AboutController implements Initializable {
 //        aboutText.setBlendMode(BlendMode.OVERLAY);
 //        aboutText.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
         String text = "", line = "";
-        File aboutFile = new File("src/GUI/About.txt");
+        File aboutFile = new File("GUI/About.txt");
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(aboutFile));
             while(line != null) {

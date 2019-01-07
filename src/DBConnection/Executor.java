@@ -68,9 +68,9 @@ class Executor {
         while(myRes.next()) {
             // append each result to builder
             for (int i = 0; i < columns.length - 1; i++) {
-                builder.append(myRes.getString(columns[i] /*field name*/)).append(",");
+                builder.append(myRes.getString(columns[i])).append(",");
             }
-            builder.append(myRes.getString(columns[columns.length - 1] /*field name*/));
+            builder.append(myRes.getString(columns[columns.length - 1]));
             builder.append('\n');
             j++;
         }

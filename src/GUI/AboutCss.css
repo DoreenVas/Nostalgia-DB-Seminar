@@ -1,13 +1,13 @@
 .root {
-	-fx-background-image: url("pic/disk2.jpg");
+	-fx-background-image: url("pic/about.jpeg");
 	/*'auto', 'cover', 'contain', or  'stretch' */
 	-fx-background-size:stretch;
 }
 
-.TextArea{
+.text-area, .text-area .viewport, .text-area .content {
     -fx-background-color:transparent;
 }
 
-.text-area, .text-area .viewport, .text-area .content {
-    -fx-background-color:transparent;
+.text-area{
+    -fx-font-weight: bold
 }

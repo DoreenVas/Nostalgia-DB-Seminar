@@ -1,5 +1,4 @@
 .root {
-	/*-fx-background-color:darkcyan;*/
 	-fx-background-image: url("pic/search.jpeg");
     -fx-background-size: cover;
 }
@@ -14,8 +13,4 @@
 
 }
 
-.label{
-    /*-fx-text-fill: white;*/
-
-}
 

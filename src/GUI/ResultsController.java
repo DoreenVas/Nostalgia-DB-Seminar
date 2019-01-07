@@ -67,10 +67,6 @@ public class ResultsController {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root,SongInfoController.minWidth, SongInfoController.minHeight);
             SongInfoController songInfoController = loader.getController();
-            stage.setMinHeight(SongInfoController.minHeight);
-            stage.setMinWidth(SongInfoController.minWidth);
-            stage.setHeight(SongInfoController.minHeight);
-            stage.setWidth(SongInfoController.minWidth);
             Connection connection = Connection.getInstance();
             Map<String, ArrayList<String>> requestLyrics = new HashMap<>();
             ArrayList<String> values = new ArrayList<>();
@@ -86,6 +82,7 @@ public class ResultsController {
             songInfoController.initialize(row, data, map, groupIndex);
             stage.setTitle("Song");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -105,10 +102,7 @@ public class ResultsController {
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
-            stage.setMinHeight(MenuController.minHeight);
-            stage.setMinWidth(MenuController.minWidth);
-            stage.setHeight(MenuController.minHeight);
-            stage.setWidth(MenuController.minWidth);
+            stage.setResizable(false);
             stage.show();
             // set stage to the center of the screen
             Centralizer.setCenter(stage);
@@ -132,10 +126,7 @@ public class ResultsController {
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
-            stage.setMinHeight(SearchController.minHeight);
-            stage.setMinWidth(SearchController.minWidth);
-            stage.setHeight(SearchController.minHeight);
-            stage.setWidth(SearchController.minWidth);
+            stage.setResizable(false);
             stage.show();
             // set stage to the center of the screen
             Centralizer.setCenter(stage);

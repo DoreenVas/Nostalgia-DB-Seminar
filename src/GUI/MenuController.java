@@ -36,10 +36,7 @@ public class MenuController {
             scene.getStylesheets().add(getClass().getResource("AboutCss.css").toExternalForm());
             stage.setTitle("About");
             stage.setScene(scene);
-            stage.setMinHeight(AboutController.minHeight);
-            stage.setMinWidth(AboutController.minWidth);
-            stage.setHeight(AboutController.minHeight);
-            stage.setWidth(AboutController.minWidth);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -59,10 +56,7 @@ public class MenuController {
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
-            stage.setMinHeight(SearchController.minHeight);
-            stage.setMinWidth(SearchController.minWidth);
-            stage.setHeight(SearchController.minHeight);
-            stage.setWidth(SearchController.minWidth);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

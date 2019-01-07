@@ -77,10 +77,6 @@ public abstract class Search {
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
             stage.setScene(scene);
-            stage.setMinHeight(MenuController.minHeight);
-            stage.setMinWidth(MenuController.minWidth);
-            stage.setHeight(MenuController.minHeight);
-            stage.setWidth(MenuController.minWidth);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {
@@ -129,10 +125,6 @@ public abstract class Search {
             AnchorPane root = (AnchorPane) loader.load();
             Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
             stage.setScene(scene);
-            stage.setMinHeight(WaitingController.minHeight);
-            stage.setMinWidth(WaitingController.minWidth);
-            stage.setHeight(WaitingController.minHeight);
-            stage.setWidth(WaitingController.minWidth);
             stage.setTitle("Loading");
             Centralizer.setCenter(stage);
             stage.show();

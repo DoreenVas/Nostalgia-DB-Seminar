@@ -26,8 +26,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
         primaryStage.setTitle("Nostalgia");
         primaryStage.setScene(scene);
-        primaryStage.setMinHeight(MenuController.minHeight);
-        primaryStage.setMinWidth(MenuController.minWidth);
+        primaryStage.setResizable(false);
         primaryStage.show();
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);

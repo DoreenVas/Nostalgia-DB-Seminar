@@ -86,10 +86,7 @@ public class SongInfoController {
             resultsController.addData(data, map);
             stage.setTitle("Results");
             stage.setScene(scene);
-            stage.setMinHeight(ResultsController.minHeight);
-            stage.setMinWidth(ResultsController.minWidth);
-            stage.setHeight(ResultsController.minHeight);
-            stage.setWidth(ResultsController.minWidth);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

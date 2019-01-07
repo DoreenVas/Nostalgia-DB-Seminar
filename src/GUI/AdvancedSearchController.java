@@ -47,10 +47,7 @@ public class AdvancedSearchController extends Search {
             scene.getStylesheets().add(getClass().getResource("SearchCss.css").toExternalForm());
             stage.setTitle("Search");
             stage.setScene(scene);
-            stage.setMinHeight(SearchController.minHeight);
-            stage.setMinWidth(SearchController.minWidth);
-            stage.setHeight(SearchController.minHeight);
-            stage.setWidth(SearchController.minWidth);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
         } catch(Exception e) {

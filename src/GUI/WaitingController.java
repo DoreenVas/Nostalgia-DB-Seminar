@@ -38,10 +38,7 @@ public class WaitingController {
             Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
             stage.setTitle("Results");
             stage.setScene(scene);
-            stage.setMinHeight(ResultsController.minHeight);
-            stage.setMinWidth(ResultsController.minWidth);
-            stage.setHeight(ResultsController.minHeight);
-            stage.setWidth(ResultsController.minWidth);
+            stage.setResizable(false);
             stage.show();
             Centralizer.setCenter(stage);
             ResultsController resultsController = loader.getController();

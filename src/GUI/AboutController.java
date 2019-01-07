@@ -71,11 +71,8 @@ public class AboutController implements Initializable {
             Scene scene = new Scene(root,MenuController.minWidth, MenuController.minHeight);
             scene.getStylesheets().add(getClass().getResource("MenuCss.css").toExternalForm());
             stage.setTitle("Nostalgia");
+            stage.setResizable(false);
             stage.setScene(scene);
-            stage.setMinHeight(MenuController.minHeight);
-            stage.setMinWidth(MenuController.minWidth);
-            stage.setHeight(MenuController.minHeight);
-            stage.setWidth(MenuController.minWidth);
             stage.show();
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
             stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);

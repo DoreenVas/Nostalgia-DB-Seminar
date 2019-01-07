@@ -126,8 +126,8 @@ public abstract class Search {
             Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
             stage.setScene(scene);
             stage.setTitle("Loading");
-            Centralizer.setCenter(stage);
             stage.show();
+            Centralizer.setCenter(stage);
 
             WaitingController waitingController = loader.getController();
             TableInfo info = waitingController.activateWaiting(map);

@@ -47,8 +47,8 @@ public class DBModel implements Model {
             this.password = br.readLine().replace("password: ", "");
             br.close();
         } catch(Exception e) {
-            throw new IOException(AlertMessages.failedConnection("couldn't read from configuration file.",
-                    false));
+            throw new IOException(AlertMessages.failedConnection(
+                    AlertMessages.readFromFileError("configuration"), false));
         }
     }
 

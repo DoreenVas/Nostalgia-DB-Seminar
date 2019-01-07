@@ -11,7 +11,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AboutController">
    <children>
       <Button fx:id="back" layoutX="267.0" layoutY="342.0" mnemonicParsing="false" onAction="#back" text="Return" />
-      <TextArea fx:id="aboutText" editable="false" layoutX="74.0" layoutY="85.0" prefHeight="242.0" prefWidth="450.0" wrapText="true" />
+      <TextArea fx:id="aboutText" editable="false" layoutX="74.0" layoutY="85.0" prefHeight="242.0" prefWidth="450.0" style="-fx-background-color: transparent;" wrapText="true" />
       <Text fill="#9e3737" layoutX="192.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About" textAlignment="CENTER" underline="true" wrappingWidth="179.13671875">
          <font>
             <Font name="System Bold" size="18.0" />

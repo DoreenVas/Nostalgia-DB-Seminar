@@ -74,4 +74,14 @@ public class AlertMessages {
     public static String pageLoadingFailure() {
         return "Couldn't load the requested page.";
     }
+
+    /**
+     *
+     * Holds a file reading failure message to display.
+     * @param fileName the file failed to read from
+     * @return the page loading failure message content
+     */
+    public static String readFromFileError(String fileName) {
+        return "couldn't read from " + fileName + " file.";
+    }
 }

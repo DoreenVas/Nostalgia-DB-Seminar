@@ -9,7 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -36,8 +40,11 @@ public class AboutController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        aboutText.setBackground(Background.EMPTY);
+//        aboutText.setBlendMode(BlendMode.OVERLAY);
+//        aboutText.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"))));
         String text = "", line = "";
-        File aboutFile = new File("About.txt");
+        File aboutFile = new File("src/GUI/About.txt");
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(aboutFile));
             while(line != null) {
@@ -48,7 +55,7 @@ public class AboutController implements Initializable {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Alerter.showAlert(AlertMessages.readFromFileError("About"), Alert.AlertType.ERROR);
         }
         aboutText.setText(text);
     }

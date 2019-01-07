@@ -1,7 +1,4 @@
 This application was made to help you recall the past.
-Here you can decide whether to search the song by era
-of time, or you can insert your birth year and the age
- when you heard the song, and we will find it for you.
-Along with advanced searching methods, you can also
-discover new songs that resemble your favorite music type.
+Here you can decide whether to search the song by era of time, or you can insert your birth year and the age when you heard the song, and we will find it for you.
+Along with advanced searching methods, you can also discover new songs that resemble your favorite music type.
 - ENJOY! -

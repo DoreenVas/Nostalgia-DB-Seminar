@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="204.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WaitingController">
+<AnchorPane prefHeight="230.0" prefWidth="220.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WaitingController">
    <children>
-      <ImageView fx:id="loadingGif" fitHeight="126.0" fitWidth="126.0" layoutX="22.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="25.0">
+      <ImageView fx:id="loadingGif" fitHeight="126.0" fitWidth="126.0" layoutX="55.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="40.0">
          <image>
             <Image url="@pic/animatedEllipse.gif" />
          </image>
       </ImageView>
-      <Label fx:id="loading" layoutX="40.0" layoutY="163.0" prefHeight="27.0" prefWidth="90.0" text="Loading..." textAlignment="CENTER" AnchorPane.bottomAnchor="14.0">
+      <Label fx:id="loading" layoutX="73.0" layoutY="178.0" prefHeight="27.0" prefWidth="90.0" text="Loading..." textAlignment="CENTER" AnchorPane.bottomAnchor="25.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

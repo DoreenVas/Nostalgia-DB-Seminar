@@ -27,8 +27,8 @@ public class WaitingController {
     private Map<String, ArrayList<String>> map;
     private Stage prev = null;
 
-    public static final int minWidth = 160;
-    public static final int minHeight = 200;
+    public static final int minWidth = 220;
+    public static final int minHeight = 230;
 
     public void stop(TableInfo info, Stage prev2) {
         try {

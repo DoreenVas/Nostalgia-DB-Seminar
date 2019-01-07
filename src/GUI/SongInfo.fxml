@@ -36,6 +36,5 @@
       <Label fx:id="album" layoutX="105.0" layoutY="105.0" text="Label" wrapText="true" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="0.0" />
       <Label layoutX="229.0" layoutY="185.0" text="Tempo" />
       <Label fx:id="tempo" layoutX="300.0" layoutY="185.0" text="Label" />
-      <Separator layoutX="26.0" layoutY="43.0" prefHeight="0.0" prefWidth="400.0" />
    </children>
 </AnchorPane>

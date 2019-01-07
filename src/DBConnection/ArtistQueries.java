@@ -74,11 +74,6 @@ class ArtistQueries {
      * @throws SQLException
      */
     DataContainer getArtists(GenreContainer genre, String artistQuery) throws SQLException {
-
-
-        // *** needs checking***
-
-
         StringBuilder query = attachGenreQueryToSArtistQuery(artistQuery, genre);
         String[] res = Executor.executeQuery(myStatement, query.toString(), allArtistFields);
         int count = res.length;
@@ -92,15 +87,9 @@ class ArtistQueries {
      * @throws SQLException
      */
     DataContainer getArtists(AlbumIdContainer album) throws SQLException {
-
-
-        // *** needs checking***
-
-
         String[] fields = {"*"};
         String[] tables = {"artist", "artist_album", "album"};
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        // get songs with given duration plus - minus an amount of time in relation to the given duration
         builder.addWhere().addEqualStatements("album_name", "\"" + album.getValue() + "\"");
         builder.addWhere().addEqualStatements("artist.artist_id", "artist_album.artist_id");
         builder.addWhere().addEqualStatements("artist_album.album_id", "album.album_id");
@@ -121,7 +110,6 @@ class ArtistQueries {
         String[] tables = {"artist"};
         // initialize the query
         QueryBuilder builder = new QueryBuilder(fields, tables);
-        // get songs with given duration plus - minus an amount of time in relation to the given duration
         builder.addWhere().addEqualStatements("artist_name", "\"" + artist.getValue() + "\"");
         String query = builder.build();
         // execute the query

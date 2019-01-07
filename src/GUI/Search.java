@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,6 +96,10 @@ public abstract class Search {
         age.setDisable(false);
     }
 
+    private void load() {
+
+    }
+
     @FXML
     protected boolean results() {
         try {
@@ -104,66 +109,24 @@ public abstract class Search {
             Map<String, ArrayList<String>> map = new HashMap<>();
             addValues(map);
 
-            Stage stage = (Stage)rb1.getScene().getWindow();
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("Waiting.fxml"));
-////            AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Waiting.fxml"));
-//            AnchorPane root = (AnchorPane) loader.load();
-//            Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
-//            stage.setMinHeight(WaitingController.minHeight);
-//            stage.setMinWidth(WaitingController.minWidth);
-//            stage.setHeight(WaitingController.minHeight);
-//            stage.setWidth(WaitingController.minWidth);
-//            WaitingController waitingController = loader.getController();
-//            waitingController.activateWaiting(map, "song");
-//            stage.setTitle("Loading");
-//            stage.setScene(scene);
-//            stage.show();
-//            Centralizer.setCenter(stage);
-
-//            new Thread(() -> Alerter.showAlert("Loading", Alert.AlertType.INFORMATION)).start();
-
-//            ExecutorService executorService = Executors.newSingleThreadExecutor();
-//            Callable<TableInfo> callable = new Callable<TableInfo>() {
-//                @Override
-//                public TableInfo call() throws Exception {
-//                    try {
-//                        TimeUnit.SECONDS.sleep(5);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Connection connection = Connection.getInstance();
-//                    TableInfo info = connection.query(map, "song");
-//                    if(info == null) {
-//                        return null;
-//                    }
-//                    return info;
-//                }
-//            };
-//            Future<TableInfo> future = executorService.submit(callable);
-
-//            Alerter.showAlert("Loading", Alert.AlertType.INFORMATION);
-            Connection connection = Connection.getInstance();
-            TableInfo info = connection.query(map, "song");
-//            TableInfo info = future.get();
-            if(info == null) {
-                return false;
-            }
-
+            Stage prev = (Stage)rb1.getScene().getWindow();
+            Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("Results.fxml"));
+            loader.setLocation(getClass().getResource("Waiting.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            Scene scene = new Scene(root, ResultsController.minWidth, ResultsController.minHeight);
-            ResultsController resultsController = loader.getController();
-            resultsController.addData(info, map);
-            stage.setTitle("Nostalgia");
+            Scene scene = new Scene(root, WaitingController.minWidth, WaitingController.minHeight);
             stage.setScene(scene);
-            stage.setMinHeight(ResultsController.minHeight);
-            stage.setMinWidth(ResultsController.minWidth);
-            stage.setHeight(ResultsController.minHeight);
-            stage.setWidth(ResultsController.minWidth);
-            stage.show();
+            WaitingController waitingController = loader.getController();
+            waitingController.activateWaiting(map);
+            stage.setMinHeight(WaitingController.minHeight);
+            stage.setMinWidth(WaitingController.minWidth);
+            stage.setHeight(WaitingController.minHeight);
+            stage.setWidth(WaitingController.minWidth);
+            stage.setTitle("Loading");
             Centralizer.setCenter(stage);
+            stage.show();
+            prev.close();
+            waitingController.stop();
         } catch(Exception e) {
             Alerter.showAlert(AlertMessages.pageLoadingFailure(), Alert.AlertType.ERROR);
             return false;

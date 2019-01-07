@@ -1,16 +1,14 @@
 .root {
-	-fx-background-image: url("pic/search2.jpg");
+	-fx-background-image: url("pic/search.jpg");
     -fx-background-size: cover;
 }
 
 .choice-box {
     -fx-pref-width: 188;
-
 }
 
 .choice-box .context-menu {
     -fx-pref-width: 188;
-
 }
 
 

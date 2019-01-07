@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -7,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="250.0" minWidth="150.0" prefHeight="401.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SongInfoController">
+<AnchorPane minHeight="250.0" minWidth="150.0" prefHeight="401.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SongInfoController">
    <children>
       <Label layoutX="42.0" layoutY="155.0" text="Duration:" AnchorPane.leftAnchor="42.0" />
       <Label layoutX="229.0" layoutY="155.0" text="Popularity:" />
@@ -32,5 +36,6 @@
       <Label fx:id="album" layoutX="105.0" layoutY="105.0" text="Label" wrapText="true" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="0.0" />
       <Label layoutX="229.0" layoutY="185.0" text="Tempo" />
       <Label fx:id="tempo" layoutX="300.0" layoutY="185.0" text="Label" />
+      <Separator layoutX="26.0" layoutY="43.0" prefHeight="0.0" prefWidth="400.0" />
    </children>
 </AnchorPane>

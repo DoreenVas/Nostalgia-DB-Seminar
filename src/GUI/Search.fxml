@@ -32,7 +32,6 @@
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font></Label>
-            <Separator layoutX="107.0" layoutY="60.0" prefHeight="11.0" prefWidth="461.0" />
             <Group layoutX="7.0" layoutY="-29.0">
                <children>
                   <RadioButton fx:id="rb1" layoutX="336.0" layoutY="153.0" mnemonicParsing="false" onAction="#rb1Clicked" pickOnBounds="false" prefHeight="20.0" prefWidth="182.0" selected="true" textAlignment="RIGHT">
@@ -72,7 +71,7 @@
                   </RadioButton>
                </children>
             </Group>
-            <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="9.0" />
+            <Separator layoutX="83.0" layoutY="14.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="9.0" style="-fx-background-color: black;" />
             <ImageView fitHeight="50.0" fitWidth="53.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#home" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="GUI\pic\home.png" />
@@ -112,6 +111,7 @@
                <image>
                   <Image url="GUI\pic\animatedEllipse.gif" />
                </image></ImageView>
+            <Separator layoutX="107.0" layoutY="60.0" prefHeight="11.0" prefWidth="415.0" />
          </children>
       </Pane>
    </children>
